@@ -1,12 +1,21 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
 
 namespace Vs_Eats
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+
+        private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .Build();
+
+
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+           
         }
     }
 }
