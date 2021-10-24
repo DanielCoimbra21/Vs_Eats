@@ -1,4 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using DTO;
+using Microsoft.Ajax.Utilities;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

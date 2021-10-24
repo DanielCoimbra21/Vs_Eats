@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.IO;
+using Microsoft.Extensions.Configuration;
+using DTO;
+using DAL;
 
 namespace Vs_Eats
 {
@@ -15,7 +17,16 @@ namespace Vs_Eats
 
         public static void Main(string[] args)
         {
-           
+            var city = new CityManager(Configuration);
+            //Exercise List of all cities
+            Console.WriteLine("Exercise List of all cities");
+
+            var cities = city.GetCity();
+
+            foreach (var m in cities)
+            {
+                Console.WriteLine(m.ToString());
+            }
         }
     }
 }
