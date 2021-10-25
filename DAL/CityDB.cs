@@ -22,8 +22,6 @@ namespace DAL
         {
             List<City> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            Console.WriteLine("connectionString:"+connectionString);
-
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
