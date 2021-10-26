@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class StaffManager
+    public class StaffManager : IStaffManager
     {
         private IStaffDB StaffDb { get; }
         public StaffManager(IConfiguration conf)

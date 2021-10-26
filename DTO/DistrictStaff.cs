@@ -8,8 +8,8 @@ namespace DTO
 {
     public class DistrictStaff
     {
-        public int IDSTAFF { get; }
-        public int IDDISTRICT { get; }
+        public int IDSTAFF { get; set; }
+        public int IDDISTRICT { get; set; }
 
         public override string ToString()
         {
