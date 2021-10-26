@@ -13,9 +13,9 @@ namespace DTO
         public int IDRESTAURANT { get; set; }
         public int IDSTAFF { get; set; }
         public int IDCUSTOMER { get; set; }
-        public int TOTALPRICE { get; set; }
-        public int DELIVERTIME { get; set; }
-        public int STATUS { get; set; }
+        public decimal TOTALPRICE { get; set; }
+        public DateTime DELIVERTIME { get; set; }
+        public string STATUS { get; set; }
 
         public override string ToString()
         {
