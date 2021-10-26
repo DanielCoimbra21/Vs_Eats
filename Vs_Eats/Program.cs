@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using DTO;
 using DAL;
+using BLL;
 
 namespace Vs_Eats
 {
@@ -37,6 +38,17 @@ namespace Vs_Eats
             foreach (var m in cities)
             {
                 Console.WriteLine(m.ToString());
+            }
+
+            //Exercise List of all Districts
+            var district = new DistrictManager(Configuration);
+            Console.WriteLine("Exercise list of all districts");
+
+            var districts = district.GetDistricts();
+
+            foreach(var d in districts)
+            {
+                Console.WriteLine(d.ToString());
             }
         }
     }

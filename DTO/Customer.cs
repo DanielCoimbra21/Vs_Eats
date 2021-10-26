@@ -20,14 +20,14 @@ namespace DTO
 
         public override string ToString()
         {
-            return "IdCustomer " + IDCUSTOMER
-                + "Name" + NAME
-                + "Surname" + SURNAME
-                + "Username" + USERNAME
-                + "Phone" + PHONE
-                + "Address" + ADDRESS
-                + "Mail" + MAIL
-                + "Password" + PASSWORD;
+            return "IdCustomer: " + IDCUSTOMER +"\n"
+                + "Name: " + NAME + "\n"
+                + "Surname: " + SURNAME + "\n"
+                + "Username: " + USERNAME + "\n"
+                + "Phone: " + PHONE + "\n"
+                + "Address: " + ADDRESS + "\n"
+                + "Mail: " + MAIL + "\n"
+                + "Password: " + PASSWORD;
         }
     }
 }

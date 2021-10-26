@@ -18,7 +18,7 @@ namespace DAL
             Configuration = configuration;
         }
 
-        /*public List<District> GetDistrict()
+        public List<District> GetDistricts()
         {
             List<District> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -37,18 +37,33 @@ namespace DAL
                             if (results == null)
                             {
                                 results = new List<District>();
+                            }
 
-                                District district = new District();
+                              District district = new District();
 
-                                district.IDDISTRICT = (int)dr["IDDISTRICT"];
+                              district.IDDISTRICT = (int)dr["IDDISTRICT"];
 
-                                if(dr["NameDistrict"] != null)
+                            if (dr["NameDistrict"] != null)
+                            {
+                                district.NAMEDISTRICT = (string)dr["NAMEDISTRICT"];
+                            }
+
+                                results.Add(district);
 
                             }
                         }
                     }
                 }
+            catch(Exception e)
+            {
+                throw e;
             }
-        }*/
+            return results;
+        }
+
+        public District GetDistrict(string nameDistrict)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
