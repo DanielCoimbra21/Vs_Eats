@@ -17,6 +17,17 @@ namespace Vs_Eats
 
         public static void Main(string[] args)
         {
+
+            var customer = new CustomerManager(Configuration);
+            Console.WriteLine("Exercise List of all customers");
+
+            var customers =  customer.GetCustomers();
+
+            foreach(var c in customers)
+            {
+                Console.WriteLine(c.ToString());
+            }
+            
             var city = new CityManager(Configuration);
             //Exercise List of all cities
             Console.WriteLine("Exercise List of all cities");

@@ -28,7 +28,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from Customer";
+                    string query = "Select * from CUSTOMER";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cn.Open();
@@ -42,17 +42,17 @@ namespace DAL
 
                             Customer customer = new Customer();
 
-                            customer.IdCustomer = (int)dr["idCustomer"];
+                            customer.IDCUSTOMER = (int)dr["IDCUSTOMER"];
 
-                            if (dr["Name"] != null)
-                                customer.Name = (string)dr["Name"];
+                            if (dr["NAME"] != null)
+                                customer.NAME = (string)dr["NAME"];
 
-                            if (dr["Surname"] != null)
-                                customer.Surname = (string)dr["Surname"];
+                            if (dr["SURNAME"] != null)
+                                customer.SURNAME = (string)dr["SURNAME"];
 
-                            customer.Mail = (string)dr["Email"];
+                            customer.MAIL = (string)dr["MAIL"];
 
-                            customer.Password = (string)dr["Password"];
+                            customer.PASSWORD = (string)dr["PASSWORD"];
 
                             results.Add(customer);
                         }
@@ -76,7 +76,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from Customer where email = @mail AND password = @password";
+                    string query = "Select * from CUSTOMER where email = @mail AND password = @password";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@password", password);
@@ -89,18 +89,18 @@ namespace DAL
                         {
                             customer = new Customer();
 
-                            customer.IdCustomer = (int)dr["idCustomer"];
+                            customer.IDCUSTOMER = (int)dr["IDCUSTOMER"];
 
-                            if (dr["Name"] != null)
-                                customer.Name = (string)dr["Name"];
+                            if (dr["NAME"] != null)
+                                customer.NAME = (string)dr["NAME"];
 
-                            if (dr["Surname"] != null)
-                                customer.Surname = (string)dr["Surname"];
+                            if (dr["SURNAME"] != null)
+                                customer.SURNAME = (string)dr["SURNAME"];
 
-                            if (dr["Email"] != null)
-                                customer.Mail = (string)dr["Email"];
-                            if (dr["Password"] != null)
-                                customer.Password = (string)dr["Email"];
+                            if (dr["MAIL"] != null)
+                                customer.MAIL = (string)dr["MAIL"];
+                            if (dr["PASSWORD"] != null)
+                                customer.PASSWORD = (string)dr["EMAIL"];
                         }
                     }
                 }

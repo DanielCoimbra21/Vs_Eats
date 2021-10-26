@@ -9,25 +9,25 @@ namespace DTO
     public class Customer
     {
 
-        public int IdCustomer { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Username { get; set; }
-        public int Phone { get; set; }
-        public string Address { get; set; }
-        public string Mail { get; set; }
-        public string Password { get; set; }
+        public int IDCUSTOMER { get; set; }
+        public string NAME { get; set; }
+        public string SURNAME { get; set; }
+        public string USERNAME { get; set; }
+        public int PHONE { get; set; }
+        public string ADDRESS { get; set; }
+        public string MAIL { get; set; }
+        public string PASSWORD { get; set; }
 
-        public string toString()
+        public override string ToString()
         {
-            return "IdCustomer " + IdCustomer
-                + "Name" + Name
-                + "Surname" + Surname
-                + "Username" + Username
-                + "Phone" + Phone
-                + "Address" + Address
-                + "Mail" + Mail
-                + "Password" + Password;
+            return "IdCustomer " + IDCUSTOMER
+                + "Name" + NAME
+                + "Surname" + SURNAME
+                + "Username" + USERNAME
+                + "Phone" + PHONE
+                + "Address" + ADDRESS
+                + "Mail" + MAIL
+                + "Password" + PASSWORD;
         }
     }
 }
