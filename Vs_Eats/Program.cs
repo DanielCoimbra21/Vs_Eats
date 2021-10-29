@@ -50,6 +50,18 @@ namespace Vs_Eats
             {
                 Console.WriteLine(d.ToString());
             }
+
+
+            //Exercise List of all Dishes
+            var dish = new DishManager(Configuration);
+            Console.WriteLine("Exercise list of all Dishes");
+
+            var dishes = dish.GetDishes();
+
+            foreach(var d in dishes)
+            {
+                Console.WriteLine(d.ToString());
+            }
         }
     }
 }

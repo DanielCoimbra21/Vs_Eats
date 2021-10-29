@@ -105,20 +105,18 @@ namespace DAL
 
                             if (dr["MAIL"] != null)
                                 customer.MAIL = (string)dr["MAIL"];
+
                             if (dr["PASSWORD"] != null)
                                 customer.PASSWORD = (string)dr["EMAIL"];
 
                             if (dr["USERNAME"] != null)
                                 customer.USERNAME = (string)dr["USERNAME"];
 
-                            if (dr["PHONE"] != null)
-                                customer.PHONE = (int)dr["PHONE"];
+                            customer.PHONE = (int)dr["PHONE"];
 
                             if (dr["ADDRESS"] != null)
                                 customer.ADDRESS = (string)dr["ADDRESS"];
 
-                            if (dr["PASSWORD"] != null)
-                                customer.PASSWORD = (string)dr["PASSWORD"];
                         }
                     }
                 }
