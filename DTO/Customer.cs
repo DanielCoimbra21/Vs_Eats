@@ -10,6 +10,7 @@ namespace DTO
     {
 
         public int IDCUSTOMER { get; set; }
+        public int IDCITY { get; set; }
         public string NAME { get; set; }
         public string SURNAME { get; set; }
         public string USERNAME { get; set; }
@@ -21,13 +22,14 @@ namespace DTO
         public override string ToString()
         {
             return "IdCustomer: " + IDCUSTOMER +"\n"
+                + "IdCity: " + IDCITY + "\n"
                 + "Name: " + NAME + "\n"
                 + "Surname: " + SURNAME + "\n"
                 + "Username: " + USERNAME + "\n"
                 + "Phone: " + PHONE + "\n"
                 + "Address: " + ADDRESS + "\n"
                 + "Mail: " + MAIL + "\n"
-                + "Password: " + PASSWORD;
+                + "Password: " + PASSWORD +"\n";
         }
     }
 }

@@ -27,5 +27,12 @@ namespace DAL
         {
             return CustomerDb.GetCustomers();
         }
+
+        public Customer InsertCustomer(Customer customer)//Customer customer
+        {
+            return CustomerDb.InsertCustomer(customer);
+        }
+
+       
     }
 }

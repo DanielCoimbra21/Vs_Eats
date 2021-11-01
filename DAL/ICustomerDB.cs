@@ -12,6 +12,6 @@ namespace DAL
         List<Customer> GetCustomers();
 
         Customer GetCustomer(string mail, string password);
-
+        Customer InsertCustomer(Customer customer);
     }
 }

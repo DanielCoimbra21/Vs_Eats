@@ -44,6 +44,8 @@ namespace DAL
 
                             customer.IDCUSTOMER = (int)dr["IDCUSTOMER"];
 
+                            customer.IDCITY = (int)dr["IDCITY"];
+
                             if (dr["NAME"] != null)
                                 customer.NAME = (string)dr["NAME"];
 
@@ -73,6 +75,43 @@ namespace DAL
             return results;
         }
 
+        public Customer InsertCustomer(Customer customer)//Customer customer
+        {
+       
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using(SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    //string query = "Insert into CUSTOMER(IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@IDCITY, @NAME, @SURNAME, @USERNAME, @PHONE, @ADDRESS, @MAIL, @PASSWORD)";
+                    string query = "Insert into CUSTOMER(IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@IDCITY, @NAME, @SURNAME, @USERNAME, @PHONE, @ADDRESS, @MAIL, @PASSWORD) SELECT SCOPE_IDENTITY()";
+                    //string query = "Insert into CUSTOMER(IDCUSTOMER, IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@IDCUSTOMER, @IDCITY, @NAME, @SURNAME, @USERNAME, @PHONE, @ADDRESS, @MAIL, @PASSWORD) ";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                   
+                   // cmd.Parameters.AddWithValue("@IDCUSTOMER", customer.IDCUSTOMER);
+                    cmd.Parameters.AddWithValue("@IDCITY", customer.IDCITY);
+                    cmd.Parameters.AddWithValue("@NAME", customer.NAME);
+                    cmd.Parameters.AddWithValue("@SURNAME", customer.SURNAME);
+                    cmd.Parameters.AddWithValue("@USERNAME", customer.USERNAME);
+                    cmd.Parameters.AddWithValue("@PHONE", customer.PHONE);
+                    cmd.Parameters.AddWithValue("@ADDRESS",customer. ADDRESS);
+                    cmd.Parameters.AddWithValue("@MAIL", customer.MAIL);
+                    cmd.Parameters.AddWithValue("@PASSWORD", customer.PASSWORD);
+
+                    cn.Open();
+
+                    customer.IDCUSTOMER = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+            return customer;
+
+           
+        }
+
         public Customer GetCustomer(string email, string password)
         {
             Customer customer = null;
@@ -82,7 +121,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from CUSTOMER where email = @mail AND password = @password";
+                    string query = "Select * from CUSTOMER where email = @email AND password = @password";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@password", password);

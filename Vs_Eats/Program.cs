@@ -19,6 +19,12 @@ namespace Vs_Eats
         public static void Main(string[] args)
         {
 
+            var customerManager = new CustomerManager(Configuration);
+
+            Console.WriteLine("Exercise to insert Customers");
+            var newCustomer = customerManager.InsertCustomer(new Customer { IDCITY = 1, ADDRESS = "Le coin des BGS", MAIL = "Houk@bg.ch", NAME = "Houk", PASSWORD = "WESHHALORS", PHONE = 1234, SURNAME = "Vouillamoz", USERNAME = "Hugo" });  
+            
+
             var customer = new CustomerManager(Configuration);
             Console.WriteLine("Exercise List of all customers");
 
@@ -62,6 +68,8 @@ namespace Vs_Eats
             {
                 Console.WriteLine(d.ToString());
             }
+
+            //Exercise insert IdDish and IdOrder
         }
     }
 }
