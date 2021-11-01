@@ -8,6 +8,7 @@ namespace DAL
     {
 
         public List<Order> GetOrders();
+        public void ArchiveDelivery(Order order);
 
     }
 }

@@ -9,4 +9,5 @@ namespace BLL
     public interface IOrderManager
     {
     }
+    public void ArchiveDelivery(OrderManager order);
 }

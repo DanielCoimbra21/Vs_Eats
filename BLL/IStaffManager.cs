@@ -8,6 +8,9 @@ namespace BLL
 {
     public interface IStaffManager
     {
-
+        public void UpdateStaff(StaffManager staff);
+        
     }
+
+
 }

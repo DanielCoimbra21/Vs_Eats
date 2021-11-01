@@ -12,11 +12,11 @@ namespace DTO
         public int IDCITY { get; set; }
         public string NAMESTAFF { get; set; }
         public string SURNAMESTAFF { get; set; }
-        public int PHONENUMBER { get; set; }
+        public int PHONENUMBERSTAFF { get; set; }
         public string ADDRESSSTAFF { get; set; }
         public string MAILSTAFF { get; set; }
         public string USERNAMESTAFF { get; set; }
-        public string PASSWORDSSTAFF { get; set; }
+        public string PASSWORDSTAFF { get; set; }
         public int ORDERCURRENTTOTAL { get; set; }
 
         public override string ToString()
@@ -25,10 +25,11 @@ namespace DTO
             "IdCity : " + IDCITY + "\n" +
             "NameStaff : " + NAMESTAFF + "\n" +
             "SurnameStaff : " + SURNAMESTAFF + "\n" +
+            "PhoneNumberStaff : " + PHONENUMBERSTAFF + "\n" +
             "AddressStaff : " + ADDRESSSTAFF + "\n" +
             "MailStaff : " + MAILSTAFF + "\n" +
             "UserNameStaff : " + USERNAMESTAFF + "\n" +
-            "PasswordsStaff : " + PASSWORDSSTAFF + "\n" +
+            "PasswordStaff : " + PASSWORDSTAFF + "\n" +
             "OrderCurrentTotal : " + ORDERCURRENTTOTAL + "\n";
         }
     }

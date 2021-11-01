@@ -22,5 +22,18 @@ namespace BLL
         {
             return StaffDb.GetStaffs(); 
         }
+
+        public void UpdateStaff(StaffManager staff) {}
+
+        public Staff GetStaff(string usernameStaff, string passwordStaff)
+        {
+            return StaffDb.GetStaff(usernameStaff, passwordStaff);
+        }
+
+        public void ArchiveDelivery(Order order)
+        {
+
+        }
+
     }
 }

@@ -58,5 +58,34 @@ namespace DAL
             }
             return results;
         }
+
+        public void ArchiveDelivery(Order order)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    var query = "UPDATE ORDER SET STATUS = @status" +
+                        "WHERE IDORDER=@idOrder and IDSTAFF=@idStaff and IDCUSTOMER=@idCustomer and IDDISTRICT=@idDistrict";
+
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@status", order.STATUS);
+                    cmd.Parameters.AddWithValue("@idOrder", order.IDORDER);
+                    cmd.Parameters.AddWithValue("@idStaff", order.IDSTAFF);
+                    cmd.Parameters.AddWithValue("@idCustomer", order.IDCUSTOMER);
+                    cmd.Parameters.AddWithValue("@idDistrict", order.IDDISTRICT);
+
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
