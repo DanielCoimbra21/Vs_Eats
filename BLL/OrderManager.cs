@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class OrderManager : IOrderManager
+    public class OrderManager 
     {
         private IOrderDB OrderDb { get; }
         public OrderManager(IConfiguration conf)
@@ -21,5 +21,17 @@ namespace BLL
         {
             return OrderDb.GetOrders();
         }
+
+        public Order GetOrder(int orderId)
+        {
+            return OrderDb.GetOrder(orderId);
+        }
+
+        public void ArchiveDelivery(Order order, string status)
+        {
+            Order order1 = OrderDb.GetOrder(order.IDORDER);
+            OrderDb.ArchiveDelivery(order1, status);
+        }
+
     }
 }

@@ -69,7 +69,15 @@ namespace Vs_Eats
                 Console.WriteLine(d.ToString());
             }
 
-            //Exercise insert IdDish and IdOrder
+            //Update orderStatus
+            Console.WriteLine("Update orderStatus");
+            var order = new OrderManager(Configuration);
+            var orderSelected = order.GetOrder(0);
+            Console.WriteLine(orderSelected.ToString());
+            order.ArchiveDelivery(orderSelected, "terminé");
+            var orderSelected1 = order.GetOrder(0);
+            Console.WriteLine(orderSelected1.ToString());
+
         }
     }
 }
