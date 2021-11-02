@@ -33,5 +33,17 @@ namespace BLL
             OrderDb.ArchiveDelivery(order1, status);
         }
 
+        public void CancelOrder(Customer customer, int orderId, string codeToCancel)
+        {
+            Order order = OrderDb.GetOrder(orderId);
+
+            var output = String.Concat(orderId, customer.NAME, customer.SURNAME);
+            if (output.Equals(codeToCancel))
+            {
+                Console.WriteLine("Canceld");
+                OrderDb.ArchiveDelivery(order, "canceled");
+            }
+        }
+
     }
 }
