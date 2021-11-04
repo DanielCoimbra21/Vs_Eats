@@ -121,7 +121,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from CUSTOMER where email = @email AND password = @password";
+                    string query = "Select * from CUSTOMER where MAIL = @email AND password = @password";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@password", password);
@@ -146,7 +146,7 @@ namespace DAL
                                 customer.MAIL = (string)dr["MAIL"];
 
                             if (dr["PASSWORD"] != null)
-                                customer.PASSWORD = (string)dr["EMAIL"];
+                                customer.PASSWORD = (string)dr["PASSWORD"];
 
                             if (dr["USERNAME"] != null)
                                 customer.USERNAME = (string)dr["USERNAME"];

@@ -70,13 +70,25 @@ namespace Vs_Eats
             }
 
             //Update orderStatus
-            Console.WriteLine("Update orderStatus");
-            var order = new OrderManager(Configuration);
-            var orderSelected = order.GetOrder(0);
-            Console.WriteLine(orderSelected.ToString());
-            order.ArchiveDelivery(orderSelected, "terminé");
-            var orderSelected1 = order.GetOrder(0);
-            Console.WriteLine(orderSelected1.ToString());
+            //Console.WriteLine("Update orderStatus");
+            //var order = new OrderManager(Configuration);
+            //var orderSelected = order.GetOrder(0);
+            //Console.WriteLine(orderSelected.ToString());
+            //order.ArchiveDelivery(orderSelected, "terminé");
+            //var orderSelected1 = order.GetOrder(0);
+            //Console.WriteLine(orderSelected1.ToString());
+
+            //Cancel an order
+            Console.WriteLine("Cancel an order");
+            var orderC = new OrderManager(Configuration);
+            var orderToCancel = orderC.GetOrder(0);
+            var customerC = new CustomerManager(Configuration);
+            var customerCurrent = customerC.GetCustomer("dsaf", "1234");
+            orderC.CancelOrder(customerCurrent, orderToCancel.IDORDER, "0CoimbraDaniel");
+            Console.WriteLine(orderToCancel.ToString());
+
+
+
 
         }
     }
