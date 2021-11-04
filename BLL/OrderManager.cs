@@ -12,9 +12,13 @@ namespace BLL
     public class OrderManager 
     {
         private IOrderDB OrderDb { get; }
+        private IDistrictStaffDB DistrictStaffDb { get; }
+        private StaffDB StaffDb { get; }
         public OrderManager(IConfiguration conf)
         {
             OrderDb = new OrderDB(conf);
+            DistrictStaffDb = new DistrictStaffDB(conf);
+            StaffDb = new StaffDB(conf);
         }
 
         public List<Order> GetOrders()
@@ -44,6 +48,43 @@ namespace BLL
                 OrderDb.ArchiveDelivery(order, "canceled");
             }
         }
+
+        public List<Staff> AssignStaff(int idOrder)
+        {
+            Order order = OrderDb.GetOrder(idOrder);
+
+
+            List<DistrictStaff> listDS = DistrictStaffDb.GetDistrictStaffs();
+            List<Staff> listStaff = new List<Staff>();
+            List<Staff> listStaffs = StaffDb.GetStaffs();
+
+            foreach (var districtstaff in listDS)
+            {
+                if(order.IDDISTRICT == districtstaff.IDDISTRICT)
+                {
+                    listStaff.Add(StaffDb.GetStaff(districtstaff.IDSTAFF));
+                }
+
+                
+            }
+
+            List<Staff> listStaff2 = new List<Staff>();
+
+            for (int i = 0; i < listStaff.Count; i++)
+            {
+                if(listStaff[i].ORDERCURRENTTOTAL <= 5)
+                {
+                    listStaff2.Add(listStaff[i]);
+                }
+            }
+
+            
+
+            return listStaff2;
+         
+
+        }
+
 
     }
 }

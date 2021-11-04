@@ -27,29 +27,33 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from Order";
+                    string query = "Select * from ORDER";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cn.Open();
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        if (results == null)
-                            results = new List<Order>();
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
 
-                        Order order = new Order();
+                            Order order = new Order();
 
-                        order.IDORDER = (int)dr["IDORDER"];
-                        order.IDDISTRICT= (int)dr["IDDISTRICT"];
-                        order.IDRESTAURANT = (int)dr["IDRESTAURANT"];
-                        order.IDSTAFF = (int)dr["IDSTAFF"];
-                        order.IDCUSTOMER = (int)dr["IDCUSTOMER"];
-                        order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
-                        order.DELIVERTIME = (DateTime)dr["DELIVERTIME"];
-                        order.STATUS = (string)dr["STATUS"];
-                        
-                        results.Add(order);
-
+                            order.IDORDER = (int)dr["IDORDER"];
+                            order.IDDISTRICT = (int)dr["IDDISTRICT"];
+                            order.IDRESTAURANT = (int)dr["IDRESTAURANT"];
+                            order.IDSTAFF = (int)dr["IDSTAFF"];
+                            order.IDCUSTOMER = (int)dr["IDCUSTOMER"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.DELIVERTIME = (DateTime)dr["DELIVERTIME"];
+                            order.STATUS = (string)dr["STATUS"];
+                            
+                            results.Add(order);
+                        }
+                            
+                      
                     }
                 }
             }catch (Exception e)
@@ -61,8 +65,8 @@ namespace DAL
 
         public Order GetOrder(int orderId)
         {
-            Order order = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            Order order = null;
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
@@ -83,7 +87,11 @@ namespace DAL
                             order.IDORDER = (int)dr["IDORDER"];
                             order.IDDISTRICT = (int)dr["IDDISTRICT"];
                             order.IDRESTAURANT = (int)dr["IDRESTAURANT"];
-                            order.IDSTAFF = (int)dr["IDSTAFF"];
+                            if (dr["IDSTAFF"] != null)
+                            {
+                                order.IDSTAFF = (int)dr["IDSTAFF"];
+                               
+                            }     
                             order.IDCUSTOMER = (int)dr["IDCUSTOMER"];
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.DELIVERTIME = (DateTime)dr["DELIVERTIME"];

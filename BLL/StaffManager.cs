@@ -35,5 +35,10 @@ namespace BLL
 
         }
 
+        public Staff GetStaff(int idStaff)
+        {
+            return StaffDb.GetStaff(idStaff);
+        }
+
     }
 }

@@ -26,22 +26,29 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from DistrictStaff";
+                    string query = "Select * from [dbo].DISTRICTSTAFF";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cn.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        DistrictStaff districtStaff = new DistrictStaff();
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<DistrictStaff>();
 
-                        districtStaff.IDDISTRICT = (int)dr["IDDISTRICT"];
-                        districtStaff.IDSTAFF = (int)dr["IDSTAFF"];
+                            DistrictStaff districtStaff = new DistrictStaff();
 
-                        results.Add(districtStaff);
+                            districtStaff.IDSTAFF = (int)dr["IDSTAFF"];
+                            districtStaff.IDDISTRICT = (int)dr["IDDISTRICT"];
+
+                            results.Add(districtStaff);
+                        }                 
                     }
                 }
             }catch (Exception e)
             {
+                Console.WriteLine(e.StackTrace);
                 throw e;
             }
             return results;

@@ -64,9 +64,9 @@ namespace Vs_Eats
 
             var dishes = dish.GetDishes();
 
-            foreach(var d in dishes)
+            foreach(var dh in dishes)
             {
-                Console.WriteLine(d.ToString());
+               Console.WriteLine(dh.ToString());
             }
 
             //Update orderStatus
@@ -79,15 +79,25 @@ namespace Vs_Eats
             //Console.WriteLine(orderSelected1.ToString());
 
             //Cancel an order
-            Console.WriteLine("Cancel an order");
-            var orderC = new OrderManager(Configuration);
-            var orderToCancel = orderC.GetOrder(0);
-            var customerC = new CustomerManager(Configuration);
-            var customerCurrent = customerC.GetCustomer("dsaf", "1234");
-            orderC.CancelOrder(customerCurrent, orderToCancel.IDORDER, "0CoimbraDaniel");
-            Console.WriteLine(orderToCancel.ToString());
+            //Console.WriteLine("Cancel an order");
+            //var orderC = new OrderManager(Configuration);
+            //var orderToCancel = orderC.GetOrder(0);
+            //var customerC = new CustomerManager(Configuration);
+            //var customerCurrent = customerC.GetCustomer("dsaf", "1234");
+            //orderC.CancelOrder(customerCurrent, orderToCancel.IDORDER, "0CoimbraDaniel");
+            //Console.WriteLine(orderToCancel.ToString());
 
 
+            //Assign order
+            Console.WriteLine("Assign order");
+            var od = new OrderManager(Configuration);
+            var lStaff = od.AssignStaff(0);
+
+            Console.WriteLine("Staffs choisis");
+            foreach (var staffChosen in lStaff)
+            {
+                Console.WriteLine(staffChosen.ToString());
+            }
 
 
         }
