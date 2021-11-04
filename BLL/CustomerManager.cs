@@ -30,9 +30,31 @@ namespace DAL
 
         public Customer InsertCustomer(Customer customer)//Customer customer
         {
-            return CustomerDb.InsertCustomer(customer);
-        }
+            var mail = customer.MAIL;
+            var username = customer.USERNAME;
 
+            var list = CustomerDb.GetCustomers();
+
+            foreach(Customer customer1 in list)
+            {
+                if(customer1.MAIL.Equals(mail))
+                {
+                    Console.WriteLine("This Email Exists already");
+                    customer = null;
+                    return customer;
+                }
+
+                if(customer1.USERNAME.Equals(username))
+                {
+                    Console.WriteLine("This Username Exists already");
+                    customer = null;
+                    return customer;
+                }
+            }
+            return CustomerDb.InsertCustomer(customer);
+
+
+        }
        
     }
 }
