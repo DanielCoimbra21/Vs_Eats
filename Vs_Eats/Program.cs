@@ -22,8 +22,16 @@ namespace Vs_Eats
             var customerManager = new CustomerManager(Configuration);
 
             Console.WriteLine("Exercise to insert Customers");
-            var newCustomer = customerManager.InsertCustomer(new Customer { IDCITY = 1, ADDRESS = "Le coin des BGS", MAIL = "Houk@bg.ch", NAME = "Houk", PASSWORD = "WESHHALORS", PHONE = 1234, SURNAME = "Vouillamoz", USERNAME = "Hugo" });  
-            
+            var newCustomer = customerManager.InsertCustomer(new Customer { IDCITY = 1, ADDRESS = "Le coin des BGS", MAIL = "Houk@bg.ch", NAME = "Houk", PASSWORD = "WESHHALORS", PHONE = 1234, SURNAME = "Vouillamoz", USERNAME = "Hugo" });
+
+            Console.WriteLine("Exercice Insert Order");
+            var orderManager = new OrderManager(Configuration);
+
+            var src = DateTime.Now;
+            var hm = new DateTime(src.Year, src.Month, src.Day, src.Hour, src.Minute, 0);
+
+            var newOrder = orderManager.InsertOrder(new Order { IDDISTRICT = 1, IDRESTAURANT = 1, IDCUSTOMER = 1, TOTALPRICE = 20, DELIVERTIME = hm, STATUS="Free"});
+
 
             var customer = new CustomerManager(Configuration);
             Console.WriteLine("Exercise List of all customers");

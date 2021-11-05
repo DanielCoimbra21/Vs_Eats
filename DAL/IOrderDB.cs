@@ -11,6 +11,6 @@ namespace DAL
         public void ArchiveDelivery(Order order, string status);
         public Order GetOrder(int orderId);
 
-
+        public Order InsertOrder(Order order);
     }
 }

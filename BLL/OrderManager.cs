@@ -85,6 +85,11 @@ namespace BLL
 
         }
 
+        public Order InsertOrder(Order order)
+        {
+            return OrderDb.InsertOrder(order);
+        }
+
 
     }
 }
