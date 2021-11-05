@@ -11,7 +11,7 @@ namespace DTO
         public int IDDISHES { get; set; }
         public string NAMEDISH { get; set; }
 
-        public decimal PRICEDISH { get; set; }
+        public double PRICEDISH { get; set; }
 
         public override string ToString()
         {
