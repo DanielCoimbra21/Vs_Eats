@@ -51,38 +51,57 @@ namespace BLL
 
         public List<Staff> AssignStaff(int idOrder)
         {
+            //Déclaration variables
+            List<Staff> listStaff = new List<Staff>();
+            List<DistrictStaff> listOfStaffDistrict = DistrictStaffDb.GetDistrictStaffs();
+            List<Order> listOrders = OrderDb.GetOrders();
             Order order = OrderDb.GetOrder(idOrder);
 
+            //Variable pour déterminer la plage horaire de 30 minutes
+            DateTime dateTimeOrder = order.DELIVERTIME;
+            DateTime dateTimeOrderBefore = dateTimeOrder.Subtract(new TimeSpan(0, 15, 0));
+            DateTime dateTimeOrderAfter = dateTimeOrder.Add(new TimeSpan(0, 15, 0));
 
-            List<DistrictStaff> listDS = DistrictStaffDb.GetDistrictStaffs();
-            List<Staff> listStaff = new List<Staff>();
-            List<Staff> listStaffs = StaffDb.GetStaffs();
 
-            foreach (var districtstaff in listDS)
+            //Rechercher les staffs qui travaillent dans la même région que l'order
+            foreach (var ds in listOfStaffDistrict)
             {
-                if(order.IDDISTRICT == districtstaff.IDDISTRICT)
+                if (order.IDDISTRICT == ds.IDDISTRICT)
                 {
-                    listStaff.Add(StaffDb.GetStaff(districtstaff.IDSTAFF));
+                    listStaff.Add(StaffDb.GetStaff(ds.IDSTAFF));
                 }
-
-                
             }
 
-            List<Staff> listStaff2 = new List<Staff>();
+            var cpt = 0;
 
+            //Rechercher dans les staffs sélectionners lesquels ont moins de 5 ordres
+            //et dans la tranche horaire de 30 minutes aux abords du nouvel ordre
             for (int i = 0; i < listStaff.Count; i++)
             {
-                if(listStaff[i].ORDERCURRENTTOTAL <= 5)
+                cpt = 0;
+                foreach (var orderByStaff in listOrders)
                 {
-                    listStaff2.Add(listStaff[i]);
+                    if (orderByStaff.STATUS.Equals("ongoing") && orderByStaff.IDSTAFF.Equals(listStaff[i].IDSTAFF))
+                    {
+                        //1 instance later value
+                        //-1 instance is earlier
+                        Console.WriteLine("compare before: " + orderByStaff.DELIVERTIME.CompareTo(dateTimeOrderBefore));
+                        Console.WriteLine("compare after: " + orderByStaff.DELIVERTIME.CompareTo(dateTimeOrderAfter));
+
+                        if (orderByStaff.DELIVERTIME.CompareTo(dateTimeOrderBefore) == 1 && orderByStaff.DELIVERTIME.CompareTo(dateTimeOrderAfter) == -1)
+                        {
+                            cpt++;
+                        }
+                    }
+                }
+                Console.WriteLine("Cpt " + cpt);
+                //Si compteur du staff plus que 5, on enlève le staff de la liste
+                if (cpt >= 5)
+                {
+                    listStaff.RemoveAt(i);
                 }
             }
-
-            
-
-            return listStaff2;
-         
-
+            return listStaff;
         }
 
         public Order InsertOrder(Order order)

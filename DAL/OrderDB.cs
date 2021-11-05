@@ -27,7 +27,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDER";
+                    string query = "Select * from [dbo].[ORDER]";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cn.Open();
