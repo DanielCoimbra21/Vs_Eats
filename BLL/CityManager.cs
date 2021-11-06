@@ -18,9 +18,14 @@ namespace DAL
             CityDb = new CityDB(conf);
         }
 
-        public List<City> GetCity()
+        public List<City> GetCities()
         {
-            return CityDb.GetCity();
+            return CityDb.GetCities();
+        }
+
+        public int GetCity(int idCity)
+        {
+            return CityDb.GetCity(idCity);
         }
 
     }

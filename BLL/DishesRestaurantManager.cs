@@ -11,7 +11,7 @@ namespace BLL
 {
     public class DishesRestaurantManager
     {
-        private IDishesRestaurantDB DishesRestaurantDb;
+        private IDishesRestaurantDB DishesRestaurantDb { get; }
 
         public DishesRestaurantManager(IConfiguration conf)
         {
@@ -21,6 +21,11 @@ namespace BLL
         public List<DishesRestaurant> GetDishesRestaurants()
         {
             return DishesRestaurantDb.GetDishesRestaurants();
+        }
+
+        public int GetIdRestaurant(int idDish)
+        {
+            return DishesRestaurantDb.GetIdRestaurant(idDish);
         }
 
     }

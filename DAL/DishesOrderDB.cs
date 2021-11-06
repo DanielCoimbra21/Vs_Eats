@@ -62,5 +62,32 @@ namespace DAL
             return results;
         }
 
+        public DishesOrder InsertDishesOrder(DishesOrder dishesOrder)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using(SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Insert into DISHESORDER(IDDISHES, QUANTITY)" +
+                        " values(@idDishes, @quantity)";
+
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idDishes", dishesOrder.IDDISHES);
+                    //cmd.Parameters.AddWithValue("@idOrder", dishesOrder.IDORDER);
+                    cmd.Parameters.AddWithValue("@quantity", dishesOrder.QUANTITY);
+
+                    cn.Open();
+
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+            return dishesOrder;
+        }
+
     }
 }

@@ -18,9 +18,14 @@ namespace BLL
             DishDb = new DishDB(conf);
         }
 
-        public Dish GetDish(string dishName, int price)
+        public Dish GetDish(string dishName)
         {
-            return DishDb.GetDish(dishName, price);
+            return DishDb.GetDish(dishName);
+        }
+
+        public Dish GetDish(int idDish)
+        {
+            return DishDb.GetDish(idDish);
         }
 
         public List<Dish> GetDishes()

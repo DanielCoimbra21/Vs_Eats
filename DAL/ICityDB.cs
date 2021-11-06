@@ -5,6 +5,9 @@ namespace DAL
 {
     public interface ICityDB
     {
-        List<City> GetCity();
+        public List<City> GetCities();
+
+        public int GetCity(int idCity);
+
     }
 }

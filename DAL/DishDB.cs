@@ -64,7 +64,7 @@ namespace DAL
             return results;
         }
 
-        public Dish GetDish(string dishName, int dishPrice)
+        public Dish GetDish(string dishName)
         {
             Dish dish = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -73,10 +73,9 @@ namespace DAL
             {
                 using(SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from DISHES where dishName = @dishName and dishPrice = @dishPrice";
+                    string query = "Select * from DISHES where dishName = @dishName";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@dishName", dishName);
-                    cmd.Parameters.AddWithValue("@dishPrice", dishPrice);
 
                     cn.Open();
 
@@ -88,8 +87,7 @@ namespace DAL
 
                             dish.IDDISHES = (int)dr["IDDISHES"];
 
-                            if (dr["NAMEDISH"] != null)
-                                dish.NAMEDISH = (string)dr["NAMEDISH"];
+                            dish.NAMEDISH = (string)dr["NAMEDISH"];
 
                             if (dr["PRICEDISH"] != null)
                                 dish.PRICEDISH = (int)dr["PRICEDISH"];
@@ -104,5 +102,45 @@ namespace DAL
 
             return dish;
         }
+
+        public Dish GetDish(int idDishes)
+        {
+            Dish dish = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from DISHES where IDDISHES = @idDishes";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idDishes", idDishes);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            dish = new Dish();
+
+                            dish.IDDISHES = (int)dr["IDDISHES"];
+
+                            dish.NAMEDISH = (string)dr["NAMEDISH"];
+
+                            if (dr["PRICEDISH"] != null)
+                                dish.PRICEDISH = (int)dr["PRICEDISH"];
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return dish;
+        }
+
     }
 }

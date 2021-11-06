@@ -52,5 +52,37 @@ namespace DAL
             return results;
 
         }
+
+        public int GetIdRestaurant(int idDish)
+        {
+            List<DishesRestaurant> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            int idRestaurant;
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select IDRESTAURANT from DISHESRESTAURANT" +
+                        " where @idDish = IDDISHES";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idDish", idDish);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        idRestaurant = (int)dr["IDRESTAURANT"];
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return idRestaurant;
+
+        }
     }
 }

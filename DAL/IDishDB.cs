@@ -11,6 +11,8 @@ namespace DAL
     {
         List<Dish> GetDishes();
 
-        Dish GetDish(string nameDish, int price);
+        Dish GetDish(string nameDish);
+
+        Dish GetDish(int idDish);
     }
 }

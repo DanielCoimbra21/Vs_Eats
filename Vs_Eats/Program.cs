@@ -47,7 +47,7 @@ namespace Vs_Eats
             //Exercise List of all cities
             Console.WriteLine("Exercise List of all cities");
 
-            var cities = city.GetCity();
+            var cities = city.GetCities();
 
             foreach (var m in cities)
             {

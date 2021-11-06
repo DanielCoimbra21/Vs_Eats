@@ -155,10 +155,6 @@ namespace DAL
 
                     order.IDORDER = Convert.ToInt32(cmd.ExecuteScalar());
                     
-                  
-                    
-
-                    
                 }
             }
             catch(Exception e)

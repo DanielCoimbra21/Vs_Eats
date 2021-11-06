@@ -12,5 +12,7 @@ namespace DAL
 
         List<DishesRestaurant> GetDishesRestaurants();
 
+        public int GetIdRestaurant(int idDish);
+
     }
 }

@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-   public interface IDishesOrderDB
+    public interface IRestaurantDB
     {
-        public List<DishesOrder> GetDishesOrders();
 
-        public DishesOrder InsertDishesOrder(DishesOrder dishes);
+        public List<Restaurant> GetRestaurants();
+
+        public Restaurant GetRestaurant(int idRestaurant);
 
     }
 }

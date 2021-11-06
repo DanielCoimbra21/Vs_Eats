@@ -18,7 +18,7 @@ namespace DAL
             Configuration = configuration;
         }
 
-        public List<City> GetCity()
+        public List<City> GetCities()
         {
             List<City> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -58,5 +58,51 @@ namespace DAL
             }
             return results;
         }
+        public City GetCity(int idCity)
+        {
+            City city = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from CITY " +
+                        "where IDCITY = @idCity";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idCity", idCity);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+
+                            city = new City();
+
+                            city.IDCITY = (int)dr["IDCITY"];
+
+                            city.CITYNAME = (string)dr["CITYNAME"];
+
+                            city.NPA = (int)dr["NPA"];
+
+                            city.IDDISTRICT = (int)dr["IDDISTRICT"];
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return city;
+        }
+
+
     }
+
 }
+
