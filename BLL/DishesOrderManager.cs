@@ -27,9 +27,7 @@ namespace BLL
         public DishesOrder InsertDishesOrder(DishesOrder dishesOrder)
         { 
             List<DishesOrder> listDO = new List<DishesOrder>();
-            Order order = orderDb.GetOrder(order.IDORDER);
-
-            orderDb.InsertOrder(order);
+            Order order = orderDb.GetOrder(dishesOrder.IDORDER);
         
             return DishesOrderDb.InsertDishesOrder(dishesOrder);
         }

@@ -25,7 +25,7 @@ namespace DAL
 
         public int GetCity(int idCity)
         {
-            return CityDb.GetCity(idCity);
+            return GetCity(idCity);
         }
 
     }

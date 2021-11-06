@@ -96,7 +96,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@PHONE", customer.PHONE);
                     cmd.Parameters.AddWithValue("@ADDRESS",customer. ADDRESS);
                     cmd.Parameters.AddWithValue("@MAIL", customer.MAIL);
-                    cmd.Parameters.AddWithValue("@PASSWORD", customer.PASSWORD);
+                    cmd.Parameters.AddWithValue("@PASSWORD", GetPassword(customer.PASSWORD));
 
                     cn.Open();
 
@@ -124,7 +124,7 @@ namespace DAL
                     string query = "Select * from CUSTOMER where MAIL = @email AND password = @password";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@password", password);
+                    cmd.Parameters.AddWithValue("@password", GetPassword(password));
 
                     cn.Open();
 
@@ -167,5 +167,99 @@ namespace DAL
 
             return customer;
         }
+
+
+        public string GetPassword(string password)
+        {
+
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using(SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * FROM CUSTOMER where PASSWORD = @password";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@password", password);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if(dr.Read())
+                        {
+                            password = (string)dr["PASSWORD"];
+                        }
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+            return password;
+
+        }
+
+        public List <Customer> LoginCustomer(string email, string password)
+        {
+            List<Customer> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from CUSTOMER where MAIL = @email AND password = @password";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", password);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            Customer customer = new Customer();
+
+                            if (results == null)
+                                results = new List<Customer>();
+
+                            customer.IDCUSTOMER = (int)dr["IDCUSTOMER"];
+
+                            if (dr["NAME"] != null)
+                                customer.NAME = (string)dr["NAME"];
+
+                            if (dr["SURNAME"] != null)
+                                customer.SURNAME = (string)dr["SURNAME"];
+
+                            if (dr["MAIL"] != null)
+                                customer.MAIL = (string)dr["MAIL"];
+
+                            if (dr["PASSWORD"] != null)
+                                customer.PASSWORD = (string)dr["PASSWORD"];
+
+                            if (dr["USERNAME"] != null)
+                                customer.USERNAME = (string)dr["USERNAME"];
+
+                            customer.PHONE = (int)dr["PHONE"];
+
+                            if (dr["ADDRESS"] != null)
+                                customer.ADDRESS = (string)dr["ADDRESS"];
+
+                            results.Add(customer);
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
+        }
+
     }
 }

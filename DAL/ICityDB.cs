@@ -7,7 +7,7 @@ namespace DAL
     {
         public List<City> GetCities();
 
-        public int GetCity(int idCity);
+        public City GetCity(int idCity);
 
     }
 }
