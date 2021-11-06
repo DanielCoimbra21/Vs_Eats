@@ -105,10 +105,14 @@ namespace Vs_Eats
             var lStaff = od.AssignStaff(0);
 
             Console.WriteLine("Staffs choisis");
-            foreach (var staffChosen in lStaff)
+            if (lStaff != null)
             {
-                Console.WriteLine(staffChosen.ToString());
+                foreach (var staffChosen in lStaff)
+                {
+                    Console.WriteLine(staffChosen.ToString());
+                }
             }
+            
 
 
         }
