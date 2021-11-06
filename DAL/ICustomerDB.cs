@@ -16,6 +16,6 @@ namespace DAL
 
         string GetPassword(string password);
 
-        List<Customer> LoginCustomer(string email, string password);
+        Customer LoginCustomer(string email, string password);
     }
 }

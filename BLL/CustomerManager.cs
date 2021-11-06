@@ -92,21 +92,27 @@ namespace BLL
             return Convert.ToBase64String(encrypted_bytes);
         }
 
-        public List<Customer> LoginCustomer(string email, string password )
+        public Customer LoginCustomer(string email, string password )
         {
-           
-            //if the email and password are correct they will be place in this list, so its size will be 2
-            if(LoginCustomer(email, password).Count < 2)
-            {
-                Console.WriteLine("Email or Password incorrect");
-                return null;
-            }
-            else
-            {
-                return CustomerDb.LoginCustomer(email, password);
-                Console.WriteLine("LOGIN CORRECT");
-            }
+            List<Customer> customerList = CustomerDb.GetCustomers();
+            Customer customer = null;
             
+
+            foreach (var cs in customerList)
+            {
+                if (cs.MAIL.Equals(email) && cs.PASSWORD.Equals(password))
+                {
+                    Console.WriteLine("LOGIN CORRECT");
+                    //return CustomerDb.LoginCustomer(email, password);
+                    return customer = cs;
+                    
+                }
+
+            }
+
+            Console.WriteLine("Login or Password Incorrect");
+
+            return customer;
             
         }
        

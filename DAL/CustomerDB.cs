@@ -88,7 +88,7 @@ namespace DAL
                     //string query = "Insert into CUSTOMER(IDCUSTOMER, IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@IDCUSTOMER, @IDCITY, @NAME, @SURNAME, @USERNAME, @PHONE, @ADDRESS, @MAIL, @PASSWORD) ";
                     SqlCommand cmd = new SqlCommand(query, cn);
                    
-                   // cmd.Parameters.AddWithValue("@IDCUSTOMER", customer.IDCUSTOMER);
+                    //cmd.Parameters.AddWithValue("@IDCUSTOMER", customer.IDCUSTOMER);
                     cmd.Parameters.AddWithValue("@IDCITY", customer.IDCITY);
                     cmd.Parameters.AddWithValue("@NAME", customer.NAME);
                     cmd.Parameters.AddWithValue("@SURNAME", customer.SURNAME);
@@ -108,9 +108,8 @@ namespace DAL
                 throw e;
             }
             return customer;
-
-           
         }
+
 
         public Customer GetCustomer(string email, string password)
         {
@@ -200,9 +199,9 @@ namespace DAL
 
         }
 
-        public List <Customer> LoginCustomer(string email, string password)
+        public Customer LoginCustomer(string email, string password)
         {
-            List<Customer> results = null;
+            Customer customer = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
@@ -220,10 +219,7 @@ namespace DAL
                     {
                         if (dr.Read())
                         {
-                            Customer customer = new Customer();
-
-                            if (results == null)
-                                results = new List<Customer>();
+                            customer = new Customer();
 
                             customer.IDCUSTOMER = (int)dr["IDCUSTOMER"];
 
@@ -246,9 +242,7 @@ namespace DAL
 
                             if (dr["ADDRESS"] != null)
                                 customer.ADDRESS = (string)dr["ADDRESS"];
-
-                            results.Add(customer);
-
+                          
                         }
                     }
                 }
@@ -258,7 +252,7 @@ namespace DAL
                 throw e;
             }
 
-            return results;
+            return customer;
         }
 
     }
