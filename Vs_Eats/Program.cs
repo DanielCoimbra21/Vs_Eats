@@ -102,16 +102,10 @@ namespace Vs_Eats
             //Assign order
             Console.WriteLine("Assign order");
             var od = new OrderManager(Configuration);
-            var lStaff = od.AssignStaff(0);
+            var idStaffChosen = od.AssignStaff(0);
 
             Console.WriteLine("Staffs choisis");
-            if (lStaff != null)
-            {
-                foreach (var staffChosen in lStaff)
-                {
-                    Console.WriteLine(staffChosen.ToString());
-                }
-            }
+            Console.WriteLine("IdStaff :" + idStaffChosen);
             
 
 

@@ -59,27 +59,74 @@ namespace BLL
             }
         }
 
-        public List<Staff> AssignStaff(int idOrder)
+        public int AssignStaff(int idOrder)
         {
             //Déclaration variables
-            List<Staff> listStaff = new List<Staff>();
-            List<Staff> listStaffUpdate = new List<Staff>();
-            List<DistrictStaff> listOfStaffDistrict = DistrictStaffDb.GetDistrictStaffs();
-            List<Order> listOrders = OrderDb.GetOrders();
-            List<int> listCpt = new List<int>();
             Order order = OrderDb.GetOrder(idOrder);
-            var cpt = 0;
-            int min = 4;
+            List<Staff> listStaff = new List<Staff>();
+
+            /*
+             * Appel méthode recherche staff par district
+             */
+            listStaff = searchStaffByDistrict(order);
 
 
-            //Variable pour déterminer la plage horaire de 30 minutes
-            DateTime dateTimeOrder = order.DELIVERTIME;
-            DateTime dateTimeOrderBefore = dateTimeOrder.Subtract(new TimeSpan(0, 15, 0));
-            DateTime dateTimeOrderAfter = dateTimeOrder.Add(new TimeSpan(0, 15, 0));
+            /*
+             * Appel méthode mise à jour du staff avec condition < 5
+             * ainsi que vérification si il y a des staff qui on un compteur plus bas
+             * que 5 -> pour mieux répartir les livreurs selon le nombre de commande
+            */
+            List<Staff> listStaffUpdate = searchStaffByTime(listStaff, order.DELIVERTIME);
 
 
-            //Rechercher les staffs qui travaillent dans la même région que l'order
-            //listStaff = searchStaffByDistrict();
+            /*
+             * Vérification si la liste est vide
+             * si oui retour de la valeur -1
+            */
+            if (listStaffUpdate.Count == 0)
+            {
+                Console.WriteLine("Aucun livreur n'est disponible pour cette heure-ci");
+                return -1;
+            }
+
+
+            /*
+             * Dernière vérification dans la list staff, obtenir les staffs qui ont le moins livré
+             * dans selon le ordeur current total
+             * seul livreur disponible sinon on vérifie la valeur ORDERCURRENTOTAL
+            */
+            int idStaff = verifyCurrentOrder(listStaffUpdate);
+
+            return idStaff;
+
+        }
+
+        private int verifyCurrentOrder(List<Staff> listStaffUpdate)
+        {
+            int idStaff;
+            var minOrderTotal = listStaffUpdate[0].ORDERCURRENTTOTAL;
+            List<Staff> listStaffLastOfThem = new List<Staff>();
+
+            for (int j = 0; j < listStaffUpdate.Count; j++)
+            {
+                if (listStaffUpdate[j].ORDERCURRENTTOTAL <= minOrderTotal)
+                {
+                    listStaffLastOfThem.Add(listStaffUpdate[j]);
+                    minOrderTotal = listStaffUpdate[j].ORDERCURRENTTOTAL;
+                }
+            }
+            //Retourne la dernière valeur du tableau car elle sera la plus petite selon la condition
+            return idStaff = listStaffLastOfThem[listStaffLastOfThem.Count-1].IDSTAFF;
+        }
+
+
+        private List<Staff> searchStaffByDistrict(Order order)
+        {
+            //Déclaration des variables
+            List<DistrictStaff> listOfStaffDistrict = DistrictStaffDb.GetDistrictStaffs();
+            List<Staff> listStaff = new List<Staff>();
+
+            //Rechercher les staffs qui travaillent dans la même région que l'order 
             foreach (var ds in listOfStaffDistrict)
             {
                 if (order.IDDISTRICT == ds.IDDISTRICT)
@@ -88,16 +135,33 @@ namespace BLL
                 }
             }
 
+            return listStaff;
+        }
+
+        private List<Staff> searchStaffByTime(List<Staff> listStaff,DateTime deliverTime)
+        {
+            //Déclaration variable
+            var cpt = 0;
+            int max = 5;
+            List<Order> listOrders = OrderDb.GetOrders();
+            List<Staff> results = new List<Staff>();
+            DateTime dateTimeOrder = deliverTime;
+            DateTime dateTimeOrderBefore = dateTimeOrder.Subtract(new TimeSpan(0, 15, 0));
+            DateTime dateTimeOrderAfter = dateTimeOrder.Add(new TimeSpan(0, 15, 0));
 
 
             //Rechercher dans les staffs sélectionnés lesquels ont moins de 5 ordres
             //et dans la tranche horaire de 30 minutes
             for (int i = 0; i < listStaff.Count; i++)
             {
-                Console.WriteLine("Cpt de " + listStaff[i].NAMESTAFF);
+                //Réinitialisation du compteur à zéro pour chaque staff de la liste
                 cpt = 0;
                 foreach (var orderByStaff in listOrders)
                 {
+                    /*2 conditions
+                     * 1. Vérifier le statut qu'ils soient "ongoing" et idStaff recherché = idStaff dans la list
+                     * 2. Vérifier les heures des commandes entre -15min et +15min
+                    */
                     if (orderByStaff.STATUS.Equals("ongoing") && orderByStaff.IDSTAFF.Equals(listStaff[i].IDSTAFF))
                     {
                         if (orderByStaff.DELIVERTIME.CompareTo(dateTimeOrderBefore) == 1 && orderByStaff.DELIVERTIME.CompareTo(dateTimeOrderAfter) == -1)
@@ -108,62 +172,19 @@ namespace BLL
                 }
 
 
-                //Si compteur du staff plus que 5, on enlève le staff de la liste
-                if (cpt >= 5)
+                if(cpt < max)
                 {
-                    Console.WriteLine("Cpt de " + listStaff[i].NAMESTAFF + " " + cpt + " enlevé");
-                    //listCpt.Add(i);
-                    //listStaff.RemoveAt(i);
-                }
-                else
-                {
-                    if (cpt <= min)
-                    {
-                        min = cpt;
-                        Console.WriteLine("Minium:" + min);
-                        listStaffUpdate.Add(listStaff[i]);
-                    }
-                    else
-                    {
-                        //listCpt.Add(i);
-                        //listStaff.RemoveAt(i);
-                    }
+                    max = cpt;
+                    results.Add(listStaff[i]);
                 }
             }
-           
-
-            //Vérification si la liste est vide
-            //il faudra dire que la livraison n'est pas possible à cette heure-ci
-            Console.WriteLine("Longueur tableau " + listStaff.Count);
-            if (listStaffUpdate.Count == 0)
-            {
-                Console.WriteLine("Aucun livreur n'est disponible pour cette heure-ci");
-                return null;
-            }
-            //Vérifier la longueur de la liste Staff si 1, cela veut dire que l'on a qu'un
-            //seul livreur disponible sinon on vérifie la valeur ORDERCURRENTOTAL
-            var minOrderTotal = listStaffUpdate[0].ORDERCURRENTTOTAL;
-            List<int> listToRemove = new List<int>();
-            List<Staff> listStaffLastOfThem = new List<Staff>();
-
-            for (int j = 0; j < listStaff.Count; j++)
-            {
-                if (listStaffUpdate[j].ORDERCURRENTTOTAL > minOrderTotal)
-                {
-                    listStaffLastOfThem.Add(listStaff[j]);
-                    //listStaff.RemoveAt(j);
-                }
-            }
-
-            return listStaffLastOfThem;
-
+            return results;
         }
 
 
 
         public Order InsertOrder(Order order)
         {
-
             return OrderDb.InsertOrder(order);
         }
 
@@ -172,6 +193,7 @@ namespace BLL
             long milliseconds;
             return milliseconds = hours * 60 * 60 * 1000;
         }
+
 
 
     }
