@@ -52,8 +52,6 @@ namespace DAL
 
                             results.Add(staff);
                         }
-                            
-
                     }
                 }
             }catch (Exception e)
@@ -95,7 +93,6 @@ namespace DAL
                             staff.USERNAMESTAFF = (string)dr["USERNAMESTAFF"];
                             staff.PASSWORDSTAFF = (string)dr["PASSWORDSTAFF"];
                             staff.ORDERCURRENTTOTAL = (int)dr["ORDERCURRENTTOTAL"];
-    
                         }
                     }
                 }
@@ -156,8 +153,7 @@ namespace DAL
         }
 
         public void UpdateStaff(Staff staff)
-        {
-           
+        {  
             string connectionString = Configuration.GetConnectionString("DefaultConnection");  
             try
             {
@@ -188,6 +184,33 @@ namespace DAL
                 throw e;
             }
         }
+
+        public void UpdateCurrentTotal(int idStaff)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    var query = "UPDATE STAFF " +
+                        "SET ORDERCURRENTTOTAL += 1" + 
+                        "WHERE IDSTAFF=@idStaff";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    
+                    cmd.Parameters.AddWithValue("@idStaff",idStaff);
+                   
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
 
         public List<Order> GetUpComingOrder(int idStaff, string status)
         {

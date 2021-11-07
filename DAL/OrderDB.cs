@@ -51,9 +51,7 @@ namespace DAL
                             order.STATUS = (string)dr["STATUS"];
                             
                             results.Add(order);
-                        }
-                            
-                      
+                        }  
                     }
                 }
             }catch (Exception e)

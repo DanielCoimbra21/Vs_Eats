@@ -33,8 +33,16 @@ namespace BLL
 
         public void ArchiveDelivery(Order order, string status)
         {
+            //Déclaration des variables, objets
             Order order1 = OrderDb.GetOrder(order.IDORDER);
+           
             OrderDb.ArchiveDelivery(order1, status);
+            
+            /*
+             * Lorsqu'on archive une commande qui est livré
+             * on ajoute 1 au ordercurrentotal du staff qui l'a livré
+             */
+            StaffDb.UpdateCurrentTotal(order1.IDSTAFF);
         }
 
         public void CancelOrder(Customer customer, int orderId, string codeToValidate)
@@ -44,7 +52,7 @@ namespace BLL
             DateTime timeNow = DateTime.Now;
             long msTN = timeNow.Millisecond;
             long msOD = order.DELIVERTIME.Millisecond;
-            long threeHours = convertHoursToMiliseconds(3);
+            long threeHours = ConvertHoursToMiliseconds(3);
 
             //Condition vérification si l'heure de l'ordre et la l'heure d'aujourd'hui
             //est plus grande que 3 heures
@@ -68,7 +76,7 @@ namespace BLL
             /*
              * Appel méthode recherche staff par district
              */
-            listStaff = searchStaffByDistrict(order);
+            listStaff = SearchStaffByDistrict(order);
 
 
             /*
@@ -76,7 +84,7 @@ namespace BLL
              * ainsi que vérification si il y a des staff qui on un compteur plus bas
              * que 5 -> pour mieux répartir les livreurs selon le nombre de commande
             */
-            List<Staff> listStaffUpdate = searchStaffByTime(listStaff, order.DELIVERTIME);
+            List<Staff> listStaffUpdate = SearchStaffByTime(listStaff, order.DELIVERTIME);
 
 
             /*
@@ -95,13 +103,13 @@ namespace BLL
              * dans selon le ordeur current total
              * seul livreur disponible sinon on vérifie la valeur ORDERCURRENTOTAL
             */
-            int idStaff = verifyCurrentOrder(listStaffUpdate);
+            int idStaff = VerifyCurrentOrder(listStaffUpdate);
 
             return idStaff;
 
         }
 
-        private int verifyCurrentOrder(List<Staff> listStaffUpdate)
+        private int VerifyCurrentOrder(List<Staff> listStaffUpdate)
         {
             int idStaff;
             var minOrderTotal = listStaffUpdate[0].ORDERCURRENTTOTAL;
@@ -120,7 +128,7 @@ namespace BLL
         }
 
 
-        private List<Staff> searchStaffByDistrict(Order order)
+        private List<Staff> SearchStaffByDistrict(Order order)
         {
             //Déclaration des variables
             List<DistrictStaff> listOfStaffDistrict = DistrictStaffDb.GetDistrictStaffs();
@@ -138,7 +146,7 @@ namespace BLL
             return listStaff;
         }
 
-        private List<Staff> searchStaffByTime(List<Staff> listStaff,DateTime deliverTime)
+        private List<Staff> SearchStaffByTime(List<Staff> listStaff,DateTime deliverTime)
         {
             //Déclaration variable
             var cpt = 0;
@@ -171,7 +179,6 @@ namespace BLL
                     }
                 }
 
-
                 if(cpt < max)
                 {
                     max = cpt;
@@ -188,7 +195,7 @@ namespace BLL
             return OrderDb.InsertOrder(order);
         }
 
-        public long convertHoursToMiliseconds(int hours)
+        private long ConvertHoursToMiliseconds(int hours)
         {
             long milliseconds;
             return milliseconds = hours * 60 * 60 * 1000;
