@@ -12,5 +12,7 @@ namespace DAL
         public Order GetOrder(int orderId);
 
         public Order InsertOrder(Order order);
+
+        public Order AddTime(Order order);
     }
 }

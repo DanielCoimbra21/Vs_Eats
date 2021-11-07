@@ -161,5 +161,37 @@ namespace DAL
             }
             return order;
         }
+
+        public Order AddTime(Order order)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE [dbo].[ORDER] SET DELIVERYTIME = @deliveryTime WHERE IDORDER=@idOrder"; 
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idDistrict", order.IDDISTRICT);
+                    cmd.Parameters.AddWithValue("@idRestaurant", order.IDRESTAURANT);
+                    cmd.Parameters.AddWithValue("@idCustomer", order.IDCUSTOMER);
+                    cmd.Parameters.AddWithValue("@totalPrice", order.TOTALPRICE);
+                    cmd.Parameters.AddWithValue("@deliverTime", order.DELIVERTIME);
+                    cmd.Parameters.AddWithValue("@status", order.STATUS);
+
+
+                    cn.Open();
+
+                    order.IDORDER = Convert.ToInt32(cmd.ExecuteScalar());
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return order;
+        }
     }
 }

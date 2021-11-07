@@ -59,6 +59,7 @@ namespace BLL
 
         public string GetPassword(string password)
         {
+            //methode pour hasher les mots de passe, pas réussi
             //string salt = CreateSalt(10);
             string hashedPassword = HashPassword(password);
             
@@ -97,9 +98,10 @@ namespace BLL
             List<Customer> customerList = CustomerDb.GetCustomers();
             Customer customer = null;
             
-
+            //parcourir tous les clients
             foreach (var cs in customerList)
             {
+                //si le mot de pass et le username se trouve dans la base de données
                 if (cs.MAIL.Equals(email) && cs.PASSWORD.Equals(password))
                 {
                     Console.WriteLine("LOGIN CORRECT");
@@ -110,6 +112,7 @@ namespace BLL
 
             }
 
+            //sinon message d'erreur s'affiche
             Console.WriteLine("Login or Password Incorrect");
 
             return customer;

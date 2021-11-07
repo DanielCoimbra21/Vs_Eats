@@ -201,6 +201,24 @@ namespace BLL
             return milliseconds = hours * 60 * 60 * 1000;
         }
 
+        public Order AddTime(Order order)
+        {
+            List<Order> orderList = OrderDb.GetOrders();
+            
+            foreach(var o in orderList)
+            {
+                //checker si c'est la bonne ORDER grace à l'ID
+                if(o.IDORDER.Equals(order.IDORDER))
+                {
+                    //on va rajouter 15 minutes à la commande à chaque fois qu'elle clique sur AddTime
+                    order.DELIVERTIME = order.DELIVERTIME.Add(new TimeSpan(0, 15, 0));
+                }
+            }
+
+            //retourner l'ordre mise à jour
+            return order;
+        }
+
 
 
     }
