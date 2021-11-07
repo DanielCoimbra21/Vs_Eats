@@ -84,19 +84,19 @@ namespace DAL
                 using(SqlConnection cn = new SqlConnection(connectionString))
                 {
                     //string query = "Insert into CUSTOMER(IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@IDCITY, @NAME, @SURNAME, @USERNAME, @PHONE, @ADDRESS, @MAIL, @PASSWORD)";
-                    string query = "Insert into CUSTOMER(IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@IDCITY, @NAME, @SURNAME, @USERNAME, @PHONE, @ADDRESS, @MAIL, @PASSWORD) SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into CUSTOMER(IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@idCity, @name, @surname, @username, @phone, @address, @mail, @password) SELECT SCOPE_IDENTITY()";
                     //string query = "Insert into CUSTOMER(IDCUSTOMER, IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@IDCUSTOMER, @IDCITY, @NAME, @SURNAME, @USERNAME, @PHONE, @ADDRESS, @MAIL, @PASSWORD) ";
                     SqlCommand cmd = new SqlCommand(query, cn);
                    
                     //cmd.Parameters.AddWithValue("@IDCUSTOMER", customer.IDCUSTOMER);
-                    cmd.Parameters.AddWithValue("@IDCITY", customer.IDCITY);
-                    cmd.Parameters.AddWithValue("@NAME", customer.NAME);
-                    cmd.Parameters.AddWithValue("@SURNAME", customer.SURNAME);
-                    cmd.Parameters.AddWithValue("@USERNAME", customer.USERNAME);
-                    cmd.Parameters.AddWithValue("@PHONE", customer.PHONE);
-                    cmd.Parameters.AddWithValue("@ADDRESS",customer. ADDRESS);
-                    cmd.Parameters.AddWithValue("@MAIL", customer.MAIL);
-                    cmd.Parameters.AddWithValue("@PASSWORD", GetPassword(customer.PASSWORD));
+                    cmd.Parameters.AddWithValue("@idCity", customer.IDCITY);
+                    cmd.Parameters.AddWithValue("@name", customer.NAME);
+                    cmd.Parameters.AddWithValue("@surname", customer.SURNAME);
+                    cmd.Parameters.AddWithValue("@username", customer.USERNAME);
+                    cmd.Parameters.AddWithValue("@phone", customer.PHONE);
+                    cmd.Parameters.AddWithValue("@address",customer. ADDRESS);
+                    cmd.Parameters.AddWithValue("@mail", customer.MAIL);
+                    cmd.Parameters.AddWithValue("@password", GetPassword(customer.PASSWORD));
 
                     cn.Open();
 

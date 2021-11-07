@@ -4,12 +4,12 @@ namespace DAL
 {
     public interface IStaffDB
     {
-        public List<Staff> GetStaffs();
+        List<Staff> GetStaffs();
 
-        public Staff GetStaff(string usernameStaff, string passwordStaff);
-        public void UpdateStaff(Staff staff);
+        Staff GetStaff(string usernameStaff, string passwordStaff);
+        void UpdateStaff(Staff staff);
 
-        public Staff GetStaff(int idStaff);
+        Staff GetStaff(int idStaff);
 
 
     }
