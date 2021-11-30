@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class DishManager
+    public class DishManager : IDishManager
     {
         private IDishDB DishDb { get; set; }
 
-        public DishManager(IConfiguration conf)
+
+
+        public DishManager(IDishDB dishDB)
         {
-            DishDb = new DishDB(conf);
+            DishDb = dishDB;
         }
 
         public Dish GetDish(string dishName)
