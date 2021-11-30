@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using BLL;
+using DAL;
 using DTO;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class CityManager
+    public class CityManager : ICityManager
     {
         private ICityDB CityDb { get;}
 

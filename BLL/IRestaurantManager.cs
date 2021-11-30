@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public interface IDistrictStaffManager
+    public interface IRestaurantManager
     {
-        List<DistrictStaff> GetDistrictStaffs();
+        List<Restaurant> GetRestaurants();
+
+        Restaurant GetRestaurant(int idRestaurant);
+
     }
 }

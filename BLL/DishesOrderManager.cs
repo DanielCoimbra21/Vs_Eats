@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class DishesOrderManager
+    public class DishesOrderManager : IDishesOrderManager
     {
         private IDishesOrderDB DishesOrderDb { get; set; }
 

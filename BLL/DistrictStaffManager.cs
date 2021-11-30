@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class DistrictStaffManager
+    public class DistrictStaffManager : IDistrictStaffManager
     {
         private IDistrictStaffDB DistrictDb { get; }
         public DistrictStaffManager(IConfiguration conf)
