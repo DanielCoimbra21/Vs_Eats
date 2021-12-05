@@ -26,9 +26,12 @@ namespace WebAppVSEAT
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<IRestaurantManager, RestaurantManager>();
+            services.AddScoped<IRestaurantDB,RestaurantDB>();
             services.AddScoped<IDishManager, DishManager>();
             services.AddScoped<IDishDB, DishDB>();
+            services.AddScoped<IDishesRestaurantManager, DishesRestaurantManager>();
+            services.AddScoped<IDishesRestaurantDB, DishesRestaurantDB>();
             services.AddControllersWithViews();
             
         }

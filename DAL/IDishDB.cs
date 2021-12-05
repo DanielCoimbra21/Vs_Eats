@@ -14,5 +14,7 @@ namespace DAL
         Dish GetDish(string nameDish);
 
         Dish GetDish(int idDish);
+
+        
     }
 }

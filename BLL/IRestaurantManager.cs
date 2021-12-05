@@ -10,7 +10,6 @@ namespace BLL
     public interface IRestaurantManager
     {
         List<Restaurant> GetRestaurants();
-
         Restaurant GetRestaurant(int idRestaurant);
 
     }

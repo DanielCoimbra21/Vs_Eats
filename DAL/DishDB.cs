@@ -129,7 +129,7 @@ namespace DAL
                             dish.NAMEDISH = (string)dr["NAMEDISH"];
 
                             if (dr["PRICEDISH"] != null)
-                                dish.PRICEDISH = (int)dr["PRICEDISH"];
+                                dish.PRICEDISH = (double)dr["PRICEDISH"];
                         }
                     }
                 }

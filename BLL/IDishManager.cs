@@ -9,15 +9,8 @@ namespace BLL
 {
     public interface IDishManager
     {
-               
-        
         Dish GetDish(string dishName);
-
-
         Dish GetDish(int idDish);
-
-
-        List<Dish> GetDishes();
-        
+        List<Dish> GetDishes();  
     }
 }

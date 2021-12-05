@@ -55,7 +55,6 @@ namespace DAL
 
         public int GetIdRestaurant(int idDish)
         {
-            List<DishesRestaurant> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int idRestaurant;
 
@@ -82,6 +81,47 @@ namespace DAL
                 throw e;
             }
             return idRestaurant;
+
+        }
+
+        public List<int> GetListDishes(int idRestaurant)
+        {
+            List<int> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+           
+          
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select IDDISHES from DISHESRESTAURANT" +
+                        " where @idRestaurant = IDRESTAURANT";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idRestaurant", idRestaurant);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<int>();
+
+                            // DishesRestaurant dt = new DishesRestaurant();
+                            //dt.IDDISHES = (int)dr["IDDISHES"];
+                            // results.Add(dt);
+                            results.Add((int)dr["IDDISHES"]);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return results;
 
         }
     }
