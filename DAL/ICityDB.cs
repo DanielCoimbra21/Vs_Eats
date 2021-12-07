@@ -1,4 +1,5 @@
 ﻿using DTO;
+using System;
 using System.Collections.Generic;
 
 namespace DAL
@@ -8,6 +9,8 @@ namespace DAL
         List<City> GetCities();
 
         City GetCity(int idCity);
+
+       
 
     }
 }

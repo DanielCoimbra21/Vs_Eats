@@ -14,23 +14,41 @@ namespace WebAppVSEAT.Controllers
         private IRestaurantManager RestaurantManager { get; }
         private IDishesRestaurantManager DishesRestaurantManager { get; }
         private IDishManager DishManager { get; }
+        private ICityManager CityManager { get; }
 
         private List<DTO.Dish> ld = new List<DTO.Dish>();
 
 
-        public RestaurantController(IRestaurantManager restaurantManager, IDishManager dishManager, IDishesRestaurantManager dishesRestaurantManager)
+        public RestaurantController(ICityManager cityManager,IRestaurantManager restaurantManager, IDishManager dishManager, IDishesRestaurantManager dishesRestaurantManager)
         {
             RestaurantManager = restaurantManager;
             DishesRestaurantManager = dishesRestaurantManager;
             DishManager = dishManager;
-            
+            CityManager = cityManager;
         }
 
+        
         public IActionResult Index()
         {
             var rest = RestaurantManager.GetRestaurants();
-            return View(rest);
+            var restaurants_vm = new List<Models.RestaurantVM>();
+           
+
+            foreach(var r in rest)
+            {
+                var vm = new RestaurantVM();
+                var city = CityManager.GetCity(r.IDCITY);
+                vm.CITYNAME = city.CITYNAME;
+                vm.NAMERESTAURANT = r.NAMERESTAURANT;
+                vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
+                
+
+                restaurants_vm.Add(vm);
+
+            }
+            return View(restaurants_vm);
         }
+
 
         public ActionResult Details(int id)
         

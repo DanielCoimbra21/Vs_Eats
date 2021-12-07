@@ -24,10 +24,12 @@ namespace DAL
             return CityDb.GetCities();
         }
 
-        public int GetCity(int idCity)
+        public City GetCity(int idCity)
         {
             return GetCity(idCity);
         }
+
+        
 
     }
 }
