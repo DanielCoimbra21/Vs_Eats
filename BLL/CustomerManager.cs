@@ -76,7 +76,7 @@ namespace BLL
             return Convert.ToBase64String(buff);
         }*/
 
-        private string HashPassword(string password)
+        public string HashPassword(string password)
         {
 
            /* byte[] bytes = System.Text.Encoding.UTF8.GetBytes(password + salt);
