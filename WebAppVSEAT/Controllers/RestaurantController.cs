@@ -14,13 +14,16 @@ namespace WebAppVSEAT.Controllers
         private IRestaurantManager RestaurantManager { get; }
         private IDishesRestaurantManager DishesRestaurantManager { get; }
         private IDishManager DishManager { get; }
-        
+
+        private List<DTO.Dish> ld = new List<DTO.Dish>();
+
 
         public RestaurantController(IRestaurantManager restaurantManager, IDishManager dishManager, IDishesRestaurantManager dishesRestaurantManager)
         {
             RestaurantManager = restaurantManager;
             DishesRestaurantManager = dishesRestaurantManager;
             DishManager = dishManager;
+            
         }
 
         public IActionResult Index()
@@ -37,6 +40,13 @@ namespace WebAppVSEAT.Controllers
             List<DTO.Dish> results = null;
 
 
+            if (listDish == null)
+            {
+                var error = new ErrorViewModel();
+                return View(error);
+            }
+
+
             foreach (var idDish in listDish)
             {
                 if (results == null)
@@ -46,6 +56,8 @@ namespace WebAppVSEAT.Controllers
                 results.Add(DishManager.GetDish(idDish));
             }
 
+            
+
             var vm = new DishesVM()
             {
                 Dishes = results
@@ -54,6 +66,28 @@ namespace WebAppVSEAT.Controllers
 
              return View(vm);
         }
+
+        public ActionResult Add(int id)
+        {
+            var dish = DishManager.GetDish(id);
+            ld = GetDishes();
+
+            ld.Add(dish);
+
+            var vm = new DishesVM
+            {
+                Dishes = ld          
+            };
+
+            return View(ld);
+        }
+
+        public List<DTO.Dish> GetDishes()
+        {
+            return ld;
+        }
+
+       
 
 
     }

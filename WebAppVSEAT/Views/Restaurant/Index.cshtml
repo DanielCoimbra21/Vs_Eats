@@ -6,6 +6,7 @@
 
 <h1>List Restaurant</h1>
 
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -28,26 +29,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDRESTAURANT)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDCITY)
-            </td>
-            <td>
-                @Html.ActionLink(item.NAMERESTAURANT, "Details", new {id =item.IDRESTAURANT })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ADDRESSRESTAURANT)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDRESTAURANT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDCITY)
+                </td>
+                <td>
+                    @Html.ActionLink(item.NAMERESTAURANT, "Details", new { id = item.IDRESTAURANT })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ADDRESSRESTAURANT)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+
+        }
     </tbody>
 </table>
+
