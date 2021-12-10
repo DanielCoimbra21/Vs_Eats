@@ -20,7 +20,7 @@ namespace Vs_Eats
         {
            
 
-            var customerManager = new CustomerManager(Configuration);
+            //var customerManager = new CustomerManager(Configuration);
 
             //Console.WriteLine("Exercise to insert Customers");
             //var newCustomer = customerManager.InsertCustomer(new Customer { IDCITY = 1, ADDRESS = "Le coin des BGS", MAIL = "Hash9@hash.ch", NAME = "HashTest", PASSWORD = "1234", PHONE = 1234, SURNAME = "HashTest", USERNAME = "HashTest9" });
@@ -33,25 +33,27 @@ namespace Vs_Eats
 
             //var newOrder = orderManager.InsertOrder(new Order { IDDISTRICT = 1, IDRESTAURANT = 1, IDCUSTOMER = 1, TOTALPRICE = 20, DELIVERTIME = hm, STATUS="Free"});
 
-            Console.WriteLine("Check if login is correct");
-            var newCustomer = customerManager.LoginCustomer("thomas@bg.ch", "WESHHALORS");
-            Console.WriteLine("ON EST Là");
+            //Console.WriteLine("Check if login is correct");
+            //var newCustomer = customerManager.LoginCustomer("thomas@bg.ch", "WESHHALORS");
+            //Console.WriteLine("ON EST Là");
 
-            var customer = new CustomerManager(Configuration);
-            Console.WriteLine("Exercise List of all customers");
+            //var customer = new CustomerManager(Configuration);
+            //Console.WriteLine("Exercise List of all customers");
 
-            var customers =  customer.GetCustomers();
+            //var customers =  customer.GetCustomers();
 
-            foreach(var c in customers)
-            {
-                Console.WriteLine(c.ToString());
-            }
+            //foreach(var c in customers)
+            //{
+            //    Console.WriteLine(c.ToString());
+            //}
             
-            var city = new CityManager(Configuration);
-            //Exercise List of all cities
-            Console.WriteLine("Exercise List of all cities");
+            var city = new CityManager(Configuration);          
             var cityN = city.GetCity(0);
             var cityName = cityN.CITYNAME;
+            Console.WriteLine(cityName);
+
+            //Exercise List of all cities
+            Console.WriteLine("Exercise List of all cities");
             var cities = city.GetCities();
 
             foreach (var m in cities)
@@ -60,15 +62,15 @@ namespace Vs_Eats
             }
 
             //Exercise List of all Districts
-            var district = new DistrictManager(Configuration);
-            Console.WriteLine("Exercise list of all districts");
+            //var district = new DistrictManager(Configuration);
+            //Console.WriteLine("Exercise list of all districts");
 
-            var districts = district.GetDistricts();
+            //var districts = district.GetDistricts();
 
-            foreach(var d in districts)
-            {
-                Console.WriteLine(d.ToString());
-            }
+            //foreach(var d in districts)
+            //{
+            //    Console.WriteLine(d.ToString());
+            //}
 
 
             //Exercise List of all Dishes
@@ -102,12 +104,12 @@ namespace Vs_Eats
 
 
             //Assign order
-            Console.WriteLine("Assign order");
-            var od = new OrderManager(Configuration);
-            var idStaffChosen = od.AssignStaff(0);
+            //Console.WriteLine("Assign order");
+            //var od = new OrderManager(Configuration);
+            //var idStaffChosen = od.AssignStaff(0);
 
-            Console.WriteLine("Staffs choisis");
-            Console.WriteLine("IdStaff :" + idStaffChosen);
+            //Console.WriteLine("Staffs choisis");
+            //Console.WriteLine("IdStaff :" + idStaffChosen);
             
 
 

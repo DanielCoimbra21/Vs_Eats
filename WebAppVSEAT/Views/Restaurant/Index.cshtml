@@ -31,15 +31,10 @@
                 @Html.DisplayFor(modelItem => item.CITYNAME)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NAMERESTAURANT)
+                @Html.ActionLink(item.NAMERESTAURANT, "Details", new { id=item.IDRESTAURANT })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ADDRESSRESTAURANT)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

@@ -39,9 +39,9 @@ namespace WebAppVSEAT.Controllers
                 var vm = new RestaurantVM();
                 var city = CityManager.GetCity(r.IDCITY);
                 vm.CITYNAME = city.CITYNAME;
+                vm.IDRESTAURANT = r.IDRESTAURANT;
                 vm.NAMERESTAURANT = r.NAMERESTAURANT;
                 vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
-                
 
                 restaurants_vm.Add(vm);
 

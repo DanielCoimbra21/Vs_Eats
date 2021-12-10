@@ -8,7 +8,7 @@ namespace DAL
     {
         List<City> GetCities();
 
-        City GetCity(int idCity);
+        DTO.City GetCity(int idCity);
 
        
 

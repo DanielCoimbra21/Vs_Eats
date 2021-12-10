@@ -58,7 +58,7 @@ namespace DAL
             }
             return results;
         }
-        public City GetCity(int idCity)
+        public DTO.City GetCity(int idCity)
         {
             City city = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -67,8 +67,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from City " +
-                        "where IDCITY = @idCity";
+                    string query = "Select * from CITY where IDCITY = @idCity";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idCity", idCity);
 
