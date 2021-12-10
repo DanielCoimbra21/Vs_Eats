@@ -13,12 +13,12 @@ namespace WebAppVSEAT.Controllers
     {
 
         private ICustomerManager CustomerManager { get; }
-        //private IStaffManager StaffManager { get; }
+        private IStaffManager StaffManager { get; }
 
-        public LoginController(ICustomerManager customerManager)
+        public LoginController(ICustomerManager customerManager, IStaffManager staffManager)
         {
             CustomerManager = customerManager;
-            //StaffManager = staffManager;
+            StaffManager = staffManager;
         }
 
         public IActionResult Index()

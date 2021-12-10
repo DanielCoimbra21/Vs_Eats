@@ -48,7 +48,9 @@ a.navbar-brand {
 
 
 
-
+a.right {
+    float: right;
+}
 
 /* Provide sufficient contrast against white background */
 a {
