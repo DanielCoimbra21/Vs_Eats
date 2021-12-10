@@ -18,6 +18,7 @@ namespace Vs_Eats
 
         public static void Main(string[] args)
         {
+           
 
             var customerManager = new CustomerManager(Configuration);
 
@@ -49,7 +50,8 @@ namespace Vs_Eats
             var city = new CityManager(Configuration);
             //Exercise List of all cities
             Console.WriteLine("Exercise List of all cities");
-
+            var cityN = city.GetCity(0);
+            var cityName = cityN.CITYNAME;
             var cities = city.GetCities();
 
             foreach (var m in cities)
@@ -70,15 +72,15 @@ namespace Vs_Eats
 
 
             //Exercise List of all Dishes
-            var dish = new DishManager(Configuration);
-            Console.WriteLine("Exercise list of all Dishes");
+            //var dish = new DishManager(Configuration);
+            //Console.WriteLine("Exercise list of all Dishes");
 
-            var dishes = dish.GetDishes();
+            //var dishes = dish.GetDishes();
 
-            foreach(var dh in dishes)
-            {
-               Console.WriteLine(dh.ToString());
-            }
+            //foreach(var dh in dishes)
+            //{
+            //   Console.WriteLine(dh.ToString());
+            //}
 
             //Update orderStatus
             //Console.WriteLine("Update orderStatus");

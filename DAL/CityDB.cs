@@ -67,7 +67,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from CITY " +
+                    string query = "Select * from City " +
                         "where IDCITY = @idCity";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idCity", idCity);
@@ -99,6 +99,37 @@ namespace DAL
             }
 
             return city;
+        }
+
+        public string GetCityName(int idCity)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            string cityName = "";
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from [dbo].CITY where IDCITY = @idCity";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idCity", idCity);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            cityName = (string)dr["CITYNAME"];
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return cityName;
         }
 
 

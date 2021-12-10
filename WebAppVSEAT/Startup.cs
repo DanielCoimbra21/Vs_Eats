@@ -30,6 +30,8 @@ namespace WebAppVSEAT
             services.AddScoped<IRestaurantDB,RestaurantDB>();
             services.AddScoped<IDishManager, DishManager>();
             services.AddScoped<IDishDB, DishDB>();
+            services.AddScoped<ICityManager, CityManager>();
+            services.AddScoped<ICityDB, CityDB>();
             services.AddScoped<IDishesRestaurantManager, DishesRestaurantManager>();
             services.AddScoped<IDishesRestaurantDB, DishesRestaurantDB>();
 
@@ -54,8 +56,6 @@ namespace WebAppVSEAT
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            app.UseSession();
 
             app.UseRouting();
 

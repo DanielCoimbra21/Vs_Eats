@@ -8,8 +8,8 @@ namespace WebAppVSEAT.Models
 
     public class RestaurantVM
     {
+        public string CITYNAME { get; set; }
         public string NAMERESTAURANT { get; set; }
         public string ADDRESSRESTAURANT { get; set; }
-        public IEnumerable<DTO.Restaurant> Restaurants { get; set; }
     }
 }
