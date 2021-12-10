@@ -32,6 +32,8 @@ namespace WebAppVSEAT
             services.AddScoped<IDishDB, DishDB>();
             services.AddScoped<IDishesRestaurantManager, DishesRestaurantManager>();
             services.AddScoped<IDishesRestaurantDB, DishesRestaurantDB>();
+
+            services.AddSession();
             services.AddControllersWithViews();
 
             
