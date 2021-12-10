@@ -8,5 +8,9 @@ namespace WebAppVSEAT.Controllers
 {
     public class RegisterController : Controller
     {
+
+
+
+
     }
 }

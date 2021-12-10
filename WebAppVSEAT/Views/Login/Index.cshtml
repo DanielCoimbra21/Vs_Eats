@@ -1,0 +1,35 @@
+﻿@model WebAppVSEAT.Models.LoginVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Login</h1>
+
+<div class="container mt-5">
+    <div class="row justify-content-center align-content-center">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <h1 class="mb-3">Register</h1>
+            <form method="post">
+                <div asp-validation-summary="All" class="text">
+
+                </div>
+                <div class="mb-3">
+                    <label class="col-form-label" asp-for="mail">Mail</label>
+                    <input type="text" asp-for="mail" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="col-form-label" asp-for="password">Password</label>
+                    <input type="text" asp-for="password" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

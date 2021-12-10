@@ -10,7 +10,7 @@ using System.Security.Cryptography;
 
 namespace BLL
 {
-    public class CustomerManager
+    public class CustomerManager : ICustomerManager
     {
 
         private ICustomerDB CustomerDb { get; set; }

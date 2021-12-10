@@ -9,7 +9,7 @@ namespace WebAppVSEAT.Models
     public class RegisterVM
     {
         [Required]
-        [DataType(DataType.Password)]
+        [DataType(DataType.EmailAddress)]
         public string mail { get; set; }
 
         [Required]

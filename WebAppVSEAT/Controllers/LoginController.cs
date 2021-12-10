@@ -13,32 +13,32 @@ namespace WebAppVSEAT.Controllers
     {
 
         private ICustomerManager CustomerManager { get; }
-        private IStaffManager StaffManager { get; }
+        //private IStaffManager StaffManager { get; }
 
-        public LoginController(ICustomerManager customerManager, IStaffManager staffManager)
+        public LoginController(ICustomerManager customerManager)
         {
             CustomerManager = customerManager;
-            StaffManager = staffManager;
+            //StaffManager = staffManager;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        public IActionResult Index()
+        {
+            return View();
+        }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult index(LoginVM loginvm)
+        public IActionResult Index(LoginVM loginvm)
         {
             if (ModelState.IsValid)
             {
-                var member = CustomerManager.GetCustomer(loginvm.mail, loginvm.password);
+                var customer = CustomerManager.GetCustomer(loginvm.mail, loginvm.password);
 
-                if (member != null)
+                if (customer != null)
                 {
-                    HttpContext.Session.SetInt32("IdCustomer", member.IDCUSTOMER);
-                    return RedirectToAction("Index", "Members");
+                    HttpContext.Session.SetInt32("IdCustomer", customer.IDCUSTOMER);
+                    return RedirectToAction("Index", "Customer");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid email or password");

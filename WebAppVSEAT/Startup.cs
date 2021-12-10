@@ -28,12 +28,18 @@ namespace WebAppVSEAT
         {
             services.AddScoped<IRestaurantManager, RestaurantManager>();
             services.AddScoped<IRestaurantDB,RestaurantDB>();
+
             services.AddScoped<IDishManager, DishManager>();
             services.AddScoped<IDishDB, DishDB>();
+
             services.AddScoped<ICityManager, CityManager>();
             services.AddScoped<ICityDB, CityDB>();
+
             services.AddScoped<IDishesRestaurantManager, DishesRestaurantManager>();
             services.AddScoped<IDishesRestaurantDB, DishesRestaurantDB>();
+
+            services.AddScoped<ICustomerManager, CustomerManager>();
+            services.AddScoped<ICustomerDB, CustomerDB>();
 
             services.AddSession();
             services.AddControllersWithViews();
