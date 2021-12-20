@@ -28,6 +28,8 @@ namespace BLL
 
 
         public Customer LoginCustomer(string email, string password);
+
+        public Customer GetCustomerID(int id);
         
 
     }

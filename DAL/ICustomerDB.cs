@@ -15,5 +15,7 @@ namespace DAL
         Customer InsertCustomer(Customer customer);
         string GetPassword(string password);
         Customer LoginCustomer(string email, string password);
+
+        Customer GetCustomerID(int id);
     }
 }

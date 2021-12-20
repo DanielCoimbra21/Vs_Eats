@@ -38,7 +38,7 @@ namespace WebAppVSEAT.Controllers
             }
 
             var rest = RestaurantManager.GetRestaurants();
-            var restaurants_vm = new List<Models.RestaurantVM>();
+            var restaurants_vm = new List<RestaurantVM>();
            
 
             foreach(var r in rest)

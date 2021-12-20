@@ -30,6 +30,11 @@ namespace BLL
             return CustomerDb.GetCustomers();
         }
 
+        public Customer GetCustomerID(int id)
+        {
+            return CustomerDb.GetCustomerID(id);
+        }
+
         public Customer InsertCustomer(Customer customer)//Customer customer
         {
             var mail = customer.MAIL;

@@ -39,17 +39,9 @@ namespace WebAppVSEAT.Controllers
                 if (customer != null)
                 {
                     HttpContext.Session.SetInt32("IdCustomer", customer.IDCUSTOMER);
-                    return RedirectToAction("Index", "Restaurant");
+                    return RedirectToAction("Index", "Customer");
                 }
-
-                var staff = StaffManager.GetStaff(loginVM.MAILSTAFF, loginVM.PASSWORDSTAFF);
-
-                if(staff != null)
-                {
-                    HttpContext.Session.SetInt32("IdStaff", customer.IDCUSTOMER);
-                    return RedirectToAction("Index", "Home");
-                }
-
+                                
                 ModelState.AddModelError(string.Empty, "Invalid email or password");
             }
             return View(loginVM);
