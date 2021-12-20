@@ -14,5 +14,9 @@ namespace WebAppVSEAT.Models
         [Required]
         public string password { get; set; }
 
+        public string MAILSTAFF { get; set; }
+
+        public string PASSWORDSTAFF { get; set; }
+
     }
 }

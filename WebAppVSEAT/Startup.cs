@@ -65,6 +65,7 @@ namespace WebAppVSEAT
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 

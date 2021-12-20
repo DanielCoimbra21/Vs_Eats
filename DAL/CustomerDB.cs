@@ -120,7 +120,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from CUSTOMER where MAIL = @email AND password = @password";
+                    string query = "Select * from CUSTOMER where MAIL = @email AND PASSWORD = @password";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@password", GetPassword(password));

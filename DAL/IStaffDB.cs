@@ -6,7 +6,7 @@ namespace DAL
     {
         List<Staff> GetStaffs();
 
-        Staff GetStaff(string usernameStaff, string passwordStaff);
+        DTO.Staff GetStaff(string usernameStaff, string passwordStaff);
         void UpdateStaff(Staff staff);
 
         Staff GetStaff(int idStaff);

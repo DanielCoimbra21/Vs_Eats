@@ -13,7 +13,7 @@ namespace BLL
 
         List<Staff> GetStaffs();
 
-        Staff GetStaff(string usernameStaff, string passwordStaff);
+        DTO.Staff GetStaff(string usernameStaff, string passwordStaff);
 
         void ArchiveDelivery(Order order);
 

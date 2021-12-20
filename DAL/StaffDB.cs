@@ -70,7 +70,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    var query = "Select * From STAFF where USERNAMESTAFF=@username and PASSWORDSTAFF=@password";
+                    var query = "Select * From STAFF where USERNAMESTAFF=@username AND PASSWORDSTAFF=@password";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@username", usernameStaff);
                     cmd.Parameters.AddWithValue("@password", passwordStaff);
@@ -79,7 +79,7 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        while (dr.Read())
+                        if (dr.Read())
                         {
                             staff = new Staff();
 

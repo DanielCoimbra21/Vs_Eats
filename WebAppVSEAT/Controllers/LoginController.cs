@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAppVSEAT.Models;
 
+
 namespace WebAppVSEAT.Controllers
 {
     public class LoginController : Controller
@@ -29,22 +30,38 @@ namespace WebAppVSEAT.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(LoginVM loginvm)
+        public IActionResult Index(LoginVM loginVM)
         {
             if (ModelState.IsValid)
             {
-                var customer = CustomerManager.GetCustomer(loginvm.mail, loginvm.password);
+                var customer = CustomerManager.GetCustomer(loginVM.mail, loginVM.password);
 
                 if (customer != null)
                 {
                     HttpContext.Session.SetInt32("IdCustomer", customer.IDCUSTOMER);
-                    return RedirectToAction("Index", "Customer");
+                    return RedirectToAction("Index", "Restaurant");
+                }
+
+                var staff = StaffManager.GetStaff(loginVM.MAILSTAFF, loginVM.PASSWORDSTAFF);
+
+                if(staff != null)
+                {
+                    HttpContext.Session.SetInt32("IdStaff", customer.IDCUSTOMER);
+                    return RedirectToAction("Index", "Home");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid email or password");
             }
-            return View(loginvm);
+            return View(loginVM);
         }
 
+        public IActionResult Logout(LoginVM loginVM)
+        {
+            //permet de se déconnecter de la session 
+            HttpContext.Session.Clear();
+
+            //retour sur la page login
+            return RedirectToAction("Index", "Login");
+        }
     }
 }

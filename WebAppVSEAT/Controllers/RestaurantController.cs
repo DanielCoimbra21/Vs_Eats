@@ -1,6 +1,7 @@
 ﻿using BLL;
 using WebAppVSEAT.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,12 @@ namespace WebAppVSEAT.Controllers
         
         public IActionResult Index()
         {
+
+            if (HttpContext.Session.GetInt32("IdCustomer") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             var rest = RestaurantManager.GetRestaurants();
             var restaurants_vm = new List<Models.RestaurantVM>();
            
@@ -51,8 +58,13 @@ namespace WebAppVSEAT.Controllers
 
 
         public ActionResult Details(int id)
-        
         {
+
+            if (HttpContext.Session.GetInt32("IdCustomer") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             var listDish = new List<int>();
             listDish = DishesRestaurantManager.GetListDishes(id);
             List<DTO.Dish> results = null;
@@ -87,24 +99,16 @@ namespace WebAppVSEAT.Controllers
 
         public ActionResult Add(int id)
         {
-            var dish = DishManager.GetDish(id);
-            ld = GetDishes();
-
-            ld.Add(dish);
-
-            var vm = new DishesVM
+            if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
-                Dishes = ld          
-            };
+                return RedirectToAction("Index", "Login");
+            }
 
-            return View(ld);
+            var dish = DishManager.GetDish(id);
+            return null;
         }
 
-        public List<DTO.Dish> GetDishes()
-        {
-            return ld;
-        }
-
+       
        
 
 
