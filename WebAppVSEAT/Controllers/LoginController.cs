@@ -63,7 +63,7 @@ namespace WebAppVSEAT.Controllers
                 if (staff != null)
                 {
                     HttpContext.Session.SetInt32("IdStaff", staff.IDSTAFF);
-                    return RedirectToAction("Index", "Staff");
+                    return RedirectToAction("Index", "Order");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid email or password");

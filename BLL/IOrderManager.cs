@@ -9,29 +9,36 @@ namespace BLL
 {
     public interface IOrderManager
     {
-        List<Order> GetOrders();
 
-        Order GetOrder(int orderId);
+        public List<Order> GetOrders(int idStaff);
 
-        void ArchiveDelivery(Order order, string status);
+        public List<Order> GetOrders();
 
-        void CancelOrder(Customer customer, int orderId, string codeToValidate);
+        public Order GetOrder(int orderId);
 
-        int AssignStaff(int idOrder);
+        public void ArchiveDelivery(Order order, string status);
 
-        int VerifyCurrentOrder(List<Staff> listStaffUpdate);
+        public void CancelOrder(Customer customer, int orderId, string codeToValidate);
 
-        List<Staff> SearchStaffByDistrict(Order order);
+        public int AssignStaff(int idOrder);
 
-        List<Staff> SearchStaffByTime(List<Staff> listStaff, DateTime deliverTime);
+        //public int VerifyCurrentOrder(List<Staff> listStaffUpdate);
+     
+        //public List<Staff> SearchStaffByDistrict(Order order);
 
-        Order InsertOrder(Order order);
+        //public List<Staff> SearchStaffByTime(List<Staff> listStaff, DateTime deliverTime);
 
-        long ConvertHoursToMiliseconds(int hours);
+        public Order InsertOrder(Order order);
 
-        void AddTime(Order order);
+        //public long ConvertHoursToMiliseconds(int hours);
+        public void AddTime(Order order);
+      
+
+
 
     }
 
-   
 }
+
+   
+

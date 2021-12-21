@@ -14,5 +14,7 @@ namespace DAL
         Order InsertOrder(Order order);
 
         void AddTime(Order order);
+
+        List<Order> GetOrders(int idStaff);
     }
 }

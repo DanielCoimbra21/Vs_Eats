@@ -44,7 +44,10 @@ namespace WebAppVSEAT
             services.AddScoped<IStaffManager, StaffManager>();
             services.AddScoped<IStaffDB, StaffDB>();
 
-            
+            services.AddScoped<IOrderManager, OrderManager>();
+            services.AddScoped<IOrderDB, OrderDB>();
+
+
             services.AddSession();
             services.AddControllersWithViews();
 

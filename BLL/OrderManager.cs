@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class OrderManager 
+    public class OrderManager : IOrderManager
     {
         private IOrderDB OrderDb { get; }
         private IDistrictStaffDB DistrictStaffDb { get; }
@@ -19,6 +19,11 @@ namespace BLL
             OrderDb = new OrderDB(conf);
             DistrictStaffDb = new DistrictStaffDB(conf);
             StaffDb = new StaffDB(conf);
+        }
+
+        public List<Order> GetOrders(int idStaff)
+        {
+            return OrderDb.GetOrders(idStaff);
         }
 
         public List<Order> GetOrders()
