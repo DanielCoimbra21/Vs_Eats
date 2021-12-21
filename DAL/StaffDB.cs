@@ -61,7 +61,7 @@ namespace DAL
             return results;
         }
 
-        public Staff GetStaff(string usernameStaff, string passwordStaff)
+        public Staff GetStaff(string mailStaff, string passwordStaff)
         {
             Staff staff = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -70,9 +70,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    var query = "Select * From STAFF where USERNAMESTAFF=@username AND PASSWORDSTAFF=@password";
+                    string query = "Select * From STAFF where MAILSTAFF = @mailStaff AND PASSWORDSTAFF = @password";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@username", usernameStaff);
+                    cmd.Parameters.AddWithValue("@mailStaff", mailStaff);
                     cmd.Parameters.AddWithValue("@password", passwordStaff);
 
                     cn.Open();

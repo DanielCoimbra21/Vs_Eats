@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAppVSEAT.Models
 {
-    public class LoginVM
+    public class LoginStaffVM
     {
         [Required]
-        public string mail { get; set; }
-
+        public string MAILSTAFF { get; set; }
         [Required]
-        public string password { get; set; }
-
+        public string PASSWORDSTAFF { get; set; }
     }
 }

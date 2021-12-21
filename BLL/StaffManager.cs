@@ -25,9 +25,9 @@ namespace BLL
 
         public void UpdateStaff(StaffManager staff) {}
 
-        public DTO.Staff GetStaff(string usernameStaff, string passwordStaff)
+        public DTO.Staff GetStaff(string mailStaff, string passwordStaff)
         {
-            return StaffDb.GetStaff(usernameStaff, passwordStaff);
+            return StaffDb.GetStaff(mailStaff, passwordStaff);
         }
 
         public void ArchiveDelivery(Order order)

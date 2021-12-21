@@ -61,6 +61,94 @@ namespace DAL
             return results;
         }
 
+        public List<Order> GetOrders(int idStaff)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from [dbo].[ORDER] WHERE IDSTAFF = @idStaff AND STATUS='ongoing'";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idStaff", idStaff);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.IDORDER = (int)dr["IDORDER"];
+                            order.IDDISTRICT = (int)dr["IDDISTRICT"];
+                            order.IDRESTAURANT = (int)dr["IDRESTAURANT"];
+                            order.IDSTAFF = (int)dr["IDSTAFF"];
+                            order.IDCUSTOMER = (int)dr["IDCUSTOMER"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.DELIVERTIME = (DateTime)dr["DELIVERTIME"];
+                            order.STATUS = (string)dr["STATUS"];
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return results;
+        }
+
+        public List<Order> GetOrdersAll(int idStaff)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from [dbo].[ORDER] WHERE IDSTAFF = @idStaff";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idStaff", idStaff);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.IDORDER = (int)dr["IDORDER"];
+                            order.IDDISTRICT = (int)dr["IDDISTRICT"];
+                            order.IDRESTAURANT = (int)dr["IDRESTAURANT"];
+                            order.IDSTAFF = (int)dr["IDSTAFF"];
+                            order.IDCUSTOMER = (int)dr["IDCUSTOMER"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.DELIVERTIME = (DateTime)dr["DELIVERTIME"];
+                            order.STATUS = (string)dr["STATUS"];
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return results;
+        }
+
         public Order GetOrder(int orderId)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");

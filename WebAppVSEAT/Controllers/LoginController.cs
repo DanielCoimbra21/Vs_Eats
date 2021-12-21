@@ -27,6 +27,11 @@ namespace WebAppVSEAT.Controllers
             return View();
         }
 
+        public IActionResult IndexStaff()
+        {
+            return View();
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -45,6 +50,25 @@ namespace WebAppVSEAT.Controllers
                 ModelState.AddModelError(string.Empty, "Invalid email or password");
             }
             return View(loginVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult IndexStaff(LoginStaffVM loginStaffVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var staff = StaffManager.GetStaff(loginStaffVM.MAILSTAFF, loginStaffVM.PASSWORDSTAFF);
+
+                if (staff != null)
+                {
+                    HttpContext.Session.SetInt32("IdStaff", staff.IDSTAFF);
+                    return RedirectToAction("Index", "Staff");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid email or password");
+            }
+            return View(loginStaffVM);
         }
 
         public IActionResult Logout(LoginVM loginVM)

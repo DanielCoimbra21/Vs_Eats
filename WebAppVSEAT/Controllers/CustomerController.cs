@@ -29,15 +29,16 @@ namespace WebAppVSEAT.Controllers
             }
 
             var customer = CustomerManager.GetCustomerID((int)HttpContext.Session.GetInt32("IdCustomer"));
-            var customerList = new CustomerVM();
+            var customerVM = new CustomerVM();
 
-            customerList.NAME = customer.NAME;
-            customerList.SURNAME = customer.SURNAME;
-            customerList.MAIL = customer.MAIL;
-            customerList.PHONE = customer.PHONE;
+            customerVM.NAME = customer.NAME;
+            customerVM.SURNAME = customer.SURNAME;
+            customerVM.USERNAME = customer.USERNAME;
+            customerVM.MAIL = customer.MAIL;
+            customerVM.PHONE = customer.PHONE;
 
 
-            return View(customerList);
+            return View(customerVM);
         }
     }
 }
