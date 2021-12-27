@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebAppVSEAT.Models.DishesRestaurantVM>
+
+@{
+    ViewData["Title"] = "Details2";
+    var idRestaurant = 0;
+}
+
+<h1>Details2</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IDDISHES)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NAMEDISH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PRICEDISH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IDRESTAURANT)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    idRestaurant = item.IDRESTAURANT;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDDISHES)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAMEDISH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PRICEDISH)
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => item.IDRESTAURANT)
+            </td>
+        </tr>
+}
+        @Html.ActionLink("TakeAnOrder", "TakeAnOrder", new { id=idRestaurant })
+    </tbody>
+</table>

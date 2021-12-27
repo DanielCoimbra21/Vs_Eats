@@ -21,28 +21,28 @@
             <th>
                 @Html.DisplayNameFor(model => model.PRICEDISH)
             </th>
-            <th></th>
         </tr>
     </thead>
+
     <tbody>
-@foreach (var item in Model.Dishes) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDDISHES)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NAMEDISH)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PRICEDISH)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Add", "Add", new { id = item.IDDISHES })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Dishes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDDISHES)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NAMEDISH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PRICEDISH)
+                </td>
+                <td>
+                    @Html.ActionLink("TakeAnOrder", "TakeAnOrder", new { id = item.IDDISHES})
+                </td>
+            </tr>
+        }
     </tbody>
+    
+   
 </table>

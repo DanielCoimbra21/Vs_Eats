@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebAppVSEAT.Models.CommandVM>
+
+@{
+    ViewData["Title"] = "TakeAnOrder";
+}
+
+<h1>TakeAnOrder</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NAMEDISH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PRICEDISH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QUANTITY)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NAMEDISH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PRICEDISH)
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => item.QUANTITY)
+                </td>
+            </tr>
+        }
+        @Html.ActionLink("Order", "Order");
+
+        @*<select id="hoursMinutes"></select>
+        
+
+        <script>
+
+            function createOption(value, text) {
+                var option = document.createElement('option');
+                option.text = text;
+                option.value = value;
+                return option;
+            }
+            var hourMinute = document.getElementById('hoursMinutes');
+
+          
+            for (var i = 0; i < 24; i++) {
+                
+                for (var j = 0; j < 60; j += 15) {
+                    hourMinute.add(createOption(i, i+":"+j));
+                    
+                    
+                }
+            }
+
+            
+            
+        </script>*@
+
+
+        <label for="appt">Choose a time for your delivery</label>
+        <input type="time" id="appt" name="appt" min="00:00" max="24:00" step="00:15" value="17:00" required />
+    </tbody>
+</table>
+
