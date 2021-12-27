@@ -113,7 +113,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from [dbo].[ORDER] WHERE IDSTAFF = @idStaff";
+                    string query = "Select * from [dbo].[ORDER] WHERE IDSTAFF = @idStaff AND STATUS!='free'";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idStaff", idStaff);
 

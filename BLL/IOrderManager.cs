@@ -14,6 +14,8 @@ namespace BLL
 
         public List<Order> GetOrders();
 
+        public List<Order> GetOrdersAll(int idStaff);
+
         public Order GetOrder(int orderId);
 
         public void ArchiveDelivery(Order order, string status);

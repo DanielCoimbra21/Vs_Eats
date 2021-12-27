@@ -26,6 +26,11 @@ namespace BLL
             return OrderDb.GetOrders(idStaff);
         }
 
+        public List<Order> GetOrdersAll(int idStaff)
+        {
+            return OrderDb.GetOrdersAll(idStaff);
+        }
+
         public List<Order> GetOrders()
         {
             return OrderDb.GetOrders();
