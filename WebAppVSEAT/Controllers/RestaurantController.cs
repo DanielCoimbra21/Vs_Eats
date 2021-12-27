@@ -29,6 +29,7 @@ namespace WebAppVSEAT.Controllers
         }
 
 
+
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
