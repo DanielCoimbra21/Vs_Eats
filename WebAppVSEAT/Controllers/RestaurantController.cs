@@ -19,8 +19,6 @@ namespace WebAppVSEAT.Controllers
         private IOrderManager OrderManager { get; }
         private IDishesOrderManager DishesOrderManager { get; }
 
-        private List<DTO.Dish> ld = new List<DTO.Dish>();
-
 
         public RestaurantController(IDishesOrderManager dishesOrderManager,IOrderManager orderManager, ICityManager cityManager, IRestaurantManager restaurantManager, IDishManager dishManager, IDishesRestaurantManager dishesRestaurantManager)
         {

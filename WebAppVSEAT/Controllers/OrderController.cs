@@ -182,7 +182,6 @@ namespace WebAppVSEAT.Controllers
                 if (canceled != false)
                 {
                     return RedirectToAction("Orders", "Order");
-                   
                 }
                 ModelState.AddModelError(string.Empty, "Wrong Name or Surname");
                 return View(cancelOrderVM);
