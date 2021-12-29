@@ -6,9 +6,6 @@
 
 <h1>Orders</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -31,9 +28,7 @@
                 @Html.DisplayFor(modelItem => item.DELIVERTIME)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("CancelOrder", "CancelOrderID", new { id=item.IDORDER })
             </td>
         </tr>
 }

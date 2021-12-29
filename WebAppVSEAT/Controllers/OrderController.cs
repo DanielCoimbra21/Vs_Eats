@@ -23,6 +23,10 @@ namespace WebAppVSEAT.Controllers
             CityManager = cityManager;
         }
 
+        /// <summary>
+        /// Affiche directement les commandes en cours du staff
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             //Vérifier que l'utilisateur est bien connecté
@@ -35,12 +39,12 @@ namespace WebAppVSEAT.Controllers
             var listOrders = OrderManager.GetOrders((int)HttpContext.Session.GetInt32("IdStaff"),"ongoing");
             var listOrderVM = new List<OrderVM>();
             
+            //Si liste des commandes est null, afficher une vue erreur
             if(listOrders == null)
             {
                 return View("~/Views/Order/ErrorNoCommand.cshtml");
             }
 
-            //vérifier que si il n'y a pas de commande pas d'erreur????
             foreach (var o in listOrders)
             {
                 var vm = new OrderVM();
@@ -67,8 +71,14 @@ namespace WebAppVSEAT.Controllers
             return View(listOrderVM);
         }
 
+        /// <summary>
+        /// Méthode Edit pour apercevoir la commande et l'archiver
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Edit(int id)
         {
+            //Vérification si le staff est bien connecté
             if (HttpContext.Session.GetInt32("IdStaff") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -76,6 +86,8 @@ namespace WebAppVSEAT.Controllers
 
 
             var o = OrderManager.GetOrder(id);
+
+            //création de la nouvelle view model
             var vm = new OrderVM();
             var customer = CustomerManager.GetCustomerID(o.IDCUSTOMER);
             var city = CityManager.GetCity(customer.IDCITY);
@@ -97,6 +109,11 @@ namespace WebAppVSEAT.Controllers
             return View(vm);
         }
 
+        /// <summary>
+        /// Méthode pour l'archivage des livraisons du staff
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Archive(int id)
         {
             var order = OrderManager.GetOrder(id);
@@ -105,6 +122,11 @@ namespace WebAppVSEAT.Controllers
             return RedirectToAction("Index", "Order");
         }
 
+        /// <summary>
+        /// Méthode pour l'annulation de commande par le customer
+        /// redirige vers la view CancelOrder pour l'annulation
+        /// </summary>
+        /// <returns></returns>
         public IActionResult CancelOrder()
         {
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
@@ -115,23 +137,36 @@ namespace WebAppVSEAT.Controllers
             return View();
         }
 
+        public IActionResult CancelOrderID(int id)
+        {
+            if (HttpContext.Session.GetInt32("IdCustomer") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            CancelOrderVM vm = new CancelOrderVM();
+            vm.IDORDER = id;
+            
+            return View(vm);
+        }
+
+
+        /// <summary>
+        /// Méthode pour enregistrer l'annulation de la commande
+        /// </summary>
+        /// <param name="cancelOrderVM"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CancelOrder(CancelOrderVM cancelOrderVM)
         {
             //Order sera utilisé plus tard pour l'archivage
             DTO.Order order = OrderManager.GetOrder(cancelOrderVM.IDORDER);
-            //long msTN = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            //DateTime timeNow = DateTime.Now;
-            //long msTN = timeNow.Millisecond;
-            //DateTime myDeliveryTime = order.DELIVERTIME;
-            //long msOD = myDeliveryTime.ToUnixTimeMilliseconds();
 
             DateTime timeNow = DateTime.Now;
             TimeSpan diff = order.DELIVERTIME - timeNow;
 
             long threeHours = OrderManager.ConvertHoursToMiliseconds(3);
-
 
             //Condition vérification si l'heure de l'ordre et la l'heure d'aujourd'hui
             //est plus grande que 3 heures
@@ -142,18 +177,28 @@ namespace WebAppVSEAT.Controllers
                 string codeToValidate = String.Concat(cancelOrderVM.IDORDER, cancelOrderVM.NAME, cancelOrderVM.SURNAME);
 
 
-                OrderManager.CancelOrder(customer, codeToValidate, cancelOrderVM.IDORDER);
-                return RedirectToAction("Orders", "Order");
+                bool canceled = OrderManager.CancelOrder(customer, codeToValidate, cancelOrderVM.IDORDER);
+
+                if (canceled != false)
+                {
+                    return RedirectToAction("Orders", "Order");
+                   
+                }
+                ModelState.AddModelError(string.Empty, "Wrong Name or Surname");
+                return View(cancelOrderVM);
+
             }
 
-            ModelState.AddModelError(string.Empty, "To late to cancel");
 
-
+            ModelState.AddModelError(string.Empty, "Order has been delivered");
             return View(cancelOrderVM);
         }
 
         
-
+        /// <summary>
+        /// Méthode pour afficher toutes les commandes d'un customer
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Orders()
         {
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
@@ -173,9 +218,14 @@ namespace WebAppVSEAT.Controllers
 
                 listCustomerOrderVM.Add(vm);
             }
+
             return View(listCustomerOrderVM);
         }
 
+        /// <summary>
+        /// Méthode pour l'affichage de l'historique des commandes d'un staff
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Historic()
         {
             if (HttpContext.Session.GetInt32("IdStaff") == null)
@@ -219,8 +269,6 @@ namespace WebAppVSEAT.Controllers
             }
 
             return View(listOrderVM);
-
-          
         }
 
     }

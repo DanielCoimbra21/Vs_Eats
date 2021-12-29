@@ -37,9 +37,9 @@
         <option value="21:00">21:00</option>
         <option value="21:15">21:15</option>
         <option value="21:30">21:30</option>
-        <option value="22:00">21:00</option>
-        <option value="22:15">21:15</option>
-        <option value="22:30">21:30</option>
+        <option value="22:00">22:00</option>
+        <option value="22:15">22:15</option>
+        <option value="22:30">22:30</option>
     </select>
 
 
@@ -53,9 +53,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.orderDishes.First().dish.PRICEDISH)
                 </th>
-                @*<th>
-                    image
-                </th>*@
+                <th>
+                    Quantity
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -74,15 +74,11 @@
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].IDRESTAURANT)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].NAMERESTAURANT)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].CITYNAME)
-
                     </td>
                     <td>
-
                         @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.PRICEDISH)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.PRICEDISH)
-
                     </td>
-                    
                     <td>
                         @Html.TextBoxFor(m => Model.orderDishes[i].QUANTITY)
                     </td>

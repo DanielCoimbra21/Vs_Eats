@@ -71,7 +71,7 @@ namespace BLL
         /// <param name="customer"></param>
         /// <param name="codeToValidate"></param>
         /// <param name="orderId"></param>
-        public void CancelOrder(Customer customer, string codeToValidate, int orderId)
+        public bool CancelOrder(Customer customer, string codeToValidate, int orderId)
         {
             Order order = OrderDb.GetOrder(orderId);
 
@@ -83,7 +83,10 @@ namespace BLL
                 if (codeToCancel.Equals(codeToValidate))
                 {
                     OrderDb.ArchiveDelivery(order, "canceled");
+                    return true;
                 }
+
+            return false;
         }
 
         public int AssignStaff(Order order)

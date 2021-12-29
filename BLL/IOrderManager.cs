@@ -21,7 +21,7 @@ namespace BLL
 
         public void ArchiveDelivery(Order order, string status);
 
-        public void CancelOrder(Customer customer, string codeToValidate, int orderId);
+        public bool CancelOrder(Customer customer, string codeToValidate, int orderId);
 
         public int AssignStaff(Order order);
 
