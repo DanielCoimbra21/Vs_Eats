@@ -1,7 +1,8 @@
-﻿@model WebAppVSEAT.Models.DishesVM
+﻿@model IEnumerable<WebAppVSEAT.Models.DishesRestaurantVM>
 
 @{
     ViewData["Title"] = "Details";
+    var idRestaurant = 0;
 }
 
 <h1>Details</h1>
@@ -21,12 +22,16 @@
             <th>
                 @Html.DisplayNameFor(model => model.PRICEDISH)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IDRESTAURANT)
+            </th>
+            <th></th>
         </tr>
     </thead>
-
     <tbody>
-        @foreach (var item in Model.Dishes)
+        @foreach (var item in Model)
         {
+            idRestaurant = item.IDRESTAURANT;
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.IDDISHES)
@@ -38,13 +43,11 @@
                     @Html.DisplayFor(modelItem => item.PRICEDISH)
                 </td>
                 <td>
-                    @Html.ActionLink("TakeAnOrder", "TakeAnOrder", new { id = item.IDDISHES})
+                    @Html.DisplayFor(modelItem => item.IDRESTAURANT)
                 </td>
+
             </tr>
         }
+        @Html.ActionLink("TakeAnOrder", "TakeAnOrder", new { id = idRestaurant })
     </tbody>
-    
-
-
-   
 </table>

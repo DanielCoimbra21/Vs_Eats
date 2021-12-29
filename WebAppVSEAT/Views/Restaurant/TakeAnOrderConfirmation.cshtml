@@ -1,0 +1,63 @@
+﻿@model WebAppVSEAT.Models.CommandVM
+@{
+    Layout = "_Layout";
+}
+@{
+    ViewData["Title"] = "TakeAnOrderConfirmation";
+}
+
+<h1>Your command at @Model.orderDishes.First().NAMERESTAURANT</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.orderDishes.First().dish.NAMEDISH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.orderDishes.First().QUANTITY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.orderDishes.First().dish.PRICEDISH)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @{ decimal sommeTotal = 0;}
+        @foreach (var item in Model.orderDishes)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.dish.NAMEDISH)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.QUANTITY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dish.PRICEDISH)
+            </td>
+
+            @{decimal s = (decimal)(item.QUANTITY * item.dish.PRICEDISH);
+                sommeTotal += s;}
+            <td>
+                @Html.DisplayFor(modelItem => s)
+            </td>
+        </tr>
+        }
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="3"><span style='font-weight:bold;'>total of this order :</span></td>
+            <td><span style='font-weight:bold;'>@sommeTotal</span></td>
+        </tr>
+    </tfoot>
+</table>
+
+<h2> your order will be delivered at @Model.hour</h2>
+<h2> your order number is : @Model.IDORDER</h2>
+

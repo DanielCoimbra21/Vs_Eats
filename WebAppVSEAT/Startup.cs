@@ -47,6 +47,9 @@ namespace WebAppVSEAT
             services.AddScoped<IOrderManager, OrderManager>();
             services.AddScoped<IOrderDB, OrderDB>();
 
+            services.AddScoped<IDishesOrderManager, DishesOrderManager>();
+            services.AddScoped<IDishesOrderDB, DishesOrderDB>();
+
 
             services.AddSession();
             services.AddControllersWithViews();

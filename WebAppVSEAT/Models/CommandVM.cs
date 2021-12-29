@@ -7,10 +7,14 @@ namespace WebAppVSEAT.Models
 {
     public class CommandVM
     {
-        public string NAMEDISH { get; set; }
-        public double PRICEDISH { get; set; }
+        public int IDORDER { get; set; }
+        public int IDRESTAURANT { get; set; }
         public int QUANTITY { get; set; }
-
-       
+        public string CITYNAME { get; set; }
+        public string NAMERESTAURANT { get; set; }
+        public List<CommandVM> orderDishes { get; set; }
+        public DTO.Dish dish { get; set; }
+        public DateTime DELIVERTIME { get; set; }
+        public string hour { get; set; }
     }
 }

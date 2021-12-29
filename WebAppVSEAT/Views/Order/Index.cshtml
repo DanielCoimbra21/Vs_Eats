@@ -1,15 +1,10 @@
 ﻿@model IEnumerable<WebAppVSEAT.Models.OrderVM>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Error";
     Layout = "~/Views/Shared/_LayoutOrder.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -47,43 +42,44 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDORDER)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TOTALPRICE)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SURNAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ADDRESS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CITY)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NPA)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PHONE)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DELIVERTIME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.STATUS)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.IDORDER })
-               
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDORDER)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TOTALPRICE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SURNAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ADDRESS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CITY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NPA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PHONE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DELIVERTIME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.STATUS)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IDORDER })
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

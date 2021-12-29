@@ -1,76 +1,102 @@
-﻿@model IEnumerable<WebAppVSEAT.Models.CommandVM>
-
+﻿@model WebAppVSEAT.Models.CommandVM
+@{
+    Layout = "_Layout";
+}
 @{
     ViewData["Title"] = "TakeAnOrder";
 }
 
-<h1>TakeAnOrder</h1>
+<h1>pass your command at @Model.orderDishes.First().NAMERESTAURANT</h1>
+<form asp-action="TakeAnOrder">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <label asp-for="hour" class="control-label">delivery time</label>
+    <select asp-for="hour">
+        <option disabled>Lunch</option>
+        <option value="11:30">11:30</option>
+        <option value="11:45">11:45</option>
+        <option value="12:00">12:00</option>
+        <option value="12:15">12:15</option>
+        <option value="12:30">12:30</option>
+        <option value="12:45">12:45</option>
+        <option value="13:00">13:00</option>
+        <option value="13:15">13:15</option>
+        <option value="13:30">13:30</option>
+        <option disabled>Dinner</option>
+        <option value="18:00">18:00</option>
+        <option value="18:15">18:15</option>
+        <option value="18:30">18:30</option>
+        <option value="18:45">18:45</option>
+        <option value="19:00">19:00</option>
+        <option value="19:15">19:15</option>
+        <option value="19:30">19:30</option>
+        <option value="19:45">19:45</option>
+        <option value="20:00">20:00</option>
+        <option value="20:15">20:15</option>
+        <option value="20:30">20:30</option>
+        <option value="20:45">20:45</option>
+        <option value="21:00">21:00</option>
+        <option value="21:15">21:15</option>
+        <option value="21:30">21:30</option>
+        <option value="22:00">21:00</option>
+        <option value="22:15">21:15</option>
+        <option value="22:30">21:30</option>
+    </select>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NAMEDISH)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PRICEDISH)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.QUANTITY)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NAMEDISH)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PRICEDISH)
-                </td>
-                <td>
-                    @Html.TextBoxFor(modelItem => item.QUANTITY)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.orderDishes.First().dish.NAMEDISH)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.orderDishes.First().dish.PRICEDISH)
+                </th>
+                @*<th>
+                    image
+                </th>*@
+                <th></th>
             </tr>
-        }
-        @Html.ActionLink("Order", "Order");
+        </thead>
+        <tbody>
 
-        <select id="hoursMinutes"></select>
-        
 
-        <script>
 
-            function createOption(value, text) {
-                var option = document.createElement('option');
-                option.text = text;
-                option.value = value;
-                return option;
-            }
-            var hourMinute = document.getElementById('hoursMinutes');
+            @for (int i = 0; i < Model.orderDishes.Count(); i++)
+            {
 
-          
-            for (var i = 0; i < 24; i++) {
-                
-                for (var j = 0; j < 60; j += 15) {
-                    hourMinute.add(createOption(i, i+":"+j));
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.IDDISHES)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].IDRESTAURANT)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].NAMERESTAURANT)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].CITYNAME)
+
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.PRICEDISH)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.PRICEDISH)
+
+                    </td>
                     
-                    
-                }
+                    <td>
+                        @Html.TextBoxFor(m => Model.orderDishes[i].QUANTITY)
+                    </td>
+                </tr>
             }
 
-            
-            
-        </script>
+        </tbody>
 
+    </table>
+    <input type="submit" value="Confirm order" class="btn btn-primary" />
+    <br />
 
-        <label for="appt">Choose a time for your delivery</label>
-        <input type="time" id="appt" name="appt" min="00:00" max="24:00" step="00:15" value="17:00" required />
-    </tbody>
-</table>
-
+    @*<a asp-action="Index">confirm your order</a>*@
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

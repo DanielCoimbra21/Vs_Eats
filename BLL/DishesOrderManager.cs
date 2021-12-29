@@ -24,12 +24,9 @@ namespace BLL
             orderDb = new OrderDB(configuration);
         }
 
-        public DishesOrder InsertDishesOrder(DishesOrder dishesOrder)
+        public void InsertDishesOrder(DishesOrder dishesOrder)
         { 
-            List<DishesOrder> listDO = new List<DishesOrder>();
-            Order order = orderDb.GetOrder(dishesOrder.IDORDER);
-        
-            return DishesOrderDb.InsertDishesOrder(dishesOrder);
+            DishesOrderDb.InsertDishesOrder(dishesOrder);
         }
     }
 }

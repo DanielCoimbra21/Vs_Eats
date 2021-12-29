@@ -69,7 +69,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from [dbo].[ORDER] WHERE IDSTAFF = @idStaff AND STATUS='ongoing'";
+                    string query = "Select * from [dbo].[ORDER] WHERE IDSTAFF = @idStaff";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idStaff", idStaff);
 
@@ -105,7 +105,7 @@ namespace DAL
             return results;
         }
 
-        public List<Order> GetOrdersAll(int idStaff)
+        public List<Order> GetOrders(int idStaff, string status)
         {
             List<Order> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -113,9 +113,54 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from [dbo].[ORDER] WHERE IDSTAFF = @idStaff AND STATUS!='free'";
+                    string query = "Select * from [dbo].[ORDER] WHERE IDSTAFF = @idStaff AND STATUS = @status";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idStaff", idStaff);
+                    cmd.Parameters.AddWithValue("@status", status);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.IDORDER = (int)dr["IDORDER"];
+                            order.IDDISTRICT = (int)dr["IDDISTRICT"];
+                            order.IDRESTAURANT = (int)dr["IDRESTAURANT"];
+                            order.IDSTAFF = (int)dr["IDSTAFF"];
+                            order.IDCUSTOMER = (int)dr["IDCUSTOMER"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.DELIVERTIME = (DateTime)dr["DELIVERTIME"];
+                            order.STATUS = (string)dr["STATUS"];
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return results;
+        }
+
+        public List<Order> GetCustomerOrders(int idCustomer)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from [dbo].[ORDER] WHERE IDCUSTOMER = @idCustomer AND STATUS='ongoing'";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idCustomer", idCustomer);
 
                     cn.Open();
 
@@ -217,7 +262,7 @@ namespace DAL
             }
         }
 
-        public Order InsertOrder(Order order)
+        public Order InsertOrder(Order order, int idStaff)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
@@ -225,12 +270,13 @@ namespace DAL
             {
                 using(SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into [dbo].[ORDER](IDDISTRICT, IDRESTAURANT, IDCUSTOMER, TOTALPRICE, DELIVERTIME, STATUS) " +
-                        "values(@idDistrict, @idRestaurant, @idCustomer, @totalPrice, @deliverTime, @status) SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into [dbo].[ORDER](IDDISTRICT, IDRESTAURANT,IDSTAFF, IDCUSTOMER, TOTALPRICE, DELIVERTIME, STATUS) " +
+                        "values(@idDistrict, @idRestaurant,@idStaff, @idCustomer, @totalPrice, @deliverTime, @status) SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cmd.Parameters.AddWithValue("@idDistrict", order.IDDISTRICT);
                     cmd.Parameters.AddWithValue("@idRestaurant", order.IDRESTAURANT);
+                    cmd.Parameters.AddWithValue("@idStaff", idStaff);
                     cmd.Parameters.AddWithValue("@idCustomer", order.IDCUSTOMER);
                     cmd.Parameters.AddWithValue("@totalPrice", order.TOTALPRICE);
                     cmd.Parameters.AddWithValue("@deliverTime", order.DELIVERTIME);

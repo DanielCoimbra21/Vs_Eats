@@ -11,7 +11,7 @@ namespace DAL
     {
         public List<DishesOrder> GetDishesOrders();
 
-        public DishesOrder InsertDishesOrder(DishesOrder dishes);
+        public void InsertDishesOrder(DishesOrder dishes);
 
     }
 }

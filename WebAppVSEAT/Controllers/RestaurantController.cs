@@ -16,16 +16,20 @@ namespace WebAppVSEAT.Controllers
         private IDishesRestaurantManager DishesRestaurantManager { get; }
         private IDishManager DishManager { get; }
         private ICityManager CityManager { get; }
+        private IOrderManager OrderManager { get; }
+        private IDishesOrderManager DishesOrderManager { get; }
 
         private List<DTO.Dish> ld = new List<DTO.Dish>();
 
 
-        public RestaurantController(ICityManager cityManager, IRestaurantManager restaurantManager, IDishManager dishManager, IDishesRestaurantManager dishesRestaurantManager)
+        public RestaurantController(IDishesOrderManager dishesOrderManager,IOrderManager orderManager, ICityManager cityManager, IRestaurantManager restaurantManager, IDishManager dishManager, IDishesRestaurantManager dishesRestaurantManager)
         {
             RestaurantManager = restaurantManager;
             DishesRestaurantManager = dishesRestaurantManager;
             DishManager = dishManager;
             CityManager = cityManager;
+            OrderManager = orderManager;
+            DishesOrderManager = dishesOrderManager;
         }
 
 
@@ -57,49 +61,10 @@ namespace WebAppVSEAT.Controllers
         }
 
 
-        public ActionResult Details(int id)
+
+
+        public IActionResult Details(int id)
         {
-
-            if (HttpContext.Session.GetInt32("IdCustomer") == null)
-            {
-                return RedirectToAction("Index", "Login");
-            }
-
-            var listDish = new List<int>();
-            listDish = DishesRestaurantManager.GetListDishes(id);
-            List<DTO.Dish> results = null;
-
-
-            if (listDish == null)
-            {
-                var error = new ErrorViewModel();
-                return View(error);
-            }
-
-
-            foreach (var idDish in listDish)
-            {
-                if (results == null)
-                {
-                    results = new List<DTO.Dish>();
-                }
-                results.Add(DishManager.GetDish(idDish));
-            }
-
-
-
-            var vm = new DishesVM()
-            {
-                Dishes = results
-            };
-
-
-            return View(vm);
-        }
-
-        public IActionResult Details2(int id)
-        {
-
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -127,8 +92,6 @@ namespace WebAppVSEAT.Controllers
 
                 dishesRestaurantVM.Add(vm);
             }
-       
-
             return View(dishesRestaurantVM);
         }
 
@@ -139,32 +102,135 @@ namespace WebAppVSEAT.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            var listDish = new List<int>();
-            listDish = DishesRestaurantManager.GetListDishes(id);
-            var commandVMs = new List<CommandVM>();
+            //liste des id des plats dans le restaurant
+            var listIDDishes = DishesRestaurantManager.GetListDishes(id);
+            var dishes = new List<DTO.Dish>();
 
-
-            if (listDish == null)
+            //Ajout dans le tableau tous les plats liés au restaurant
+            foreach (var idDish in listIDDishes)
             {
-                var error = new ErrorViewModel();
-                return View(error);
+                dishes.Add(DishManager.GetDish(idDish));
             }
 
-            foreach (var idDish in listDish)
-            {
-                var vm = new CommandVM();
-                var dish = DishManager.GetDish(idDish);
-                vm.NAMEDISH = dish.NAMEDISH;
-                vm.PRICEDISH = dish.PRICEDISH;
-                vm.QUANTITY = 0;
-               
+            var myModel = new CommandVM();
+            myModel.orderDishes = new List<CommandVM>();
 
-                commandVMs.Add(vm);
+
+            if (dishes != null)
+            {
+                foreach (var dish in dishes)
+                {
+                    var myCityID = RestaurantManager.GetRestaurant(id).IDCITY;
+                    Models.CommandVM myDishVM = new Models.CommandVM()
+                    {
+                        IDRESTAURANT = id,
+                        QUANTITY = 0,
+                        CITYNAME = CityManager.GetCity(myCityID).CITYNAME,
+                        NAMERESTAURANT = RestaurantManager.GetRestaurant(id).NAMERESTAURANT,
+                        dish = dish,
+                        DELIVERTIME = DateTime.Now,
+                        IDORDER = -1,
+                    };
+
+                    myModel.orderDishes.Add(myDishVM);
+                }
             }
 
-
-            return View(commandVMs);
+            return View(myModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult TakeAnOrder(CommandVM commandVM)
+        {
+            if (ModelState.IsValid)
+            {
+                if(commandVM != null)
+                {
+                    //Calculer la somme de la livraison
+                    double somme = 0;
+
+                    foreach (var d in commandVM.orderDishes)
+                    {
+                        somme += d.dish.PRICEDISH * d.QUANTITY;
+                    }
+
+                    //Calculer la nouvelle date
+                    DateTime dateTimeNow = DateTime.Now;
+                    var hour = int.Parse(commandVM.hour.Split(":")[0]);
+                    var minutes = int.Parse(commandVM.hour.Split(":")[1]);
+                    DateTime myDeliveryTime = new DateTime(dateTimeNow.Year, dateTimeNow.Month, dateTimeNow.Day, hour, minutes, 0);
+
+                    //Définir le status
+                    string status = "ongoing";
+
+                    //Chercher l'id du customer
+                    int idCustomer = (int)HttpContext.Session.GetInt32("IdCustomer");
+
+                    //Trouver l'id du district
+                    var city = CityManager.GetCity(RestaurantManager.GetRestaurant(commandVM.IDRESTAURANT).IDCITY);
+                    int idDistrict = city.IDDISTRICT;
+
+                    //Trouver l'id du restaurant
+                    int idRestaurant = commandVM.IDRESTAURANT;
+
+                    //Créer une nouvelle commande sans l'id du Staff
+                    DTO.Order order = new DTO.Order();
+                    order.IDDISTRICT = idDistrict;
+                    order.IDRESTAURANT = idRestaurant;
+                    order.IDCUSTOMER = idCustomer;
+                    order.TOTALPRICE = (decimal)somme;
+                    order.DELIVERTIME = myDeliveryTime;
+                    order.STATUS = status;
+
+                    //Trouver l'id du Staff
+                    int idStaff = OrderManager.AssignStaff(order);
+
+                    //Vérifier l'id du Staff
+                    if (idStaff == -1)
+                    {
+                        ModelState.AddModelError(String.Empty, "No staff available. please choose an other delivery time");
+                        return View(commandVM);
+                    }
+
+                    //Vérifier si l'heure n'est pas avant l'heure actuel
+                    if (somme > 0)
+                    {
+                        if (myDeliveryTime < dateTimeNow)
+                        {
+                            ModelState.AddModelError(String.Empty, "Choose an another time, it passed");
+                            return View(commandVM);
+                        }
+
+                        //Créer l'ordre avec l'id du Staff
+                        var preOrder = OrderManager.InsertOrder(order, idStaff);
+
+
+                        //Ajouter les plats dans DISHESORDER
+                        //si la quantité est supérieur à 0
+                        var idOrder = preOrder.IDORDER;
+                        foreach (var o in commandVM.orderDishes)
+                        {
+                            if (o.QUANTITY > 0)
+                            {
+                                DTO.DishesOrder dishesOrder = new DTO.DishesOrder
+                                {
+                                    IDDISHES = o.dish.IDDISHES,
+                                    IDORDER = idOrder,
+                                    QUANTITY = o.QUANTITY
+                                };
+                                DishesOrderManager.InsertDishesOrder(dishesOrder);
+                            }
+                        }
+                        commandVM.IDORDER = idOrder;
+
+                        return View("~/Views/Restaurant/TakeAnOrderConfirmation.cshtml", commandVM);
+                    }
+                }
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+            }
+            return View(commandVM);
+        }
     }
 }
+    

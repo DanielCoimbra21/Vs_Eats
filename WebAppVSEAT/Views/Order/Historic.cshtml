@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<WebAppVSEAT.Models.OrderVM>
 
 @{
-    ViewData["Title"] = "Historic";
+    ViewData["Title"] = "Error";
+    Layout = "~/Views/Shared/_LayoutOrder.cshtml";
 }
 
 <h1>Historic</h1>
@@ -80,14 +81,10 @@
 
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>
         }
         <div>
-            
             <a asp-action="Index">Back to List</a>
-
     </tbody>
 </table>
