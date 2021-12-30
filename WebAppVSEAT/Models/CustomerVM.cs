@@ -15,6 +15,7 @@ namespace WebAppVSEAT.Models
         public string USERNAME { get; set; }
         public int PHONE { get; set; }
         public string ADDRESS { get; set; }
+        public string CITYNAME { get; set; }
         public string MAIL { get; set; }
         public string PASSWORD { get; set; }
 

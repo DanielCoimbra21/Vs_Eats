@@ -28,7 +28,7 @@ namespace DAL
         {
             return CityDb.GetCity(idCity);
         }
-        
+
 
     }
 }

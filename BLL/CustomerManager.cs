@@ -35,6 +35,11 @@ namespace BLL
             return CustomerDb.GetCustomerID(id);
         }
 
+        public void UpdateCustomer(Customer customer)
+        {
+            CustomerDb.UpdateCustomer(customer);
+        }
+
         public Customer InsertCustomer(Customer customer)//Customer customer
         {
             var mail = customer.MAIL;

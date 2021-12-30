@@ -18,6 +18,7 @@ namespace DAL
             Configuration = configuration;
         }
 
+
         public List<City> GetCities()
         {
             List<City> results = null;

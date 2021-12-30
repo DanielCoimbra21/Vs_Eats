@@ -10,7 +10,5 @@ namespace DAL
 
         DTO.City GetCity(int idCity);
 
-       
-
     }
 }

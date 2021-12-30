@@ -77,24 +77,22 @@ namespace DAL
 
         public Customer InsertCustomer(Customer customer)//Customer customer
         {
-       
+
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
-                using(SqlConnection cn = new SqlConnection(connectionString))
+                using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    //string query = "Insert into CUSTOMER(IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@IDCITY, @NAME, @SURNAME, @USERNAME, @PHONE, @ADDRESS, @MAIL, @PASSWORD)";
                     string query = "Insert into CUSTOMER(IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@idCity, @name, @surname, @username, @phone, @address, @mail, @password) SELECT SCOPE_IDENTITY()";
-                    //string query = "Insert into CUSTOMER(IDCUSTOMER, IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@IDCUSTOMER, @IDCITY, @NAME, @SURNAME, @USERNAME, @PHONE, @ADDRESS, @MAIL, @PASSWORD) ";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                   
+
                     //cmd.Parameters.AddWithValue("@IDCUSTOMER", customer.IDCUSTOMER);
                     cmd.Parameters.AddWithValue("@idCity", customer.IDCITY);
                     cmd.Parameters.AddWithValue("@name", customer.NAME);
                     cmd.Parameters.AddWithValue("@surname", customer.SURNAME);
                     cmd.Parameters.AddWithValue("@username", customer.USERNAME);
                     cmd.Parameters.AddWithValue("@phone", customer.PHONE);
-                    cmd.Parameters.AddWithValue("@address",customer. ADDRESS);
+                    cmd.Parameters.AddWithValue("@address", customer.ADDRESS);
                     cmd.Parameters.AddWithValue("@mail", customer.MAIL);
                     cmd.Parameters.AddWithValue("@password", GetPassword(customer.PASSWORD));
 
@@ -103,7 +101,7 @@ namespace DAL
                     customer.IDCUSTOMER = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -127,7 +125,7 @@ namespace DAL
 
                     cn.Open();
 
-                    using(SqlDataReader dr = cmd.ExecuteReader())
+                    using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         if (dr.Read())
                         {
@@ -159,7 +157,7 @@ namespace DAL
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -180,7 +178,7 @@ namespace DAL
                     string query = "Select * from CUSTOMER where IDCUSTOMER = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@id", id);
-                    
+
 
                     cn.Open();
 
@@ -230,7 +228,7 @@ namespace DAL
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
-                using(SqlConnection cn = new SqlConnection(connectionString))
+                using (SqlConnection cn = new SqlConnection(connectionString))
                 {
                     string query = "Select * FROM CUSTOMER where PASSWORD = @password";
                     SqlCommand cmd = new SqlCommand(query, cn);
@@ -240,65 +238,9 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        if(dr.Read())
-                        {
-                            password = (string)dr["PASSWORD"];
-                        }
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                throw e;
-            }
-            return password;
-
-        }
-
-        public Customer LoginCustomer(string email, string password)
-        {
-            Customer customer = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * from CUSTOMER where MAIL = @email AND password = @password";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@password", password);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
                         if (dr.Read())
                         {
-                            customer = new Customer();
-
-                            customer.IDCUSTOMER = (int)dr["IDCUSTOMER"];
-
-                            if (dr["NAME"] != null)
-                                customer.NAME = (string)dr["NAME"];
-
-                            if (dr["SURNAME"] != null)
-                                customer.SURNAME = (string)dr["SURNAME"];
-
-                            if (dr["MAIL"] != null)
-                                customer.MAIL = (string)dr["MAIL"];
-
-                            if (dr["PASSWORD"] != null)
-                                customer.PASSWORD = (string)dr["PASSWORD"];
-
-                            if (dr["USERNAME"] != null)
-                                customer.USERNAME = (string)dr["USERNAME"];
-
-                            customer.PHONE = (int)dr["PHONE"];
-
-                            if (dr["ADDRESS"] != null)
-                                customer.ADDRESS = (string)dr["ADDRESS"];
-                          
+                            password = (string)dr["PASSWORD"];
                         }
                     }
                 }
@@ -307,9 +249,39 @@ namespace DAL
             {
                 throw e;
             }
+            return password;
 
-            return customer;
         }
 
+        public void UpdateCustomer(Customer customer)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE [dbo].[CUSTOMER] SET NAME = @name, SURNAME = @surname, USERNAME=@username, PHONE = @phone," +
+                        "ADDRESS = @address, MAIL = @mail WHERE IDCUSTOMER=@idCustomer";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idCustomer", customer.IDCUSTOMER);
+                    cmd.Parameters.AddWithValue("@name", customer.NAME);
+                    cmd.Parameters.AddWithValue("@surname", customer.SURNAME);
+                    cmd.Parameters.AddWithValue("@username", customer.USERNAME);
+                    cmd.Parameters.AddWithValue("@phone", customer.PHONE);
+                    cmd.Parameters.AddWithValue("@address", customer.ADDRESS);
+                    cmd.Parameters.AddWithValue("@mail", customer.MAIL);
+                    
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

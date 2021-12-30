@@ -10,7 +10,6 @@ namespace BLL
     public interface ICustomerManager
     {
 
-
         public Customer GetCustomer(string email, string password);
 
 
@@ -18,8 +17,6 @@ namespace BLL
 
 
         public Customer InsertCustomer(Customer customer);
-
-
 
         public string GetPassword(string password);
 
@@ -30,7 +27,11 @@ namespace BLL
         public Customer LoginCustomer(string email, string password);
 
         public Customer GetCustomerID(int id);
-        
+
+        public void UpdateCustomer(Customer customer);
+
+
+
 
     }
 

@@ -10,12 +10,12 @@ namespace DAL
     public interface ICustomerDB
     {
         List<Customer> GetCustomers();
-
         Customer GetCustomer(string mail, string password);
         Customer InsertCustomer(Customer customer);
         string GetPassword(string password);
-        Customer LoginCustomer(string email, string password);
-
         Customer GetCustomerID(int id);
+
+        void UpdateCustomer(Customer customer);
+        
     }
 }
