@@ -8,30 +8,35 @@
     @Html.ActionLink("Create an account", "CreateCustomer", new { /* id = Model.PrimaryKey */ })
 </div>
 <hr />
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="active">Log in</h2>
+        <h2 class="inactive underlineHover">Register</h2>
+        <div class="container mt-5">
+            <div class="row justify-content-center align-content-center">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text">
 
-<div class="container mt-5">
-    <div class="row justify-content-center align-content-center">
-        <div class="col-sm-12 col-md-12 col-lg-4">
-            <form method="post">
-                <div asp-validation-summary="All" class="text">
-
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label" asp-for="mail"></label>
+                            <input type="text" asp-for="mail" class="form-control fadeIn second" placeholder="mail"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label" asp-for="password"></label>
+                            <input asp-for="password" type="password" class="form-control fadeIn third" placeholder="password"/>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn fadeIn fourth">Login</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label class="col-form-label" asp-for="mail">Mail</label>
-                    <input type="text" asp-for="mail" class="form-control" />
-                </div>
-                <div class="mb-3">
-                    <label class="col-form-label" asp-for="password">Password</label>
-                    <input type="text" asp-for="password" type="password" class="form-control" />
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn">Login</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
