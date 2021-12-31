@@ -2,11 +2,10 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 
-body
-{
-    background: url("/Images/Background.jpg");
-    height: 100vh;
-    background-size:cover;
+body {
+    background: url("/Images/BurgerBackground.jpeg");
+    height: auto;
+    background-size: cover;
     background-position: center center;
     position: relative;
 }
@@ -119,9 +118,16 @@ body {
   margin-bottom: 60px;
 }
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    width: 100%;
+    position: fixed;
+    background: #333;
+    padding: 10px 0;
+    color: #fff;
+    bottom: 0;
 }
+
+.container {
+    padding: 25px;
+    background-color: darkseagreen;
+    border-radius: 7px;
+}   
