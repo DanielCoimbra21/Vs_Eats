@@ -11,7 +11,7 @@ namespace DAL
     {
         List<Customer> GetCustomers();
         Customer GetCustomer(string mail, string password);
-        Customer InsertCustomer(Customer customer);
+        void InsertCustomer(Customer customer);
         string GetPassword(string password);
         Customer GetCustomerID(int id);
 

@@ -164,22 +164,49 @@ namespace DAL
                     var query = "UPDATE STAFF " +
                         "SET NAMESTAFF = @nameStaff, SURNAMESTAFF=@surnameStaff, PHONENUMBERSTAFF=@phoneNumber, " +
                             "ADDRESSSTAFF=@addressStaff, MAILSTAFF=@mailStaff " +
-                        "WHERE USERNAMESTAFF=@usernameStaff and PASSWORDSTAFF=@passwordStaff";
+                        "WHERE IDSTAFF=@idStaff";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@nameStaff", staff.NAMESTAFF);
                     cmd.Parameters.AddWithValue("@surnameStaff", staff.SURNAMESTAFF);
                     cmd.Parameters.AddWithValue("@phoneNumber", staff.PHONENUMBERSTAFF);
                     cmd.Parameters.AddWithValue("@addressStaff", staff.ADDRESSSTAFF);
                     cmd.Parameters.AddWithValue("@mailStaff", staff.MAILSTAFF);
-                    cmd.Parameters.AddWithValue("@usernameStaff", staff.USERNAMESTAFF);
-                    cmd.Parameters.AddWithValue("@passwordStaff", staff.PASSWORDSTAFF);
-                    
+                    cmd.Parameters.AddWithValue("@idStaff", staff.IDSTAFF);
+                                       
                     cn.Open();
 
                     cmd.ExecuteNonQuery();
 
                 }
             }catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void UpdatePassword(Staff staff)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+
+
+                    var query = "UPDATE STAFF " +
+                        "SET PASSWORDSTAFF = @passwordStaff WHERE IDSTAFF=@idStaff";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idStaff", staff.IDSTAFF);
+                    cmd.Parameters.AddWithValue("@passwordStaff", staff.PASSWORDSTAFF);
+                    
+
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+            catch (Exception e)
             {
                 throw e;
             }

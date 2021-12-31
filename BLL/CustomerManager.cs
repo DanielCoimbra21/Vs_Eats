@@ -40,31 +40,9 @@ namespace BLL
             CustomerDb.UpdateCustomer(customer);
         }
 
-        public Customer InsertCustomer(Customer customer)//Customer customer
-        {
-            var mail = customer.MAIL;
-            var username = customer.USERNAME;
-
-            var list = CustomerDb.GetCustomers();
-
-            foreach(Customer customer1 in list)
-            {
-                if(customer1.MAIL.Equals(mail))
-                {
-                    Console.WriteLine("This Email Exists already");
-                    customer = null;
-                    return customer;
-                }
-
-                if(customer1.USERNAME.Equals(username))
-                {
-                    Console.WriteLine("This Username Exists already");
-                    customer = null;
-                    return customer;
-                }
-            }
-            return CustomerDb.InsertCustomer(customer);
-
+        public void InsertCustomer(Customer customer)//Customer customer
+        { 
+            CustomerDb.InsertCustomer(customer);
         }
 
         public string GetPassword(string password)

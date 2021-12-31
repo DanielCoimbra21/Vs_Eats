@@ -15,11 +15,13 @@ namespace WebAppVSEAT.Controllers
 
         private ICustomerManager CustomerManager { get; }
         private IStaffManager StaffManager { get; }
+        private ICityManager CityManager { get; }
 
-        public LoginController(ICustomerManager customerManager, IStaffManager staffManager)
+        public LoginController(ICityManager cityManager,ICustomerManager customerManager, IStaffManager staffManager)
         {
             CustomerManager = customerManager;
             StaffManager = staffManager;
+            CityManager = cityManager;
         }
 
         public IActionResult Index()
@@ -77,6 +79,63 @@ namespace WebAppVSEAT.Controllers
             HttpContext.Session.Clear();
 
             //retour sur la page login
+            return RedirectToAction("Index", "Login");
+        }
+
+        /// <summary>
+        /// Méthode pour afficher la vue pour créer un staff
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult CreateCustomer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateCustomer(CustomerVM customerVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var listCustomer = CustomerManager.GetCustomers();
+                foreach(var c in listCustomer)
+                {
+                    if(c.MAIL == customerVM.MAIL)
+                    {
+                        ModelState.AddModelError(string.Empty, "An account already exists with this mail");
+                        return View(customerVM);
+                    }
+                }
+                //Trouver l'idCity en fonction de la ville
+                var cities = CityManager.GetCities();
+                var idCity = -1;
+                foreach (var city in cities)
+                {
+                    if (city.CITYNAME == customerVM.CITYNAME)
+                    {
+                        idCity = city.IDCITY;
+                    }
+                }
+
+                if (idCity == -1)
+                {
+                    ModelState.AddModelError(string.Empty, "Wrong city entered, write correctly");
+                    return View(customerVM);
+                }
+
+                var customer = new DTO.Customer();
+                customer.IDCITY = idCity;
+                customer.NAME = customerVM.NAME;
+                customer.SURNAME = customerVM.SURNAME;
+                customer.USERNAME = "";
+                customer.PHONE = 0;
+                customer.ADDRESS = "";
+                customer.MAIL = customerVM.MAIL;
+                customer.PASSWORD = customerVM.PASSWORD;
+
+                CustomerManager.InsertCustomer(customer);
+            }
+
             return RedirectToAction("Index", "Login");
         }
     }

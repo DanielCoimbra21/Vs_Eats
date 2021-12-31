@@ -23,7 +23,14 @@ namespace BLL
             return StaffDb.GetStaffs(); 
         }
 
-        public void UpdateStaff(StaffManager staff) {}
+        public void UpdatePassword(Staff staff)
+        {
+            StaffDb.UpdatePassword(staff);
+        }
+
+        public void UpdateStaff(Staff staff) {
+            StaffDb.UpdateStaff(staff);
+        }
 
         public DTO.Staff GetStaff(string mailStaff, string passwordStaff)
         {

@@ -11,6 +11,6 @@ namespace DAL
 
         Staff GetStaff(int idStaff);
 
-
+        void UpdatePassword(Staff staff);
     }
 }

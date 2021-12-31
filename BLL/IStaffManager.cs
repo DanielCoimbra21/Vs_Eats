@@ -9,7 +9,7 @@ namespace BLL
 {
     public interface IStaffManager
     {
-        public void UpdateStaff(StaffManager staff);
+        void UpdateStaff(Staff staff);
 
         List<Staff> GetStaffs();
 
@@ -18,6 +18,8 @@ namespace BLL
         void ArchiveDelivery(Order order);
 
         Staff GetStaff(int idStaff);
+
+        void UpdatePassword(Staff staff);
 
     }
 

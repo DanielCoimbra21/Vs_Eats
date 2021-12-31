@@ -75,15 +75,19 @@ namespace DAL
             return results;
         }
 
-        public Customer InsertCustomer(Customer customer)//Customer customer
+        /// <summary>
+        /// Méthode pour la création d'un nouveau customer
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        public void InsertCustomer(Customer customer)
         {
-
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into CUSTOMER(IDCITY, NAME, SURNAME, USERNAME, PHONE, ADDRESS, MAIL, PASSWORD) values(@idCity, @name, @surname, @username, @phone, @address, @mail, @password) SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into CUSTOMER(IDCITY,NAME, SURNAME,USERNAME,PHONE,ADDRESS, MAIL, PASSWORD) values(@idCity,@name, @surname,@username,@phone,@address,@mail,@password) SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     //cmd.Parameters.AddWithValue("@IDCUSTOMER", customer.IDCUSTOMER);
@@ -94,7 +98,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@phone", customer.PHONE);
                     cmd.Parameters.AddWithValue("@address", customer.ADDRESS);
                     cmd.Parameters.AddWithValue("@mail", customer.MAIL);
-                    cmd.Parameters.AddWithValue("@password", GetPassword(customer.PASSWORD));
+                    cmd.Parameters.AddWithValue("@password", customer.PASSWORD);
 
                     cn.Open();
 
@@ -105,7 +109,6 @@ namespace DAL
             {
                 throw e;
             }
-            return customer;
         }
 
 
