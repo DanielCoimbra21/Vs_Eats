@@ -13,8 +13,6 @@ namespace BLL
     {
         private IDishDB DishDb { get; set; }
 
-
-
         public DishManager(IDishDB dishDB)
         {
             DishDb = dishDB;

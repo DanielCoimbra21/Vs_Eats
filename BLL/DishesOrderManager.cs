@@ -11,15 +11,8 @@ namespace BLL
 {
     public class DishesOrderManager : IDishesOrderManager
     {
-        private IDishesOrderDB DishesOrderDb { get; set; }
-
-        public List<DishesOrder> GetDishesOrders(int idOrder)
-        {
-            return DishesOrderDb.GetDishesOrders(idOrder);
-        }
-
+        private IDishesOrderDB DishesOrderDb { get; }
         private IOrderDB orderDb { get; }
-
         public DishesOrderManager(IConfiguration configuration)
         {
             DishesOrderDb = new DishesOrderDB(configuration);
@@ -27,6 +20,12 @@ namespace BLL
             DishesOrderDb.GetDishesOrders();
 
             orderDb = new OrderDB(configuration);
+        }
+       
+
+        public List<DishesOrder> GetDishesOrders(int idOrder)
+        {
+            return DishesOrderDb.GetDishesOrders(idOrder);
         }
 
         public void InsertDishesOrder(DishesOrder dishesOrder)
