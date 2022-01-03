@@ -134,5 +134,11 @@ body {
     bottom: 0;
 }
 
+.btn-restaurant {
+    background-color: #e5e5e5;
+    border: none;
+    color: white;
+}
+
 
 
