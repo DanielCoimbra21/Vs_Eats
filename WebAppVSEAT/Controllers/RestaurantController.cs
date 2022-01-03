@@ -159,6 +159,15 @@ namespace WebAppVSEAT.Controllers
                     var minutes = int.Parse(commandVM.hour.Split(":")[1]);
                     DateTime myDeliveryTime = new DateTime(dateTimeNow.Year, dateTimeNow.Month, dateTimeNow.Day, hour, minutes, 0);
 
+                    //si l'heure de livraison est 30 minutes avant, pas possible
+                    var diff = myDeliveryTime.Subtract(dateTimeNow);
+                    
+                    if (diff.TotalMilliseconds < 1800000)
+                    {
+                        ModelState.AddModelError(String.Empty, "Choose an another time, it is too short to deliver");
+                        return View(commandVM);
+                    }
+
                     //Définir le status
                     string status = "ongoing";
 
@@ -225,7 +234,7 @@ namespace WebAppVSEAT.Controllers
                         return View("~/Views/Restaurant/TakeAnOrderConfirmation.cshtml", commandVM);
                     }
                 }
-                ModelState.AddModelError(string.Empty, "Invalid username or password");
+                ModelState.AddModelError(string.Empty, "Please, choose at least one dish");
             }
             return View(commandVM);
         }

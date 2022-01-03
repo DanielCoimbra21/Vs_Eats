@@ -33,7 +33,7 @@ namespace WebAppVSEAT.Controllers
         /// Affiche directement les commandes en cours du staff
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public IActionResult OrdersStaff()
         {
             //Vérifier que l'utilisateur est bien connecté
             if (HttpContext.Session.GetInt32("IdStaff") == null)
@@ -48,7 +48,7 @@ namespace WebAppVSEAT.Controllers
             //Si liste des commandes est null, afficher une vue erreur
             if(listOrders == null)
             {
-                return View("~/Views/Order/ErrorNoCommand.cshtml");
+                return View("~/Views/Order/ErrorNoDelivery.cshtml");
             }
 
             foreach (var o in listOrders)
