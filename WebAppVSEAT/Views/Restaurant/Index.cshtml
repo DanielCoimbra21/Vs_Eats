@@ -10,19 +10,22 @@
 
     @foreach (var item in Model)
     {
-  
-        <div class="masonry-grid__item">
 
-            <h2>           
-                @Html.ActionLink(item.NAMERESTAURANT, "Details", new { id = item.IDRESTAURANT })   
-            </h2>
-            <h3>
-                @Html.DisplayFor(modelItem => item.ADDRESSRESTAURANT)
-            </h3>
-            <h3>
-                @Html.DisplayFor(modelItem => item.CITYNAME)
-            </h3>
+        string imageUrl = "/Images/Restaurant/" + item.IDRESTAURANT + ".jpg";
+
+        <div class="masonry-grid__item" >
+                <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDRESTAURANT)" width="250" height="250" />
+                <h2>
+                    @Html.ActionLink(item.NAMERESTAURANT, "Details", new { id = item.IDRESTAURANT })
+                </h2>
+                <h4>
+                    @Html.DisplayFor(modelItem => item.ADDRESSRESTAURANT)
+                </h4>
+                <h4>
+                    @Html.DisplayFor(modelItem => item.CITYNAME)
+                </h4>
         </div>
+        <br />
     }
 
 </div>
