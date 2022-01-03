@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
     <link rel="stylesheet" href="~/css/dishes.css" />
-   /* var idRestaurant = 0;*/
+    /* var idRestaurant = 0;*/
 }
 
 
@@ -12,16 +12,20 @@
 <h1>Their Best Dishes</h1>
 
 <div class="cards">
-    
+
     @foreach (var item in Model)
     {
-    <div class="cards__item">
-        <img src="~/Images/BurgerBackground.jpg" width="150px" height="150px" />
+        string imageUrl = "/Images/Dishes/" + item.IDDISHES + ".jpg";
 
-        <h2>@Html.DisplayFor(modelItem => item.NAMEDISH)</h2>
-        <h3>@Html.DisplayFor(modelItem => item.PRICEDISH) chf</h3>
-        @Html.ActionLink("Order", "TakeAnOrder", new { id = item.IDRESTAURANT })
-    </div>
+        <div class="cards__item">
+
+            <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
+
+            <h2>@Html.DisplayFor(modelItem => item.NAMEDISH)</h2>
+            <h3>@Html.DisplayFor(modelItem => item.PRICEDISH) chf</h3>
+            @Html.ActionLink("Order", "TakeAnOrder", new { id = item.IDRESTAURANT })
+            <p>
+        </div>
     }
 
 </div>
