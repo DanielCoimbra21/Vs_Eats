@@ -3,7 +3,8 @@ for details on configuring this project to bundle and minify static web assets. 
 
 
 body {
-    background: url("/Images/BurgerBackground.jpeg");
+    /*background: url("/Images/BurgerBackground.jpeg");*/
+    background-color: antiquewhite;
     height: auto;
     background-size: cover;
     background-position: center center;
@@ -47,27 +48,34 @@ a.navbar-brand {
 
 
 
-a.right {
+.a-right {
     float: right;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;   
+    color: #92badd;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 400;
+    background-color: transparent;
 }
     
 a:hover {
-        color: aquamarine;
-        background-color: aquamarine;
+        background-color: gray;
         border-radius: 7px;
 }
 
-
+.btn {
+    background-color: #56baed;
+    border: none;
+    color: white;
+}
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    background-color: #56baed;
+    border: none;
+    color: white;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -126,9 +134,4 @@ body {
     bottom: 0;
 }
 
-/*
-.container {
-    padding: 25px;
-    background-color: darkseagreen;
-    border-radius: 7px;
-}*/   
+

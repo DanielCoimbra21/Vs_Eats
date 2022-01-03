@@ -2,39 +2,36 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<table class="table">
-    <thead>
-        <tr>
 
-            <th>
-                @Html.DisplayNameFor(model => model.NAMERESTAURANT)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ADDRESSRESTAURANT)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CITYNAME)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.ActionLink(item.NAMERESTAURANT, "Details", new { id = item.IDRESTAURANT })
-            </td>
-            <td>
+<div class="masonry-grid">
+
+    @foreach (var item in Model)
+    {
+  
+        <div class="masonry-grid__item">
+
+            <h2>           
+                @Html.ActionLink(item.NAMERESTAURANT, "Details", new { id = item.IDRESTAURANT })   
+            </h2>
+            <h3>
                 @Html.DisplayFor(modelItem => item.ADDRESSRESTAURANT)
-            </td>
-            <td>
+            </h3>
+            <h3>
                 @Html.DisplayFor(modelItem => item.CITYNAME)
-            </td>
-        </tr>
-}
+            </h3>
+        </div>
+    
+        
+    }
+
+</div>
 
 
-    </tbody>
-</table>
+
+
+
+
+

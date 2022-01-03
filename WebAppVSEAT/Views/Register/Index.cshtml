@@ -4,39 +4,39 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="active">Sign in</h2>
+        <div class="container mt-5">
+            <div class="row justify-content-center align-content-center">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text">
 
-<h1>Sign-In</h1>
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label" asp-for="mail">Enter your Mail</label>
+                            <input type="text" asp-for="mail" class="form-control fadeIn second" placeholder="mail" />
+                        </div>
 
-<div class="container mt-5">
-    <div class="row justify-content-center align-content-center">
-        <div class="col-sm-12 col-md-12 col-lg-4">
-            <h1 class="mb-3">Register</h1>
-            <form method="post">
-                <div asp-validation-summary="All" class="text">
-
+                        <div class="mb-3">
+                            <label class="col-form-label" asp-for="password">Enter New Password</label>
+                            <input asp-for="password" type="password" class="form-control fadeIn third" placeholder="password" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label" asp-for="confirmerPassword">Confirm Password</label>
+                            <input asp-for="password" type="password" class="form-control fadeIn third" placeholder="password" />
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn fadeIn fourth">Sign-In</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label class="col-form-label" asp-for="mail">Mail</label>
-                    <input type="text" asp-for="mail" class="form-control" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="col-form-label" asp-for="password">New Password</label>
-                    <input type="text" asp-for="password" type="password" class="form-control" />
-                </div>
-                <div class="mb-3">
-                    <label class="col-form-label" asp-for="confirmerPassword">Confirm Password</label>
-                    <input type="text" asp-for="password" type="password" class="form-control" />
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn">Sign-In</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
 

@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Orders";
+    Layout = "_Layout";
+
 }
 
 <h1>Orders</h1>
@@ -28,7 +30,10 @@
                 @Html.DisplayFor(modelItem => item.DELIVERTIME)
             </td>
             <td>
-                @Html.ActionLink("CancelOrder", "CancelOrderID", new { id=item.IDORDER })
+                @Html.ActionLink("Details", "DetailsOrder", new { id = item.IDORDER })
+            </td>
+            <td>
+                @Html.ActionLink("Cancel Order", "CancelOrderID", new { id = item.IDORDER })
             </td>
         </tr>
 }

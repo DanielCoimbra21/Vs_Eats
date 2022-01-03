@@ -19,6 +19,51 @@ namespace DAL
             Configuration = configuration;
         }
 
+        public List<DishesOrder> GetDishesOrders(int idOrder)
+        {
+            List<DishesOrder> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from DISHESORDER where @idOrder = IDORDER";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idOrder", idOrder);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<DishesOrder>();
+
+                            DishesOrder dishesOrder = new DishesOrder();
+
+                            dishesOrder.IDDISHES = (int)dr["IDDISHES"];
+
+                            dishesOrder.IDORDER = (int)dr["IDORDER"];
+
+                            dishesOrder.QUANTITY = (int)dr["QUANTITY"];
+
+                            results.Add(dishesOrder);
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
+        }
+
         public List<DishesOrder> GetDishesOrders()
         {
             List<DishesOrder> results = null;
@@ -69,7 +114,7 @@ namespace DAL
             {
                 using(SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into DISHESORDER(IDDISHES,IDORDER QUANTITY)" +
+                    string query = "Insert into DISHESORDER(IDDISHES,IDORDER, QUANTITY)" +
                         " values(@idDishes,@idOrder, @quantity)";
 
                     SqlCommand cmd = new SqlCommand(query, cn);
@@ -79,6 +124,8 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@quantity", dishesOrder.QUANTITY);
 
                     cn.Open();
+
+                    cmd.ExecuteNonQuery();
 
                 }
             }

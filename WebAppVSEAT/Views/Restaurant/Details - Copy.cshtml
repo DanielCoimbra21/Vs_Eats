@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebAppVSEAT.Models.DishesRestaurantVM>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link rel="stylesheet" href="~/css/dishes.css" />
+    var idRestaurant = 0;
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NAMEDISH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PRICEDISH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IDRESTAURANT)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NAMEDISH)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PRICEDISH)
+                </td>
+                <td>
+                    <div class="ImageDish" id="burger">
+
+                    </div>
+
+                    <img src="~/Images/BurgerBackground.jpg" height="300" width="300" />
+                </td>
+            </tr>
+        }
+        <input type="submit" value="ORDER" href="">
+        @Html.ActionLink("TakeAnOrder", "TakeAnOrder", new { id = idRestaurant }) </input>
+
+
+    </tbody>
+</table>
+
+
+
+
+

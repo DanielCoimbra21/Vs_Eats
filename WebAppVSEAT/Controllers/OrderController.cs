@@ -14,13 +14,19 @@ namespace WebAppVSEAT.Controllers
         private IOrderManager OrderManager { get; }
         private ICustomerManager CustomerManager { get; }
         private ICityManager CityManager { get; }
-        
 
-        public OrderController(IOrderManager orderManager, ICustomerManager customerManager, ICityManager cityManager)
+        private IRestaurantManager RestaurantManager { get; }
+ 
+        private IDishesOrderManager DishesOrderManager { get; }
+
+
+        public OrderController(IRestaurantManager restaurantManager, IDishesOrderManager dishesOrderManager ,IOrderManager orderManager, ICustomerManager customerManager, ICityManager cityManager)
         {
             OrderManager = orderManager;
             CustomerManager = customerManager;
             CityManager = cityManager;
+            RestaurantManager = restaurantManager;
+            DishesOrderManager = dishesOrderManager;
         }
 
         /// <summary>
@@ -189,7 +195,7 @@ namespace WebAppVSEAT.Controllers
             }
 
 
-            ModelState.AddModelError(string.Empty, "Order has been delivered");
+            ModelState.AddModelError(string.Empty, "Order can't be cancelled less than 3h before the delivery");
             return View(cancelOrderVM);
         }
 
@@ -208,6 +214,11 @@ namespace WebAppVSEAT.Controllers
             var idCustomer = (int)(HttpContext.Session.GetInt32("IdCustomer"));
             var listCustomerOrders = OrderManager.GetCustomerOrders(idCustomer);
             var listCustomerOrderVM = new List<CustomerOrderVM>();
+
+            if(listCustomerOrders == null)
+            {
+                return View("~/Views/Order/ErrorNoCommand.cshtml");
+            }
 
             foreach (var o in listCustomerOrders)
             {
@@ -268,6 +279,38 @@ namespace WebAppVSEAT.Controllers
             }
 
             return View(listOrderVM);
+        }
+
+        public IActionResult DetailsOrder(int id)
+        {
+            if (HttpContext.Session.GetInt32("IdCustomer") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+
+            var order = OrderManager.GetOrder(id);
+            var restaurant = RestaurantManager.GetRestaurant(order.IDRESTAURANT);
+            var dishesOrder = DishesOrderManager.GetDishesOrders(id);
+            var dishes = new List<DTO.Dish>();
+            var vms = new List<CommandVM>();
+
+
+            foreach (var idDish in dishesOrder)
+            {
+                var vm = new CommandVM();
+                vm.DELIVERTIME = order.DELIVERTIME;
+                vm.QUANTITY = idDish.QUANTITY;
+                vm.NAMERESTAURANT = restaurant.NAMERESTAURANT;
+                vm.totalPrice = order.TOTALPRICE;
+
+                vms.Add(vm);
+            }
+
+            return View(vms);
+
+
+
         }
 
 

@@ -16,5 +16,6 @@ namespace WebAppVSEAT.Models
         public DTO.Dish dish { get; set; }
         public DateTime DELIVERTIME { get; set; }
         public string hour { get; set; }
+        public decimal totalPrice { get; set; }
     }
 }
