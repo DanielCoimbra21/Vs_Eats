@@ -208,12 +208,11 @@ namespace BLL
                 {
                     /*Deux conditions
                      * 1. Vérifier le statut qu'ils soient "ongoing" et idStaff recherché = idStaff dans la liste
-                     * 2. Vérifier les heures des commandes entre -15min et +15min
+                     * 2. Vérifier les heures des commandes entre -15min et +15min et l'heure elle-même
                     */
                 if (orderByStaff.STATUS.Equals("ongoing") && orderByStaff.IDSTAFF.Equals(listStaff[i].IDSTAFF))
                     {
-                        if (orderByStaff.DELIVERTIME.CompareTo(dateTimeOrderBefore) == 1 && orderByStaff.DELIVERTIME.CompareTo(dateTimeOrderAfter) == -1)
-                        {
+                        if(orderByStaff.DELIVERTIME == dateTimeOrder || orderByStaff.DELIVERTIME == dateTimeOrderAfter || orderByStaff.DELIVERTIME == dateTimeOrderBefore){
                             cpt++;
                         }
                     }
