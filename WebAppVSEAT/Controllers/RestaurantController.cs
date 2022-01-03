@@ -238,8 +238,6 @@ namespace WebAppVSEAT.Controllers
             }
             return View(commandVM);
         }
-
- 
     }
 }
     

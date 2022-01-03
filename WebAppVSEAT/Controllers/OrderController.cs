@@ -122,10 +122,16 @@ namespace WebAppVSEAT.Controllers
         /// <returns></returns>
         public IActionResult Archive(int id)
         {
+            //Vérification si le staff est bien connecté
+            if (HttpContext.Session.GetInt32("IdStaff") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             var order = OrderManager.GetOrder(id);
             OrderManager.ArchiveDelivery(order, "archived");
             
-            return RedirectToAction("Index", "Order");
+            return RedirectToAction("OrdersStaff", "Order");
         }
 
         /// <summary>

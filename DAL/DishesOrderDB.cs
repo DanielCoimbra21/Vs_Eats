@@ -51,7 +51,6 @@ namespace DAL
                             dishesOrder.QUANTITY = (int)dr["QUANTITY"];
 
                             results.Add(dishesOrder);
-
                         }
                     }
                 }
