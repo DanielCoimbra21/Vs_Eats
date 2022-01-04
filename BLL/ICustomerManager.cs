@@ -12,7 +12,6 @@ namespace BLL
 
         public Customer GetCustomer(string email, string password);
 
-
         public List<Customer> GetCustomers();
         public void UpdatePassword(Customer customer);
 
@@ -20,18 +19,13 @@ namespace BLL
 
         public string GetPassword(string password);
 
-
         public string HashPassword(string password);
-
 
         public Customer LoginCustomer(string email, string password);
 
         public Customer GetCustomerID(int id);
 
         public void UpdateCustomer(Customer customer);
-
-
-
 
     }
 

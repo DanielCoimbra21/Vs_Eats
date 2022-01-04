@@ -37,11 +37,6 @@ namespace BLL
             return StaffDb.GetStaff(mailStaff, passwordStaff);
         }
 
-        public void ArchiveDelivery(Order order)
-        {
-
-        }
-
         public Staff GetStaff(int idStaff)
         {
             return StaffDb.GetStaff(idStaff);

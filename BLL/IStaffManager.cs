@@ -15,8 +15,6 @@ namespace BLL
 
         DTO.Staff GetStaff(string mailStaff, string passwordStaff);
 
-        void ArchiveDelivery(Order order);
-
         Staff GetStaff(int idStaff);
 
         void UpdatePassword(Staff staff);

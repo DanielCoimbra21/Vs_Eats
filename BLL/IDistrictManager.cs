@@ -9,10 +9,7 @@ namespace BLL
 {
     public interface IDistrictManager
     {
-
         District GetDistrict(string districtName);
-
         List<District> GetDistricts();
-
     }
 }
