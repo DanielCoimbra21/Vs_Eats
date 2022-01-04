@@ -127,11 +127,12 @@ namespace WebAppVSEAT.Controllers
                 customer.IDCITY = idCity;
                 customer.NAME = customerVM.NAME;
                 customer.SURNAME = customerVM.SURNAME;
-                customer.USERNAME = "";
-                customer.PHONE = 0;
-                customer.ADDRESS = "";
+                customer.USERNAME = customerVM.USERNAME;
+                customer.PHONE = customerVM.PHONE;
+                customer.ADDRESS = customerVM.ADDRESS;
                 customer.MAIL = customerVM.MAIL;
                 customer.PASSWORD = customerVM.PASSWORD;
+                //customer.PASSWORD = customerVM.confirmerPassword;
 
                 CustomerManager.InsertCustomer(customer);
             }

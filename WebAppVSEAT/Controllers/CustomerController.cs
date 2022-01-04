@@ -118,5 +118,61 @@ namespace WebAppVSEAT.Controllers
 
             return View(customerVM);
         }
+
+        /// <summary>
+        /// Méthode pour le changement de mot de passe dans la page profile
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult ChangePasswordCustomer()
+        {
+            if (HttpContext.Session.GetInt32("IdCustomer") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            return View();
+        }
+
+
+        /// <summary>
+        /// Méthode pour changer le mot de passe
+        /// </summary>
+        /// <param name="changePasswordVM"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ChangePasswordCustomer(ChangePasswordCustomerVM changePasswordCustomerVM)
+        {
+            if (ModelState.IsValid)
+            {
+                int idCustomer = (int)HttpContext.Session.GetInt32("IdCustomer");
+                var customer = CustomerManager.GetCustomerID(idCustomer);
+                
+                //vérification que le mot de passe entrer est bien le même que celui sauvegarder
+                if (changePasswordCustomerVM.PASSWORDCUSTOMER == customer.PASSWORD)
+                {
+                    //vérification que le nouveau mot de passe est égal au mot de passe confirmé
+                    if (changePasswordCustomerVM.NEWPASSWORD == changePasswordCustomerVM.CONFIRMPASSWORD)
+                    {
+                        customer.PASSWORD = changePasswordCustomerVM.CONFIRMPASSWORD;
+                        CustomerManager.UpdatePassword(customer);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Wrong password or wrong new password");
+                        return View(changePasswordCustomerVM);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Wrong password or wrong new password");
+                    return View(changePasswordCustomerVM);
+                }
+            }
+
+            return RedirectToAction("Index", "Customer");
+        }
+
     }
 }
+

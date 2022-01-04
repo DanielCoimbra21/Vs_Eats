@@ -54,7 +54,7 @@ namespace DAL
 
                             customer.USERNAME = (string)dr["USERNAME"];
 
-                            customer.PHONE = (int)dr["PHONE"];
+                            customer.PHONE = (string)dr["PHONE"];
 
                             customer.ADDRESS = (string)dr["ADDRESS"];
 
@@ -101,7 +101,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@password", customer.PASSWORD);
 
                     cn.Open();
-
+                    
                     customer.IDCUSTOMER = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
@@ -151,7 +151,7 @@ namespace DAL
                             if (dr["USERNAME"] != null)
                                 customer.USERNAME = (string)dr["USERNAME"];
 
-                            customer.PHONE = (int)dr["PHONE"];
+                            customer.PHONE = (string)dr["PHONE"];
 
                             if (dr["ADDRESS"] != null)
                                 customer.ADDRESS = (string)dr["ADDRESS"];
@@ -208,7 +208,7 @@ namespace DAL
                             if (dr["USERNAME"] != null)
                                 customer.USERNAME = (string)dr["USERNAME"];
 
-                            customer.PHONE = (int)dr["PHONE"];
+                            customer.PHONE = (string)dr["PHONE"];
 
                             if (dr["ADDRESS"] != null)
                                 customer.ADDRESS = (string)dr["ADDRESS"];
@@ -254,6 +254,34 @@ namespace DAL
             }
             return password;
 
+        }
+
+        public void UpdatePassword(Customer customer)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+
+
+                    var query = "UPDATE CUSTOMER " +
+                        "SET PASSWORD = @passwordCustomer WHERE IDCUSTOMER=@idCustomer";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idCustomer", customer.IDCUSTOMER);
+                    cmd.Parameters.AddWithValue("@passwordCustomer", customer.PASSWORD);
+
+
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public void UpdateCustomer(Customer customer)

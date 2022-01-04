@@ -14,14 +14,26 @@ namespace WebAppVSEAT.Models
         public string NAME { get; set; }
         public string SURNAME { get; set; }
         public string USERNAME { get; set; }
-        public int PHONE { get; set; }
+        
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        public string PHONE { get; set; }
         public string ADDRESS { get; set; }
         [Required]
         public string CITYNAME { get; set; }
+        
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string MAIL { get; set; }
+
         [Required]
+        [DataType(DataType.Password)]
         public string PASSWORD { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare(nameof(PASSWORD), ErrorMessage = "This Password doesn't correspond to the previous r password")]
+        public string confirmerPassword { get; set; }
 
     }
 }

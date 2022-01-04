@@ -14,7 +14,8 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+            <h1>VSEAT</h1>
+            <div class="container">            
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,20 +25,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Index">Restaurant</a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="CancelOrder">Cancel Order</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Orders">Current Orders</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark a-right" asp-area="" asp-controller="Login" asp-action="Logout">Log out</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark a-right" asp-area="" asp-controller="Customer" asp-action="Index">Profile</a>
-                        </li>
                     </ul>
+                    <div class="nav-item">
+                        <a class="nav-link text-dark a-right" asp-area="" asp-controller="Customer" asp-action="Index">Profile</a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link text-dark a-right" asp-area="" asp-controller="Login" asp-action="Logout">Log out</a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -51,7 +51,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - WebAppVSEAT - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - VSEAT - Made by Thomas Cheseaux and Daniel Coimbra
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

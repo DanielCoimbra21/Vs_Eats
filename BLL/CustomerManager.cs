@@ -15,6 +15,12 @@ namespace BLL
 
         private ICustomerDB CustomerDb { get; set; }
 
+        public void UpdatePassword(Customer customer)
+        {
+            CustomerDb.UpdatePassword(customer);
+        }
+ 
+
         public CustomerManager(IConfiguration conf)
         {
             CustomerDb = new CustomerDB(conf);

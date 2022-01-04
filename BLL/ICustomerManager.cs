@@ -14,7 +14,7 @@ namespace BLL
 
 
         public List<Customer> GetCustomers();
-
+        public void UpdatePassword(Customer customer);
 
         public void InsertCustomer(Customer customer);
 

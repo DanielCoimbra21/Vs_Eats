@@ -14,7 +14,7 @@ namespace WebAppVSEAT.Models
         public string ADDRESS { get; set; }
         public string CITY { get; set; }
         public int NPA { get; set; }
-        public int PHONE { get; set; }
+        public string PHONE { get; set; }
         public DateTime DELIVERTIME { get; set; }
         public string STATUS { get; set; }
     }

@@ -14,7 +14,7 @@ namespace DTO
         public string NAME { get; set; }
         public string SURNAME { get; set; }
         public string USERNAME { get; set; }
-        public int PHONE { get; set; }
+        public string PHONE { get; set; }
         public string ADDRESS { get; set; }
         public string MAIL { get; set; }
         public string PASSWORD { get; set; }

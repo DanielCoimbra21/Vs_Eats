@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace WebAppVSEAT.Models
 {
-    public class ChangePasswordVM
+    public class ChangePasswordCustomerVM
     {
+
         [Required]
-        public string PASSWORDSTAFF { get; set; }
+        public string PASSWORDCUSTOMER { get; set; }
         [Required]
         public string NEWPASSWORD { get; set; }
         [Required]
         public string CONFIRMPASSWORD { get; set; }
+
 
 
     }
