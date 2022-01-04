@@ -11,8 +11,6 @@ namespace BLL
     {
         void UpdateStaff(Staff staff);
 
-        List<Staff> GetStaffs();
-
         DTO.Staff GetStaff(string mailStaff, string passwordStaff);
 
         Staff GetStaff(int idStaff);

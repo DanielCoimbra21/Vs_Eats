@@ -21,8 +21,6 @@ namespace BLL
 
         public string HashPassword(string password);
 
-        public Customer LoginCustomer(string email, string password);
-
         public Customer GetCustomerID(int id);
 
         public void UpdateCustomer(Customer customer);

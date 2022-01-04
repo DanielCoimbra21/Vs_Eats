@@ -18,11 +18,6 @@ namespace BLL
             StaffDb = new StaffDB(conf);
         }
 
-        public List<Staff> GetStaffs()
-        {
-            return StaffDb.GetStaffs(); 
-        }
-
         public void UpdatePassword(Staff staff)
         {
             StaffDb.UpdatePassword(staff);

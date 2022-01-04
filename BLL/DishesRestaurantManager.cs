@@ -18,16 +18,6 @@ namespace BLL
             DishesRestaurantDb = new DishesRestaurantDB(conf);
         }
 
-        public List<DishesRestaurant> GetDishesRestaurants()
-        {
-            return DishesRestaurantDb.GetDishesRestaurants();
-        }
-
-        public int GetIdRestaurant(int idDish)
-        {
-            return DishesRestaurantDb.GetIdRestaurant(idDish);
-        }
-
         public List<int> GetListDishes(int idRestaurant)
         {
             return DishesRestaurantDb.GetListDishes(idRestaurant);

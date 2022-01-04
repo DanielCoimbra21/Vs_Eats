@@ -26,8 +26,6 @@ namespace BLL
         public int AssignStaff(Order order);
 
         public Order InsertOrder(Order order, int idStaff);
-
-        public void AddTime(Order order);
       
     }
 

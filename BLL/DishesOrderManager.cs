@@ -33,6 +33,5 @@ namespace BLL
             DishesOrderDb.InsertDishesOrder(dishesOrder);
         }
 
-        
     }
 }

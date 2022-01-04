@@ -53,6 +53,9 @@
                     @Html.DisplayNameFor(model => model.orderDishes.First().dish.PRICEDISH)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.orderDishes.First().IDRESTAURANT)
+                </th>
+                <th>
                     Quantity
                 </th>
                 <th></th>
@@ -67,6 +70,8 @@
                         @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.IDDISHES)
+
+                        @Html.DisplayFor(modelItem => Model.orderDishes[i].IDRESTAURANT)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].IDRESTAURANT)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].NAMERESTAURANT)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].CITYNAME)
@@ -76,15 +81,14 @@
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.PRICEDISH)
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => Model.orderDishes[i].QUANTITY)                      
+                        @Html.TextBoxFor(m => Model.orderDishes[i].QUANTITY)
                     </td>
                 </tr>
             }
 
         </tbody>
-
     </table>
-    <input type="submit" value="Confirm order" />
+    <input class="btn" type="submit" value="Confirm order" />
     <br />
 
     @*<a asp-action="Index">confirm your order</a>*@

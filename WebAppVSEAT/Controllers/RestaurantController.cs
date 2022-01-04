@@ -111,6 +111,7 @@ namespace WebAppVSEAT.Controllers
             }
 
             var myModel = new CommandVM();
+            myModel.IDRESTAURANT = id;
             myModel.orderDishes = new List<CommandVM>();
 
 
@@ -119,7 +120,7 @@ namespace WebAppVSEAT.Controllers
                 foreach (var dish in dishes)
                 {
                     var myCityID = RestaurantManager.GetRestaurant(id).IDCITY;
-                    Models.CommandVM myDishVM = new Models.CommandVM()
+                    CommandVM myDishVM = new CommandVM()
                     {
                         IDRESTAURANT = id,
                         QUANTITY = 0,
@@ -141,6 +142,8 @@ namespace WebAppVSEAT.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult TakeAnOrder(CommandVM commandVM)
         {
+            int idRestaurant = -1; 
+
             if (ModelState.IsValid)
             {
                 if(commandVM != null)
@@ -151,6 +154,7 @@ namespace WebAppVSEAT.Controllers
                     foreach (var d in commandVM.orderDishes)
                     {
                         somme += d.dish.PRICEDISH * d.QUANTITY;
+                        idRestaurant = d.IDRESTAURANT;
                     }
 
                     //Calculer la nouvelle date
@@ -175,11 +179,11 @@ namespace WebAppVSEAT.Controllers
                     int idCustomer = (int)HttpContext.Session.GetInt32("IdCustomer");
 
                     //Trouver l'id du district
-                    var city = CityManager.GetCity(RestaurantManager.GetRestaurant(commandVM.IDRESTAURANT).IDCITY);
+                    var city = CityManager.GetCity(RestaurantManager.GetRestaurant(idRestaurant).IDCITY);
                     int idDistrict = city.IDDISTRICT;
 
                     //Trouver l'id du restaurant
-                    int idRestaurant = commandVM.IDRESTAURANT;
+                    
 
                     //Créer une nouvelle commande sans l'id du Staff
                     DTO.Order order = new DTO.Order();

@@ -87,31 +87,5 @@ namespace BLL
             return Convert.ToBase64String(encrypted_bytes);
         }
 
-        public Customer LoginCustomer(string email, string password )
-        {
-            List<Customer> customerList = CustomerDb.GetCustomers();
-            Customer customer = null;
-            
-            //parcourir tous les clients
-            foreach (var cs in customerList)
-            {
-                //si le mot de pass et le username se trouve dans la base de données
-                if (cs.MAIL.Equals(email) && cs.PASSWORD.Equals(password))
-                {
-                    Console.WriteLine("LOGIN CORRECT");
-                    //return CustomerDb.LoginCustomer(email, password);
-                    return customer = cs;
-                    
-                }
-
-            }
-
-            //sinon message d'erreur s'affiche
-            Console.WriteLine("Login or Password Incorrect");
-
-            return customer;
-            
-        }
-       
     }
 }
