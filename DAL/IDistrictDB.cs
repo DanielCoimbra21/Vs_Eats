@@ -10,6 +10,6 @@ namespace DAL
     public interface IDistrictDB
     {
         List<District> GetDistricts();
-        District GetDistrict(string nameDistrict);
+        District GetDistrict(int idDistrict);
     }
 }

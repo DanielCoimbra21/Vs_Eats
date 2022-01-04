@@ -5,6 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<p>
+    @using (@Html.BeginForm("Index", "Restaurant", FormMethod.Get))
+    {
+        <b>Search by :</b> @Html.RadioButton("searchBy", "Restaurant", true) <text>Restaurant</text>
+        @Html.RadioButton("searchBy", "District", true) <text>District</text>
+        <br />
+        @Html.TextBox("search") <input type="submit" class="btn" value="search" />
+    }
+
+</p>
+
 
 <div class="masonry-grid">
 

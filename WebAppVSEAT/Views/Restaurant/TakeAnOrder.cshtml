@@ -53,9 +53,6 @@
                     @Html.DisplayNameFor(model => model.orderDishes.First().dish.PRICEDISH)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.orderDishes.First().IDRESTAURANT)
-                </th>
-                <th>
                     Quantity
                 </th>
                 <th></th>
@@ -71,7 +68,6 @@
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.IDDISHES)
 
-                        @Html.DisplayFor(modelItem => Model.orderDishes[i].IDRESTAURANT)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].IDRESTAURANT)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].NAMERESTAURANT)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].CITYNAME)

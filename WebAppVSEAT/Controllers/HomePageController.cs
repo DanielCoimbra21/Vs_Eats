@@ -28,29 +28,66 @@ namespace WebAppVSEAT.Controllers
             DishesOrderManager = dishesOrderManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchBy, string search)
         {
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
 
-            var rest = RestaurantManager.GetRestaurants();
-            var restaurants_vm = new List<RestaurantVM>();
 
-
-            foreach (var r in rest)
+            if(search == null)
             {
-                var vm = new RestaurantVM();
-                var city = CityManager.GetCity(r.IDCITY);
-                vm.CITYNAME = city.CITYNAME;
-                vm.IDRESTAURANT = r.IDRESTAURANT;
-                vm.NAMERESTAURANT = r.NAMERESTAURANT;
-                vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
+                var rest = RestaurantManager.GetRestaurants();
+                var restaurants_vm = new List<RestaurantVM>();
 
-                restaurants_vm.Add(vm);
+
+                foreach (var r in rest)
+                {
+                    var vm = new RestaurantVM();
+                    var city = CityManager.GetCity(r.IDCITY);
+                    vm.CITYNAME = city.CITYNAME;
+                    vm.IDRESTAURANT = r.IDRESTAURANT;
+                    vm.NAMERESTAURANT = r.NAMERESTAURANT;
+                    vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
+
+                    restaurants_vm.Add(vm);
+                }
+                return View(restaurants_vm);
             }
-            return View(restaurants_vm);
+
+            
+
+
+                if (searchBy == "Restaurant")
+            {
+
+                var restaurant = RestaurantManager.GetRestaurants();
+                var restaurantsList = new List<RestaurantVM>();
+
+
+                foreach (var r in restaurant)
+                {
+                    if (r.NAMERESTAURANT.StartsWith(search))
+                    {
+
+                        var vm = new RestaurantVM();
+                        var city = CityManager.GetCity(r.IDCITY);
+
+                        vm.CITYNAME = city.CITYNAME;
+                        vm.IDRESTAURANT = r.IDRESTAURANT;
+                        vm.NAMERESTAURANT = r.NAMERESTAURANT;
+                        vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
+
+                        restaurantsList.Add(vm);
+                    }
+
+                }
+
+                return View(restaurantsList);
+            }
+
+            return View();   
         }
     }
 }

@@ -7,12 +7,15 @@
 <h1>Index</h1>
 
 <p>
+    @using (@Html.BeginForm("Index", "HomePage", FormMethod.Get))
+    {
+        <b>Search by :</b> @Html.RadioButton("searchBy", "Restaurant", true) <text>Restaurant</text>
+        @Html.RadioButton("searchBy", "Dishes", true) <text>Dishes</text>
+        @Html.RadioButton("searchBy", "District", true) <text>District</text>
+        <br />
+        @Html.TextBox("search") <input type="submit" class="btn" value="search" />
+    }
 
-    <b>Search by :</b> @Html.RadioButton("searchBy", "Restaurant", true)  Restaurant
-    @Html.RadioButton("searchBy", "Dishes", true)  Dishes
-    @Html.RadioButton("searchBy", "District", true)  District
-    <br />
-    @Html.TextBox("search") <input type="submit" class="btn" value="search" />
 
 </p>
 

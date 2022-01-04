@@ -32,7 +32,7 @@ namespace WebAppVSEAT.Controllers
 
 
 
-        public IActionResult Index()
+        public IActionResult Index(string searchBy, string search)
         {
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
@@ -53,8 +53,50 @@ namespace WebAppVSEAT.Controllers
                 vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
 
                 restaurants_vm.Add(vm);
-
             }
+
+            if (search == null)
+            {
+                var rest_vm = new List<RestaurantVM>();
+                foreach (var r in rest)
+                {
+                    var vm = new RestaurantVM();
+                    var city = CityManager.GetCity(r.IDCITY);
+                    vm.CITYNAME = city.CITYNAME;
+                    vm.IDRESTAURANT = r.IDRESTAURANT;
+                    vm.NAMERESTAURANT = r.NAMERESTAURANT;
+                    vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
+
+                    rest_vm.Add(vm);
+                }
+                return View(rest_vm);
+            }
+
+
+            if (searchBy == "Restaurant")
+            {
+                var restVM = new List<RestaurantVM>();
+                foreach (var r in rest)
+                {
+                    if (r.NAMERESTAURANT.StartsWith(search))
+                    {
+
+                        var vm = new RestaurantVM();
+                        var city = CityManager.GetCity(r.IDCITY);
+
+                        vm.CITYNAME = city.CITYNAME;
+                        vm.IDRESTAURANT = r.IDRESTAURANT;
+                        vm.NAMERESTAURANT = r.NAMERESTAURANT;
+                        vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
+
+                        restVM.Add(vm);
+                    }
+
+                }
+
+                return View(restVM);
+            }
+
             return View(restaurants_vm);
         }
 

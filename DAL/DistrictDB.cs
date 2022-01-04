@@ -61,9 +61,41 @@ namespace DAL
             return results;
         }
 
-        public District GetDistrict(string nameDistrict)
+        public District GetDistrict(int idDistrict)
         {
-            throw new NotImplementedException();
+            District district = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from [dbo].DISTRICT where IDDISTRICT = @idDistrict";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idDistrict", idDistrict);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+
+                            district = new District();
+
+                            district.IDDISTRICT = (int)dr["IDCITY"];
+
+                            district.NAMEDISTRICT = (string)dr["NAMEDISTRICT"];
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return district;
         }
     }
 }

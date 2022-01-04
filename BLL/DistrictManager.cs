@@ -18,9 +18,9 @@ namespace BLL
             DistrictDb = new DistrictDB(conf);
         }
 
-        public District GetDistrict(string districtName)
+        public District GetDistrict(int idDistrict)
         {
-            return DistrictDb.GetDistrict(districtName);
+            return DistrictDb.GetDistrict(idDistrict);
         }
 
         public List<District> GetDistricts()
