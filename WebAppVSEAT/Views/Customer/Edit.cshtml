@@ -15,8 +15,7 @@
             <span asp-validation-for="IDCUSTOMER" class="text-danger"></span>
         </div>
         <div class="hide">
-            <label asp-for="IDCITY" class="control-label"></label>
-            <input asp-for="IDCITY" class="form-control" />
+            <input asp-for="IDCITY" type="hidden" class="form-control" />
             <span asp-validation-for="IDCITY" class="text-danger"></span>
         </div>
             <div class="form-group">
@@ -53,16 +52,6 @@
                 <label asp-for="MAIL" class="control-label"></label>
                 <input asp-for="MAIL" class="form-control" />
                 <span asp-validation-for="MAIL" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PASSWORD" class="control-label"></label>
-                <input asp-for="PASSWORD" class="form-control" type="hidden"/>
-                <span asp-validation-for="PASSWORD" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="confirmerPassword" class="control-label"></label>
-                <input asp-for="confirmerPassword" class="form-control fadeIn second" placeholder="confirm password" />
-                <span asp-validation-for="confirmerPassword" class="text-danger fadeIn second"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

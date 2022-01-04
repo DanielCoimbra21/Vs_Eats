@@ -93,25 +93,26 @@ namespace WebAppVSEAT.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateCustomer(CustomerVM customerVM)
+        public IActionResult CreateCustomer(CreateCustomerVM createCustomerVM)
         {
             if (ModelState.IsValid)
             {
                 var listCustomer = CustomerManager.GetCustomers();
                 foreach(var c in listCustomer)
                 {
-                    if(c.MAIL == customerVM.MAIL)
+                    if(c.MAIL == createCustomerVM.MAIL)
                     {
                         ModelState.AddModelError(string.Empty, "An account already exists with this mail");
-                        return View(customerVM);
+                        return View(createCustomerVM);
                     }
                 }
+
                 //Trouver l'idCity en fonction de la ville
                 var cities = CityManager.GetCities();
                 var idCity = -1;
                 foreach (var city in cities)
                 {
-                    if (city.CITYNAME == customerVM.CITYNAME)
+                    if (city.CITYNAME == createCustomerVM.CITYNAME)
                     {
                         idCity = city.IDCITY;
                     }
@@ -120,19 +121,19 @@ namespace WebAppVSEAT.Controllers
                 if (idCity == -1)
                 {
                     ModelState.AddModelError(string.Empty, "Wrong city entered, write correctly");
-                    return View(customerVM);
+                    return View(createCustomerVM);
                 }
 
                 var customer = new DTO.Customer();
                 customer.IDCITY = idCity;
-                customer.NAME = customerVM.NAME;
-                customer.SURNAME = customerVM.SURNAME;
-                customer.USERNAME = customerVM.USERNAME;
-                customer.PHONE = customerVM.PHONE;
-                customer.ADDRESS = customerVM.ADDRESS;
-                customer.MAIL = customerVM.MAIL;
-                customer.PASSWORD = customerVM.PASSWORD;
-                //customer.PASSWORD = customerVM.confirmerPassword;
+                customer.NAME = createCustomerVM.NAME;
+                customer.SURNAME = createCustomerVM.SURNAME;
+                customer.USERNAME = createCustomerVM.USERNAME;
+                customer.PHONE = createCustomerVM.PHONE;
+                customer.ADDRESS = createCustomerVM.ADDRESS;
+                customer.MAIL = createCustomerVM.MAIL;
+                customer.PASSWORD = createCustomerVM.PASSWORD;
+                
 
                 CustomerManager.InsertCustomer(customer);
             }

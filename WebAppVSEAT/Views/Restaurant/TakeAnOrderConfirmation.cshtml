@@ -12,7 +12,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
                 @Html.DisplayNameFor(model => model.orderDishes.First().dish.NAMEDISH)
             </th>
             <th>
@@ -33,7 +32,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.dish.NAMEDISH)
             </td>
-
+            <th>
+                @Html.HiddenFor(model => item.IDRESTAURANT)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.QUANTITY)
             </td>

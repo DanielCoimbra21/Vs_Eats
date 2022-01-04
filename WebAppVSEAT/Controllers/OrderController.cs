@@ -175,6 +175,29 @@ namespace WebAppVSEAT.Controllers
             //Order sera utilisé plus tard pour l'archivage
             DTO.Order order = OrderManager.GetOrder(cancelOrderVM.IDORDER);
 
+            //vérification si le numéro d'ordre existe dans la base de données
+            if (order == null)
+            {
+                ModelState.AddModelError(string.Empty, "This order doesn't exist");
+                return View(cancelOrderVM);
+            }
+
+            //vérification du status de l'order id
+            if (!order.STATUS.Equals("ongoing"))
+            {
+                ModelState.AddModelError(string.Empty, "Order has been dealt with");
+                return View(cancelOrderVM);
+            }
+
+            //vérification si le customer logger a bien fait cette commande
+            if(order.IDCUSTOMER != HttpContext.Session.GetInt32("IdCustomer"))
+            {
+                ModelState.AddModelError(string.Empty, "Cannot canceled an order you didn't make");
+                return View(cancelOrderVM);
+            }
+
+            
+
             DateTime timeNow = DateTime.Now;
             TimeSpan diff = order.DELIVERTIME - timeNow;
 

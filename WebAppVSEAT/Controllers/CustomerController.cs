@@ -156,6 +156,7 @@ namespace WebAppVSEAT.Controllers
                     {
                         customer.PASSWORD = changePasswordCustomerVM.CONFIRMPASSWORD;
                         CustomerManager.UpdatePassword(customer);
+                        return RedirectToAction("Index", "Customer");
                     }
                     else
                     {
@@ -170,7 +171,7 @@ namespace WebAppVSEAT.Controllers
                 }
             }
 
-            return RedirectToAction("Index", "Customer");
+            return View(changePasswordCustomerVM);
         }
 
     }
