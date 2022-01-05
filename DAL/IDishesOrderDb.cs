@@ -15,5 +15,6 @@ namespace DAL
 
         public List<DishesOrder> GetDishesOrders(int idOrder);
 
+        public void UpdateDishesOrder(DishesOrder dishesOrder);
     }
 }

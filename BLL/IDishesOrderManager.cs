@@ -12,6 +12,8 @@ namespace BLL
         public void InsertDishesOrder(DishesOrder dishesOrder);
 
         public List<DishesOrder> GetDishesOrders(int idOrder);
+
+        public void UpdateDishesOrder(DishesOrder dishesOrder);
     }
 
     

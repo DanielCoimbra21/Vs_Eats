@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-   public class DishesOrderDB : IDishesOrderDB
+    public class DishesOrderDB : IDishesOrderDB
     {
-
         private IConfiguration Configuration { get; }
 
         public DishesOrderDB(IConfiguration configuration)
@@ -111,7 +110,7 @@ namespace DAL
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
-                using(SqlConnection cn = new SqlConnection(connectionString))
+                using (SqlConnection cn = new SqlConnection(connectionString))
                 {
                     string query = "Insert into DISHESORDER(IDDISHES,IDORDER, QUANTITY)" +
                         " values(@idDishes,@idOrder, @quantity)";
@@ -128,11 +127,40 @@ namespace DAL
 
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
         }
 
+        public void UpdateDishesOrder(DishesOrder dishesOrder)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+
+
+                    var query = "UPDATE [dbo].[DISHESORDER] " +
+                        "SET QUANTITY=@quantity " +
+                        "WHERE IDDISHES=@iddishes AND IDORDER=@idorder";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@quantity", dishesOrder.QUANTITY);
+                    cmd.Parameters.AddWithValue("@iddishes", dishesOrder.IDDISHES);
+                    cmd.Parameters.AddWithValue("@idorder", dishesOrder.IDORDER);
+
+
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

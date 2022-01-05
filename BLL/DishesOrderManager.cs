@@ -33,5 +33,10 @@ namespace BLL
             DishesOrderDb.InsertDishesOrder(dishesOrder);
         }
 
+        public void UpdateDishesOrder(DishesOrder dishesOrder)
+        {
+            DishesOrderDb.UpdateDishesOrder(dishesOrder);
+        }
+
     }
 }

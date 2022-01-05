@@ -13,12 +13,12 @@ namespace DAL
 
         Order InsertOrder(Order order, int idStaff);
 
-        void AddTime(Order order);
-
         List<Order> GetOrders(int idStaff);
 
         List<Order> GetOrders(int idStaff, string status);
 
         List<Order> GetCustomerOrders(int idCustomer);
+
+        void UpdateOrder(Order order);
     }
 }

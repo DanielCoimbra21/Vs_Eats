@@ -231,6 +231,11 @@ namespace BLL
             return results;
         }
 
+        public void UpdateOrder(Order order)
+        {
+            OrderDb.UpdateOrder(order);
+        }
+
 
         public Order InsertOrder(Order order, int idStaff)
         {

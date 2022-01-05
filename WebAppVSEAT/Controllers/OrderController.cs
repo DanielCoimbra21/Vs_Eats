@@ -16,12 +16,12 @@ namespace WebAppVSEAT.Controllers
         private ICityManager CityManager { get; }
 
         private IRestaurantManager RestaurantManager { get; }
- 
+
         private IDishesOrderManager DishesOrderManager { get; }
         private IDishManager DishManager { get; }
 
 
-        public OrderController(IDishManager dishManager,IRestaurantManager restaurantManager, IDishesOrderManager dishesOrderManager ,IOrderManager orderManager, ICustomerManager customerManager, ICityManager cityManager)
+        public OrderController(IDishManager dishManager, IRestaurantManager restaurantManager, IDishesOrderManager dishesOrderManager, IOrderManager orderManager, ICustomerManager customerManager, ICityManager cityManager)
         {
             OrderManager = orderManager;
             CustomerManager = customerManager;
@@ -44,11 +44,11 @@ namespace WebAppVSEAT.Controllers
             }
 
 
-            var listOrders = OrderManager.GetOrders((int)HttpContext.Session.GetInt32("IdStaff"),"ongoing");
+            var listOrders = OrderManager.GetOrders((int)HttpContext.Session.GetInt32("IdStaff"), "ongoing");
             var listOrderVM = new List<OrderVM>();
-            
+
             //Si liste des commandes est null, afficher une vue erreur
-            if(listOrders == null)
+            if (listOrders == null)
             {
                 return View("~/Views/Order/ErrorNoDelivery.cshtml");
             }
@@ -79,7 +79,7 @@ namespace WebAppVSEAT.Controllers
             return View(listOrderVM);
         }
 
-        
+
 
         /// <summary>
         /// Méthode pour l'archivage des livraisons du staff
@@ -96,7 +96,7 @@ namespace WebAppVSEAT.Controllers
 
             var order = OrderManager.GetOrder(id);
             OrderManager.ArchiveDelivery(order, "archived");
-            
+
             return RedirectToAction("OrdersStaff", "Order");
         }
 
@@ -124,7 +124,7 @@ namespace WebAppVSEAT.Controllers
 
             CancelOrderVM vm = new CancelOrderVM();
             vm.IDORDER = id;
-            
+
             return View(vm);
         }
 
@@ -156,13 +156,13 @@ namespace WebAppVSEAT.Controllers
             }
 
             //vérification si le customer logger a bien fait cette commande
-            if(order.IDCUSTOMER != HttpContext.Session.GetInt32("IdCustomer"))
+            if (order.IDCUSTOMER != HttpContext.Session.GetInt32("IdCustomer"))
             {
                 ModelState.AddModelError(string.Empty, "Cannot canceled an order you didn't make");
                 return View(cancelOrderVM);
             }
 
-            
+
 
             DateTime timeNow = DateTime.Now;
             TimeSpan diff = order.DELIVERTIME - timeNow;
@@ -194,7 +194,7 @@ namespace WebAppVSEAT.Controllers
             return View(cancelOrderVM);
         }
 
-        
+
         /// <summary>
         /// Méthode pour afficher toutes les commandes d'un customer
         /// </summary>
@@ -210,7 +210,7 @@ namespace WebAppVSEAT.Controllers
             var listCustomerOrders = OrderManager.GetCustomerOrders(idCustomer);
             var listCustomerOrderVM = new List<CustomerOrderVM>();
 
-            if(listCustomerOrders == null)
+            if (listCustomerOrders == null)
             {
                 return View("~/Views/Order/ErrorNoCommand.cshtml");
             }
@@ -240,7 +240,7 @@ namespace WebAppVSEAT.Controllers
 
             var listOrders = OrderManager.GetOrders((int)HttpContext.Session.GetInt32("IdStaff"));
             var listOrderVM = new List<OrderVM>();
-             
+
             /*
              *  si le staff est nouveau, il n'y aura pas de commande -> pas d'historique
              *  page pour annoncer aucun historique
@@ -275,10 +275,14 @@ namespace WebAppVSEAT.Controllers
 
             return View(listOrderVM);
         }
-
+        /// <summary>
+        /// Methode pour l'affichage détaillé de la commande faite par le customer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult DetailsOrder(int id)
         {
-
+            //Vérifier si le customer est bien connecté
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -287,7 +291,7 @@ namespace WebAppVSEAT.Controllers
             var order = OrderManager.GetOrder(id);
             var restaurant = RestaurantManager.GetRestaurant(order.IDRESTAURANT);
             var city = CityManager.GetCity(restaurant.IDCITY);
-            
+
             var vm = new CustomerDetailOrderVM();
             vm.IDORDER = id;
             vm.CITYNAME = city.CITYNAME;
@@ -296,7 +300,7 @@ namespace WebAppVSEAT.Controllers
             vm.DELIVERTIME = order.DELIVERTIME;
 
             var dishesOrder = DishesOrderManager.GetDishesOrders(id);
-            vm.orderDishes = new List<DishesOrderVM>(); 
+            vm.orderDishes = new List<DishesOrderVM>();
 
             foreach (var idDish in dishesOrder)
             {
@@ -307,14 +311,98 @@ namespace WebAppVSEAT.Controllers
                 vmDish.NAMEDISH = dish.NAMEDISH;
                 vmDish.PRICEDISH = dish.PRICEDISH;
                 vmDish.QUANTITY = idDish.QUANTITY;
-                
+
                 vm.orderDishes.Add(vmDish);
             }
 
             return View(vm);
         }
 
+        /// <summary>
+        /// Methode pour la modification de la commande
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult EditOrder(int id)
+        {
+            //Vérifier si le customer est bien connecté
+            if (HttpContext.Session.GetInt32("IdCustomer") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            //rechercher les informations pour order
+            var order = OrderManager.GetOrder(id);
+            var dishesOrder = DishesOrderManager.GetDishesOrders(id);
+            var restaurant = RestaurantManager.GetRestaurant(order.IDRESTAURANT);
+            DateTime deliveryTime = order.DELIVERTIME; 
+
+            //créer la view
+            var vm = new EditOrderVM();
+            vm.IDRESTAURANT = restaurant.IDRESTAURANT;
+            vm.NAMERESTAURANT = restaurant.NAMERESTAURANT;
+            vm.IDORDER = id;
+            vm.orderDishes = new List<DishesOrderVM>();
+
+            foreach (var dish in dishesOrder)
+            {
+                var vmDish = new DishesOrderVM();
+                var d = DishManager.GetDish(dish.IDDISHES);
+                vmDish.IDRESTAURANT = restaurant.IDRESTAURANT;
+                vmDish.IDDISHES = d.IDDISHES;
+                vmDish.NAMEDISH = d.NAMEDISH;
+                vmDish.PRICEDISH = d.PRICEDISH;
+                vmDish.QUANTITY = dish.QUANTITY;
+                vmDish.IDRESTAURANT = restaurant.IDRESTAURANT;
+                vm.orderDishes.Add(vmDish);
+            }
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditOrder(EditOrderVM editOrderVM)
+        {
+            if (ModelState.IsValid)
+            {
+                //Calculer la somme de la livraison
+                double somme = 0;
+
+                foreach (var d in editOrderVM.orderDishes)
+                {
+                    somme += d.PRICEDISH * d.QUANTITY;
+                }
+
+                //Vérifier si l'heure n'est pas avant l'heure actuel
+                if (somme > 0)
+                {
+                    //mettre à jour l'order avec les nouvelles valeurs
+                    var order = OrderManager.GetOrder(editOrderVM.IDORDER);
+                    order.TOTALPRICE = (decimal)somme;
 
 
+                    OrderManager.UpdateOrder(order);
+
+
+                    //Ajouter les plats dans DISHESORDER
+                    //si la quantité est supérieur à 0
+                    var idOrder = editOrderVM.IDORDER;
+                    foreach (var o in editOrderVM.orderDishes)
+                    {
+                        if (o.QUANTITY > 0)
+                        {
+                            DTO.DishesOrder dishesOrder = new DTO.DishesOrder
+                            {
+                                IDDISHES = o.IDDISHES,
+                                IDORDER = idOrder,
+                                QUANTITY = o.QUANTITY
+                            };
+                            DishesOrderManager.UpdateDishesOrder(dishesOrder);
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("Order", "Orders");
+        }
     }
 }
