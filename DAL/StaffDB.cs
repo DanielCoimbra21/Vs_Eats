@@ -162,17 +162,19 @@ namespace DAL
                     
 
                     var query = "UPDATE STAFF " +
-                        "SET NAMESTAFF = @nameStaff, SURNAMESTAFF=@surnameStaff, PHONENUMBERSTAFF=@phoneNumber, " +
-                            "ADDRESSSTAFF=@addressStaff, MAILSTAFF=@mailStaff " +
+                        "SET IDCITY=@idCity,NAMESTAFF = @nameStaff, SURNAMESTAFF=@surnameStaff, PHONENUMBERSTAFF=@phoneNumber, " +
+                            "ADDRESSSTAFF=@addressStaff, MAILSTAFF=@mailStaff, USERNAMESTAFF=@usernameStaff " +
                         "WHERE IDSTAFF=@idStaff";
                     SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idStaff", staff.IDSTAFF);
+                    cmd.Parameters.AddWithValue("@idCity", staff.IDCITY);
                     cmd.Parameters.AddWithValue("@nameStaff", staff.NAMESTAFF);
                     cmd.Parameters.AddWithValue("@surnameStaff", staff.SURNAMESTAFF);
                     cmd.Parameters.AddWithValue("@phoneNumber", staff.PHONENUMBERSTAFF);
                     cmd.Parameters.AddWithValue("@addressStaff", staff.ADDRESSSTAFF);
                     cmd.Parameters.AddWithValue("@mailStaff", staff.MAILSTAFF);
-                    cmd.Parameters.AddWithValue("@idStaff", staff.IDSTAFF);
-                                       
+                    cmd.Parameters.AddWithValue("@usernameStaff", staff.USERNAMESTAFF);
+
                     cn.Open();
 
                     cmd.ExecuteNonQuery();

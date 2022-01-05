@@ -292,11 +292,12 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE [dbo].[CUSTOMER] SET NAME = @name, SURNAME = @surname, USERNAME=@username, PHONE = @phone," +
+                    string query = "UPDATE [dbo].[CUSTOMER] SET IDCITY = @idCity, NAME = @name, SURNAME = @surname, USERNAME=@username, PHONE = @phone," +
                         "ADDRESS = @address, MAIL = @mail WHERE IDCUSTOMER=@idCustomer";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cmd.Parameters.AddWithValue("@idCustomer", customer.IDCUSTOMER);
+                    cmd.Parameters.AddWithValue("@idCity", customer.IDCITY);
                     cmd.Parameters.AddWithValue("@name", customer.NAME);
                     cmd.Parameters.AddWithValue("@surname", customer.SURNAME);
                     cmd.Parameters.AddWithValue("@username", customer.USERNAME);

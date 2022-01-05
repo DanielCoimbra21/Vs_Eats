@@ -9,7 +9,7 @@
 <h1>pass your command at @Model.orderDishes.First().NAMERESTAURANT</h1>
 <form asp-action="TakeAnOrder">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <label asp-for="hour" class="control-label">delivery time</label>
+    <label asp-for="hour" class="control-label">Delivery time</label>
     <select asp-for="hour">
         <option disabled>Lunch</option>
         <option value="11:30">11:30</option>
@@ -87,7 +87,6 @@
     <input class="btn" type="submit" value="Confirm order" />
     <br />
 
-    @*<a asp-action="Index">confirm your order</a>*@
 </form>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -53,7 +53,10 @@ namespace WebAppVSEAT.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            var staff = StaffManager.GetStaff((int)HttpContext.Session.GetInt32("IdStaff"));
+            //Récupérer le staff avec id du login dans session
+            DTO.Staff staff = StaffManager.GetStaff((int)HttpContext.Session.GetInt32("IdStaff"));
+            
+            //Trouver l'idCity en fonction de la ville
             var city = CityManager.GetCity(staff.IDCITY);
 
             StaffVM staffVM = new StaffVM()
@@ -101,6 +104,8 @@ namespace WebAppVSEAT.Controllers
                 return View(staffVM);
             }
 
+            staff.IDSTAFF = staffVM.IDSTAFF;
+            staff.IDCITY = idCity;
             staff.NAMESTAFF = staffVM.NAMESTAFF;
             staff.SURNAMESTAFF = staffVM.SURNAMESTAFF;
             staff.PHONENUMBERSTAFF = staffVM.PHONENUMBERSTAFF;
