@@ -1,78 +1,46 @@
-﻿@model IEnumerable<WebAppVSEAT.Models.CommandVM>
+﻿@model WebAppVSEAT.Models.CustomerDetailOrderVM
 
 @{
-    ViewData["Title"] = "DetailsOrder";
     Layout = "_Layout";
 }
-
-<h1>DetailsOrder</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IDORDER)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IDRESTAURANT)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.QUANTITY)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CITYNAME)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NAMERESTAURANT)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DELIVERTIME)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.hour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.totalPrice)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDORDER)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDRESTAURANT)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QUANTITY)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CITYNAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NAMERESTAURANT)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DELIVERTIME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.hour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.totalPrice)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+@{
+    ViewData["Title"] = "TakeAnOrderConfirmation";
 }
-    </tbody>
-</table>
+<div>
+    <h3>Your command at @Model.NAMERESTAURANT in @Model.CITYNAME</h3>
+    <h3>Delivery Time : @Model.DELIVERTIME</h3>
+    <h3>Order number : @Model.IDORDER</h3>
+
+</div>
+
+    <div class="cards">
+
+        @foreach (var item in Model.orderDishes)
+        {
+            string imageUrl = "/Images/Dishes/" + item.IDDISHES + ".jpg";
+
+            <div class="cards__item">
+
+                <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
+
+                <h1>@Html.DisplayFor(modelItem => item.NAMEDISH)</h1>
+                <h1>@Html.DisplayFor(modelItem => item.PRICEDISH) CHF</h1>
+                <h1>@Html.DisplayFor(modelItem => item.QUANTITY)x</h1>
+                <p>
+            </div>
+        }
+    </div>
+
+    <tfoot>
+        <tr>
+            <h1>
+            <td colspan="3"><span style='font-weight:bold;'>Total : @Model.totalPrice CHF</span></td>
+            </h1>
+        </tr>
+        <td>
+            <h1>
+                @Html.ActionLink("Cancel Order", "CancelOrderID", new { id = Model.IDORDER })
+            </h1>
+        </td>
+    </tfoot>
+

@@ -6,59 +6,50 @@
 }
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-            <label asp-for="IDSTAFF" class="control-label"></label>
-            <input asp-for="IDSTAFF" class="form-control" />
-            <span asp-validation-for="IDSTAFF" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="IDCITY" class="control-label"></label>
-            <input asp-for="IDCITY" class="form-control" />
-            <span asp-validation-for="IDCITY" class="text-danger"></span>
-        </div>*@
-            <div class="form-group">
-                <label asp-for="NAMESTAFF" class="control-label"></label>
-                <input asp-for="NAMESTAFF" class="form-control" />
-                <span asp-validation-for="NAMESTAFF" class="text-danger"></span>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <center>
+            <div class="row justify-content-center align-content-center">
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text">
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" asp-for="NAMESTAFF" />
+                            <input type="text" asp-for="NAMESTAFF" class="form-control fadeIn second" placeholder="name" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" asp-for="SURNAMESTAFF" />
+                            <input type="text" asp-for="SURNAMESTAFF" class="form-control fadeIn second" placeholder="surname" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" asp-for="MAILSTAFF" />
+                            <input type="text" asp-for="MAILSTAFF" class="form-control fadeIn second" placeholder="mail" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" asp-for="PHONENUMBERSTAFF" />
+                            <input type="text" asp-for="PHONENUMBERSTAFF" class="form-control fadeIn second" placeholder="phonenumber" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" asp-for="ADDRESSSTAFF" />
+                            <input type="text" asp-for="ADDRESSSTAFF" class="form-control fadeIn second" placeholder="address" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" asp-for="CITYNAME" />
+                            <input type="text" asp-for="CITYNAME" class="form-control fadeIn second" placeholder="city" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" asp-for="USERNAMESTAFF" />
+                            <input type="text" asp-for="USERNAMESTAFF" class="form-control fadeIn second" placeholder="username" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="SURNAMESTAFF" class="control-label"></label>
-                <input asp-for="SURNAMESTAFF" class="form-control" />
-                <span asp-validation-for="SURNAMESTAFF" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MAILSTAFF" class="control-label"></label>
-                <input asp-for="MAILSTAFF" class="form-control" />
-                <span asp-validation-for="MAILSTAFF" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PHONENUMBERSTAFF" class="control-label"></label>
-                <input asp-for="PHONENUMBERSTAFF" class="form-control" />
-                <span asp-validation-for="PHONENUMBERSTAFF" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ADDRESSSTAFF" class="control-label"></label>
-                <input asp-for="ADDRESSSTAFF" class="form-control" />
-                <span asp-validation-for="ADDRESSSTAFF" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CITYNAME" class="control-label"></label>
-                <input asp-for="CITYNAME" class="form-control" />
-                <span asp-validation-for="CITYNAME" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="USERNAMESTAFF" class="control-label"></label>
-                <input asp-for="USERNAMESTAFF" class="form-control" />
-                <span asp-validation-for="USERNAMESTAFF" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </center>
     </div>
 </div>
 

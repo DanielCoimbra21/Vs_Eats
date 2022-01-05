@@ -17,7 +17,7 @@ namespace WebAppVSEAT.Models
         public string NEWPASSWORD { get; set; }
         [Required]
         [DataType(DataType.Password)]
-        [Compare(nameof(NEWPASSWORD), ErrorMessage = "This Password doesn't correspond to the previous r password")]
+        [Compare(nameof(NEWPASSWORD), ErrorMessage = "This Password doesn't correspond to the previous password")]
         public string CONFIRMPASSWORD { get; set; }
 
 

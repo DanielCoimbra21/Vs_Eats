@@ -18,15 +18,17 @@ namespace WebAppVSEAT.Controllers
         private IRestaurantManager RestaurantManager { get; }
  
         private IDishesOrderManager DishesOrderManager { get; }
+        private IDishManager DishManager { get; }
 
 
-        public OrderController(IRestaurantManager restaurantManager, IDishesOrderManager dishesOrderManager ,IOrderManager orderManager, ICustomerManager customerManager, ICityManager cityManager)
+        public OrderController(IDishManager dishManager,IRestaurantManager restaurantManager, IDishesOrderManager dishesOrderManager ,IOrderManager orderManager, ICustomerManager customerManager, ICityManager cityManager)
         {
             OrderManager = orderManager;
             CustomerManager = customerManager;
             CityManager = cityManager;
             RestaurantManager = restaurantManager;
             DishesOrderManager = dishesOrderManager;
+            DishManager = dishManager;
         }
 
         /// <summary>
@@ -312,34 +314,40 @@ namespace WebAppVSEAT.Controllers
 
         public IActionResult DetailsOrder(int id)
         {
+
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
 
-
             var order = OrderManager.GetOrder(id);
             var restaurant = RestaurantManager.GetRestaurant(order.IDRESTAURANT);
-            var dishesOrder = DishesOrderManager.GetDishesOrders(id);
-            var dishes = new List<DTO.Dish>();
-            var vms = new List<CommandVM>();
+            var city = CityManager.GetCity(restaurant.IDCITY);
+            
+            var vm = new CustomerDetailOrderVM();
+            vm.IDORDER = id;
+            vm.CITYNAME = city.CITYNAME;
+            vm.NAMERESTAURANT = restaurant.NAMERESTAURANT;
+            vm.totalPrice = order.TOTALPRICE;
+            vm.DELIVERTIME = order.DELIVERTIME;
 
+            var dishesOrder = DishesOrderManager.GetDishesOrders(id);
+            vm.orderDishes = new List<DishesOrderVM>(); 
 
             foreach (var idDish in dishesOrder)
             {
-                var vm = new CommandVM();
-                vm.DELIVERTIME = order.DELIVERTIME;
-                vm.QUANTITY = idDish.QUANTITY;
-                vm.NAMERESTAURANT = restaurant.NAMERESTAURANT;
-                vm.totalPrice = order.TOTALPRICE;
-
-                vms.Add(vm);
+                var vmDish = new DishesOrderVM();
+                vmDish.IDDISHES = idDish.IDDISHES;
+                vmDish.IDRESTAURANT = restaurant.IDRESTAURANT;
+                var dish = DishManager.GetDish(idDish.IDDISHES);
+                vmDish.NAMEDISH = dish.NAMEDISH;
+                vmDish.PRICEDISH = dish.PRICEDISH;
+                vmDish.QUANTITY = idDish.QUANTITY;
+                
+                vm.orderDishes.Add(vmDish);
             }
 
-            return View(vms);
-
-
-
+            return View(vm);
         }
 
 
