@@ -79,43 +79,7 @@ namespace WebAppVSEAT.Controllers
             return View(listOrderVM);
         }
 
-        /// <summary>
-        /// Méthode Edit pour apercevoir la commande et l'archiver
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public IActionResult Edit(int id)
-        {
-            //Vérification si le staff est bien connecté
-            if (HttpContext.Session.GetInt32("IdStaff") == null)
-            {
-                return RedirectToAction("Index", "Login");
-            }
-
-
-            var o = OrderManager.GetOrder(id);
-
-            //création de la nouvelle view model
-            var vm = new OrderVM();
-            var customer = CustomerManager.GetCustomerID(o.IDCUSTOMER);
-            var city = CityManager.GetCity(customer.IDCITY);
-
-            vm.IDORDER = o.IDORDER;
-            vm.NAME = customer.NAME;
-            vm.SURNAME = customer.SURNAME;
-
-            vm.ADDRESS = customer.ADDRESS;
-            vm.CITY = city.CITYNAME;
-            vm.NPA = city.NPA;
-
-            vm.PHONE = customer.PHONE;
-
-            vm.DELIVERTIME = o.DELIVERTIME;
-            vm.TOTALPRICE = o.TOTALPRICE;
-            vm.STATUS = o.STATUS;
-
-            return View(vm);
-        }
+        
 
         /// <summary>
         /// Méthode pour l'archivage des livraisons du staff
