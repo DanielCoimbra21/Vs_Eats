@@ -4,9 +4,6 @@
     ViewData["Title"] = "Profile";
     Layout = "~/Views/Shared/_LayoutOrder.cshtml";
 }
-<div>
-    @Html.ActionLink("Change Password", "ChangePassword", new { /* id = Model.PrimaryKey */ })
-</div>
 <hr />
 
 <div class="cardProfile">
@@ -28,6 +25,11 @@
         <button value="Change Password">
             <div>
                 @Html.ActionLink("Change Password", "ChangePassword", new { /* id = Model.PrimaryKey */ })
+            </div>
+        </button>
+        <button value="Edit">
+            <div>
+                @Html.ActionLink("Edit Profile", "Edit", new { /* id = Model.PrimaryKey */ })
             </div>
         </button>
     </p>
