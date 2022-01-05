@@ -6,7 +6,32 @@
 }
 
 
-<div>
+<div class="cardProfile">
+    <img src="/Images/Avatar/avatar.png" style="width:100%">
+    <h1>@Html.DisplayFor(model => model.NAME) @Html.DisplayFor(model => model.SURNAME)</h1>
+    <p class="title"> @Html.DisplayFor(model => model.USERNAME)</p>
+    <p>
+        @Html.DisplayFor(model => model.MAIL)
+        <br />
+        <i class=""> @Html.DisplayFor(model => model.PHONE)</i>
+    </p>
+    <br />
+    <p>
+        <i class="">@Html.DisplayFor(model => model.ADDRESS)</i>
+        <br />
+        <i class="">@Html.DisplayFor(model => model.CITYNAME)</i>
+    </p>
+    <p>
+        <button value="Edit">
+            <div>
+                    @Html.ActionLink("Edit", "Edit")
+            </div>
+        </button>
+    </p>
+</div>
+
+
+@*<div>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -67,4 +92,4 @@
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit")
-</div>
+</div>*@

@@ -11,37 +11,36 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="headerOrder">
                 @Html.DisplayNameFor(model => model.IDORDER)
             </th>
-            <th>
+            <th class="headerOrder">
                 @Html.DisplayNameFor(model => model.TOTALPRICE)
             </th>
-            <th>
+            <th class="headerOrder">
                 @Html.DisplayNameFor(model => model.NAME)
             </th>
-            <th>
+            <th class="headerOrder">
                 @Html.DisplayNameFor(model => model.SURNAME)
             </th>
-            <th>
+            <th class="headerOrder">
                 @Html.DisplayNameFor(model => model.ADDRESS)
             </th>
-            <th>
+            <th class="headerOrder">
                 @Html.DisplayNameFor(model => model.CITY)
             </th>
-            <th>
+            <th class="headerOrder">
                 @Html.DisplayNameFor(model => model.NPA)
             </th>
-            <th>
+            <th class="headerOrder">
                 @Html.DisplayNameFor(model => model.PHONE)
             </th>
-            <th>
+            <th class="headerOrder">
                 @Html.DisplayNameFor(model => model.DELIVERTIME)
             </th>
-            <th>
+            <th class="headerOrder">
                 @Html.DisplayNameFor(model => model.STATUS)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -80,7 +79,7 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>
         }

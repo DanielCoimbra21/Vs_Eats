@@ -6,13 +6,24 @@
 }
 
 <p>
-    @using (@Html.BeginForm("Index", "Restaurant", FormMethod.Get))
-    {
-        <b>Search by :</b> @Html.RadioButton("searchBy", "Restaurant", true) <text>Restaurant</text>
-        @Html.RadioButton("searchBy", "District", true) <text>District</text>
-        <br />
-        @Html.TextBox("search") <input type="submit" class="btn" value="search" />
-    }
+    <div class="cardSearch">
+        @using (@Html.BeginForm("Index", "Restaurant", FormMethod.Get))
+        {
+        <p>
+            <h1>
+
+                <b>Search by :</b> @Html.RadioButton("searchBy", "Restaurant", true) <text>Restaurant</text>
+                @Html.RadioButton("searchBy", "District", true) <text>District</text>
+                <br />
+            </h1>
+        </p>
+        <p>
+            @Html.TextBox("search")
+        </p>
+        <input type="submit" class="btn" value="search" />
+        }
+    </div>
+
 
 </p>
 

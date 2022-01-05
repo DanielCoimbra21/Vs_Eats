@@ -8,7 +8,33 @@
     @Html.ActionLink("Change Password", "ChangePassword", new { /* id = Model.PrimaryKey */ })
 </div>
 <hr />
-<div>
+
+<div class="cardProfile">
+    <img src="/Images/Avatar/avatar.png" style="width:100%">
+    <h1>@Html.DisplayFor(model => model.NAMESTAFF) @Html.DisplayFor(model => model.SURNAMESTAFF)</h1>
+    <p class="title"> @Html.DisplayFor(model => model.USERNAMESTAFF)</p>
+    <p>
+        @Html.DisplayFor(model => model.MAILSTAFF)
+        <br />
+        <i class=""> @Html.DisplayFor(model => model.PHONENUMBERSTAFF)</i>
+    </p>
+    <br />
+    <p>
+        <i class="">@Html.DisplayFor(model => model.ADDRESSSTAFF)</i>
+        <br />
+        <i class="">@Html.DisplayFor(model => model.CITYNAME)</i>
+    </p>
+    <p>
+        <button value="Change Password">
+            <div>
+                @Html.ActionLink("Change Password", "ChangePassword", new { /* id = Model.PrimaryKey */ })
+            </div>
+        </button>
+    </p>
+</div>
+
+
+@*<div>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -69,4 +95,4 @@
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ })
-</div>
+</div>*@

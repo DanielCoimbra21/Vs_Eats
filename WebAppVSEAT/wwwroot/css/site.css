@@ -54,11 +54,14 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-    color: #92badd;
+    font-family: sans-serif;
     display: inline-block;
     text-decoration: none;
     font-weight: 400;
     background-color: transparent;
+    font-size: 15px;
+    color: black;
+}
 }
     
 a:hover {
@@ -139,6 +142,16 @@ body {
     border: none;
     color: white;
 }
+
+.headerOrder {
+    background-color: #ddd;
+    position: sticky;
+    top: 0; 
+    z-index: 9999;
+}
+
+
+
 
 
 
