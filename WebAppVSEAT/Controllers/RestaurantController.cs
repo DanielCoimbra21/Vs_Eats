@@ -224,8 +224,6 @@ namespace WebAppVSEAT.Controllers
                     var city = CityManager.GetCity(RestaurantManager.GetRestaurant(idRestaurant).IDCITY);
                     int idDistrict = city.IDDISTRICT;
 
-                    //Trouver l'id du restaurant
-                    
 
                     //Créer une nouvelle commande sans l'id du Staff
                     DTO.Order order = new DTO.Order();
