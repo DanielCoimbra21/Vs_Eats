@@ -28,7 +28,7 @@ namespace WebAppVSEAT.Controllers
             DishesOrderManager = dishesOrderManager;
         }
 
-        public IActionResult Index(string searchBy, string search)
+        public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
@@ -36,58 +36,46 @@ namespace WebAppVSEAT.Controllers
             }
 
 
-            if(search == null)
-            {
-                var rest = RestaurantManager.GetRestaurants();
-                var restaurants_vm = new List<RestaurantVM>();
+           
+            var rest = RestaurantManager.GetRestaurants();               
+            var listDish = DishManager.GetDishes();
+
+            var vm = new HomePageVM();
+            vm.restaurantVMS = new List<RestaurantVM>();
+            vm.dishesVMS = new List<DishesVM>();
 
 
-                foreach (var r in rest)
+            foreach (var r in rest)
                 {
-                    var vm = new RestaurantVM();
+                    var vmr = new RestaurantVM();
                     var city = CityManager.GetCity(r.IDCITY);
-                    vm.CITYNAME = city.CITYNAME;
-                    vm.IDRESTAURANT = r.IDRESTAURANT;
-                    vm.NAMERESTAURANT = r.NAMERESTAURANT;
-                    vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
+                    vmr.CITYNAME = city.CITYNAME;
+                    vmr.IDRESTAURANT = r.IDRESTAURANT;
+                    vmr.NAMERESTAURANT = r.NAMERESTAURANT;
+                    vmr.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
 
-                    restaurants_vm.Add(vm);
+                    vm.restaurantVMS.Add(vmr);
                 }
-                return View(restaurants_vm);
+
+
+
+            foreach (var dish in listDish)
+            {
+                var vmd = new DishesVM();
+                var restaurant = RestaurantManager.GetRestaurant(dish.IDDISHES);
+               // vmd.IDRESTAURANT = 
+                vmd.NAMEDISH = dish.NAMEDISH;
+                vmd.PRICEDISH = dish.PRICEDISH;
+                vmd.IDDISHES = dish.IDDISHES;
+
+                vm.dishesVMS.Add(vmd);
             }
+
+
+            return View(vm);
 
             
 
-
-                if (searchBy == "Restaurant")
-            {
-
-                var restaurant = RestaurantManager.GetRestaurants();
-                var restaurantsList = new List<RestaurantVM>();
-
-
-                foreach (var r in restaurant)
-                {
-                    if (r.NAMERESTAURANT.StartsWith(search))
-                    {
-
-                        var vm = new RestaurantVM();
-                        var city = CityManager.GetCity(r.IDCITY);
-
-                        vm.CITYNAME = city.CITYNAME;
-                        vm.IDRESTAURANT = r.IDRESTAURANT;
-                        vm.NAMERESTAURANT = r.NAMERESTAURANT;
-                        vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
-
-                        restaurantsList.Add(vm);
-                    }
-
-                }
-
-                return View(restaurantsList);
-            }
-
-            return View();   
         }
     }
 }

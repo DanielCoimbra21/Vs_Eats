@@ -245,13 +245,16 @@ namespace WebAppVSEAT.Controllers
                     }
 
                     //Vérifier si l'heure n'est pas avant l'heure actuel
+
+                    if (myDeliveryTime < dateTimeNow)
+                    {
+                        ModelState.AddModelError(String.Empty, "Choose an another time, it passed");
+                        return View(commandVM);
+                    }
+
                     if (somme > 0)
                     {
-                        if (myDeliveryTime < dateTimeNow)
-                        {
-                            ModelState.AddModelError(String.Empty, "Choose an another time, it passed");
-                            return View(commandVM);
-                        }
+                        
 
                         //Créer l'ordre avec l'id du Staff
                         var preOrder = OrderManager.InsertOrder(order, idStaff);

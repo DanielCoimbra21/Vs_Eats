@@ -11,8 +11,6 @@ namespace WebAppVSEAT.Models
         public int IDDISHES { get; set; }
         public string NAMEDISH { get; set; }
         public double PRICEDISH { get; set; }
-        public IEnumerable<DTO.Dish> Dishes { get; set; }
-
 
     }
 

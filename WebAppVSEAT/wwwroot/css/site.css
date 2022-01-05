@@ -143,6 +143,8 @@ body {
     color: white;
 }
 
+/*DropDown mennu*/
+
 .headerOrder {
     background-color: #ddd;
     position: sticky;
@@ -174,6 +176,34 @@ body {
 /* Show the content when hover on the container */
 .dropdown:hover .dropdown__content {
     display: block;
+}
+
+/*HomePage Code*/
+
+.containerHomePage {
+    /* Content is centered horizontally */
+    align-items: center;
+    display: flex;
+    border: 1px;
+    overflow-x: auto;
+    
+}
+
+.containerHomePage::-webkit-scrollbar
+{
+    width: 1;
+}
+
+.containerColumnHomePage {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    margin: 0 8px;
+    border-radius: 4px;
+    background-color: #edcdb3;
+    padding: 5px;
 }
 
 

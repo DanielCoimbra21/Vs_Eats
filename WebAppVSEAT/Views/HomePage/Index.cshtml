@@ -1,64 +1,67 @@
-﻿@model IEnumerable<WebAppVSEAT.Models.RestaurantVM>
+﻿@model WebAppVSEAT.Models.HomePageVM
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <p>
-    @using (@Html.BeginForm("Index", "HomePage", FormMethod.Get))
-    {
-        <b>Search by :</b> @Html.RadioButton("searchBy", "Restaurant", true) <text>Restaurant</text>
-        @Html.RadioButton("searchBy", "Dishes", true) <text>Dishes</text>
-        @Html.RadioButton("searchBy", "District", true) <text>District</text>
-        <br />
-        @Html.TextBox("search") <input type="submit" class="btn" value="search" />
-    }
-
-
+        <h1 style="font-family: 'Palatino Linotype'; text-align: center;" >Welcome to VSEat</h1>
 </p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IDRESTAURANT)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CITYNAME)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NAMERESTAURANT)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ADDRESSRESTAURANT)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IDRESTAURANT)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CITYNAME)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NAMERESTAURANT)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ADDRESSRESTAURANT)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<p>
+    <center>
+        <h3>All of the Restaurants available in our app</h3>
+    </center>
+</p>
+
+<div class="containerHomePage">
+
+
+    @foreach (var item in Model.restaurantVMS)
+    {
+        string imageUrl = "/Images/Restaurant/" + item.IDRESTAURANT + ".jpg";
+
+        <div class="containerColumnHomePage">
+            <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDRESTAURANT)" width="250" height="250" />
+            <h4>
+                @Html.ActionLink(item.NAMERESTAURANT, "Details", "Restaurant", new { id = item.IDRESTAURANT }, null)
+            </h4>
+            <h4>
+                @Html.DisplayFor(modelItem => item.ADDRESSRESTAURANT)
+            </h4>
+            <h4>
+                @Html.DisplayFor(modelItem => item.CITYNAME)
+            </h4>
+        </div>
+
+    }
+
+</div>
+
+
+<p>
+    <center>
+        <h3>All of the Dishes available in our app</h3>
+    </center>
+</p>
+
+
+
+<div class="containerHomePage">
+
+    @foreach (var item in Model.dishesVMS)
+    {
+        string imageUrl = "/Images/Dishes/" + item.IDDISHES + ".jpg";
+
+        <div class="containerColumnHomePage">
+
+            <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
+
+            <h3>@Html.DisplayFor(modelItem => item.NAMEDISH)</h3>
+            <h3>@Html.DisplayFor(modelItem => item.PRICEDISH) chf</h3>
+            @*@Html.ActionLink("Order", "TakeAnOrder", "Restaurant", new { id = item.IDRESTAURANT }, null)*@       
+        </div>
+    }
+
+</div>
+
