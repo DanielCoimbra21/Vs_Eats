@@ -19,10 +19,10 @@
 
     @foreach (var item in Model.restaurantVMS)
     {
-        string imageUrl = "/Images/Restaurant/" + item.IDRESTAURANT + ".jpg";
+        string imageUrl = "Images/Restaurant/" + item.IDRESTAURANT + ".jpg";
 
         <div class="containerColumnHomePage">
-            <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDRESTAURANT)" width="250" height="250" />
+            <img src="~/@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDRESTAURANT)" width="250" height="250" />
             <h4>
                 @Html.ActionLink(item.NAMERESTAURANT, "Details", "Restaurant", new { id = item.IDRESTAURANT }, null)
             </h4>
@@ -51,14 +51,14 @@
 
     @foreach (var item in Model.dishesVMS)
     {
-        string imageUrl = "/Images/Dishes/" + item.IDDISHES + ".jpg";
+        string imageUrl = "Images/Dishes/" + item.IDDISHES + ".jpg";
 
         <div class="containerColumnHomePage">
 
-            <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
+            <img src="~/@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
 
             <h3>@Html.DisplayFor(modelItem => item.NAMEDISH)</h3>
-            <h3>@Html.DisplayFor(modelItem => item.PRICEDISH) chf</h3>
+            <h3>@Html.DisplayFor(modelItem => item.PRICEDISH) CHF</h3>
             @*@Html.ActionLink("Order", "TakeAnOrder", "Restaurant", new { id = item.IDRESTAURANT }, null)*@       
         </div>
     }

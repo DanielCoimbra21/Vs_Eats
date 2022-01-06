@@ -12,8 +12,7 @@
         <p>
             <h1>
 
-                <b>Search by :</b> @Html.RadioButton("searchBy", "Restaurant", true) <text>Restaurant</text>
-                @Html.RadioButton("searchBy", "District", true) <text>District</text>
+                <b>Search by :</b> @Html.RadioButton("searchBy", "Restaurant", true)
                 <br />
             </h1>
         </p>
@@ -33,10 +32,10 @@
     @foreach (var item in Model)
     {
 
-        string imageUrl = "/Images/Restaurant/" + item.IDRESTAURANT + ".jpg";
+        string imageUrl = "Images/Restaurant/" + item.IDRESTAURANT + ".jpg";
 
         <div class="masonry-grid__item" >
-                <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDRESTAURANT)" width="250" height="250" />
+                <img src="~/@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDRESTAURANT)" width="250" height="250" />
                 <h2>
                     @Html.ActionLink(item.NAMERESTAURANT, "Details", new { id = item.IDRESTAURANT })
                 </h2>

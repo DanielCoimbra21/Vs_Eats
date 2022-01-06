@@ -9,26 +9,35 @@
 
 
 
-<h1>Their Best Dishes </h1>
+<h1 style="font-family: 'Palatino Linotype'; text-align: center;" ">Their Best Dishes </h1>
 
-<div class="cards">
+<center>
+    <div class="cards">
 
-    @foreach (var item in Model)
-    {
-        string imageUrl = "/Images/Dishes/" + item.IDDISHES + ".jpg";
+        @foreach (var item in Model)
+        {
+            string imageUrl = "/Images/Dishes/" + item.IDDISHES + ".jpg";
 
-        <div class="cards__item">
+            <div class="cards__item">
 
-            <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
+                <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
 
-            <h2>@Html.DisplayFor(modelItem => item.NAMEDISH)</h2>
-            <h3>@Html.DisplayFor(modelItem => item.PRICEDISH) chf</h3>
-            @Html.ActionLink("Order", "TakeAnOrder", new { id = item.IDRESTAURANT })
-            <p>
-        </div>
-    }
+                <h2>@Html.DisplayFor(modelItem => item.NAMEDISH)</h2>
+                <h3>@Html.DisplayFor(modelItem => item.PRICEDISH) CHF</h3>
+                <p>
+                    <button class="btn">
+                        @Html.ActionLink("Order", "TakeAnOrder", new { id = item.IDRESTAURANT })
+                    </button>
+                </p>
 
-</div>
+            </div>
+
+
+        }
+
+    </div>
+</center>
+
 
 
 

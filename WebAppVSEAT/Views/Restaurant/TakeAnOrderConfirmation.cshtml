@@ -6,56 +6,50 @@
     ViewData["Title"] = "TakeAnOrderConfirmation";
 }
 
-<h1>Your command at @Model.orderDishes.First().NAMERESTAURANT</h1>
+<h1 style="font-family: 'Palatino Linotype'; text-align: center;">Your command at @Model.orderDishes.First().NAMERESTAURANT</h1>
 
 
-<table class="table">
-    <thead>
-        <tr>
-                @Html.DisplayNameFor(model => model.orderDishes.First().dish.NAMEDISH)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.orderDishes.First().QUANTITY)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.orderDishes.First().dish.PRICEDISH)
-            </th>
 
-        </tr>
-    </thead>
-    <tbody>
+<div class="containerHomePage">
+    @{ decimal sommeTotal = 0;}
 
-        @{ decimal sommeTotal = 0;}
-        @foreach (var item in Model.orderDishes)
+    @for (int i = 0; i < Model.orderDishes.Count(); i++)
+    {
+        int idDish = Model.orderDishes[i].dish.IDDISHES;
+        string imageUrl = "/Images/Dishes/" + idDish + ".jpg";
+
+        @if (Model.orderDishes[i].QUANTITY > 0)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.dish.NAMEDISH)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QUANTITY)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dish.PRICEDISH)
-            </td>
 
-            @{decimal s = (decimal)(item.QUANTITY * item.dish.PRICEDISH);
+    <div class="containerColumnHomePage">
+        <img src="@imageUrl" alt="@idDish" width="250" height="250" />
+        <h4>
+            @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
+            <br />
+        </h4>
+        <h4>
+            @Html.DisplayFor(modelItem => Model.orderDishes[i].QUANTITY)X
+            <br />
+        </h4>
+        <h4>
+            @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.PRICEDISH) CHF
+        </h4>
+        <h4>
+            @{decimal s = (decimal)(Model.orderDishes[i].QUANTITY * Model.orderDishes[i].dish.PRICEDISH);
                 sommeTotal += s;}
-            <td>
-                @Html.DisplayFor(modelItem => s)
-            </td>
-        </tr>
+        </h4>
+        <h4 style="align-content:center">
+            Total : @Html.DisplayFor(modelItem => s) CHF
+        </h4>
+
+    </div>
         }
-    </tbody>
+    }
 
-    <tfoot>
-        <tr>
-            <td colspan="3"><span style='font-weight:bold;'>Total :</span></td>
-            <td><span style='font-weight:bold;'>@sommeTotal</span> CHF</td>
-        </tr>
-    </tfoot>
-</table>
+    </div>
 
-<h4> Delivery Time : @Model.hour</h4>
-<h4> Order number : @Model.IDORDER</h4>
+
+<h4 style='font-weight:bold;'>Total Order : @sommeTotal CHF</h4>
+<h4 style='font-weight:bold;'> Delivery Time : @Model.hour</h4>
+<h4 style='font-weight:bold;'> Order number : @Model.IDORDER</h4>
 

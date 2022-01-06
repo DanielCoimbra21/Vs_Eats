@@ -6,12 +6,47 @@
     ViewData["Title"] = "EditOrder";
 }
 
-<h1>Your command at @Model.NAMERESTAURANT</h1>
+<h1 style="font-family: 'Palatino Linotype'; text-align: center;">Your command at @Model.NAMERESTAURANT</h1>
 <form asp-action="EditOrder">
     <div asp-validation-summary="All" class="text-danger"></div>
 
 
-    <table class="table">
+
+
+    <div class="containerHomePage">
+
+        @for (int i = 0; i < Model.orderDishes.Count(); i++)
+        {
+            //var idDish = (int)@Html.DisplayFor(modelItem => Model.orderDishes[i].dish.IDDISHES);
+            int idDish = Model.orderDishes[i].IDDISHES;
+            string imageUrl = "Images/Dishes/" + idDish + ".jpg";
+
+            <div class="containerColumnHomePage">
+                <img src="~/@imageUrl" alt="@idDish" width="250" height="250" />
+                <h4>
+                    @Html.DisplayFor(modelItem => Model.orderDishes[i].NAMEDISH)
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].NAMEDISH)
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].IDDISHES)
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].IDRESTAURANT)
+                    @Html.HiddenFor(modelItem => Model.IDRESTAURANT)
+                    @Html.HiddenFor(modelItem => Model.IDORDER)
+                </h4>
+                <h4>
+                    @Html.DisplayFor(modelItem => Model.orderDishes[i].PRICEDISH) CHF
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].PRICEDISH)
+                </h4>
+                <h4 style="align-content:center">
+                    @Html.TextBoxFor(m => Model.orderDishes[i].QUANTITY)
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].QUANTITY)
+                    @Html.DisplayFor(modelItem => Model.hour) 
+                </h4>
+
+            </div>
+        }
+
+    </div>
+
+    @*<table class="table">
         <thead>
             <tr>
                 <th>
@@ -51,7 +86,7 @@
             }
 
         </tbody>
-    </table>
+    </table>*@
     <input class="btn" type="submit" value="Confirm order" />
     <br />
 

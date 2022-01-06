@@ -53,10 +53,10 @@
         {
             //var idDish = (int)@Html.DisplayFor(modelItem => Model.orderDishes[i].dish.IDDISHES);
             int idDish = Model.orderDishes[i].dish.IDDISHES;
-            string imageUrl = "/Images/Dishes/" + idDish + ".jpg";
+            string imageUrl = "Images/Dishes/" + idDish + ".jpg";
 
             <div class="containerColumnHomePage">
-                <img src="@imageUrl" alt="@idDish" width="250" height="250" />
+                <img src="~/@imageUrl" alt="@idDish" width="250" height="250" />
                 <h4>
                     @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
                     @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
@@ -69,7 +69,7 @@
                     @Html.DisplayFor(model => model.orderDishes[i].dish.PRICEDISH) CHF
                     @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.PRICEDISH) 
                 </h4>
-                <h4 style="align-content:center">
+                <h4 style="align-content:center">                  
                     @Html.TextBoxFor(modelItem => Model.orderDishes[i].QUANTITY)
                 </h4>
 

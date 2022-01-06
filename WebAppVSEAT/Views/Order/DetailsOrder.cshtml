@@ -17,15 +17,15 @@
 
         @foreach (var item in Model.orderDishes)
         {
-            string imageUrl = "/Images/Dishes/" + item.IDDISHES + ".jpg";
+            string imageUrl = "Images/Dishes/" + item.IDDISHES + ".jpg";
 
             <div class="cards__item">
 
-                <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
+                <img src="~/@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
 
                 <h1>@Html.DisplayFor(modelItem => item.NAMEDISH)</h1>
                 <h1>@Html.DisplayFor(modelItem => item.PRICEDISH) CHF</h1>
-                <h1>@Html.DisplayFor(modelItem => item.QUANTITY)x</h1>
+                <h1>@Html.DisplayFor(modelItem => item.QUANTITY)X</h1>
                 <p>
             </div>
         }
@@ -38,12 +38,12 @@
             </h1>
         </tr>
         <td>
-            <h1>
+            <button class="btn">
                 @Html.ActionLink("Cancel Order", "CancelOrderID", new { id = Model.IDORDER })
-            </h1>
-            <h1>
+            </button>
+            <button class="btn">
                 @Html.ActionLink("Edit Order", "EditOrder", new { id = Model.IDORDER })
-            </h1>
+            </button>
         </td>
     </tfoot>
 

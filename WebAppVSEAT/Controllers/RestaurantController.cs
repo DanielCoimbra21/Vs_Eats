@@ -78,7 +78,7 @@ namespace WebAppVSEAT.Controllers
                 var restVM = new List<RestaurantVM>();
                 foreach (var r in rest)
                 {
-                    if (r.NAMERESTAURANT.StartsWith(search))
+                    if (r.NAMERESTAURANT.ToLower().StartsWith(search.ToLower()))
                     {
 
                         var vm = new RestaurantVM();
