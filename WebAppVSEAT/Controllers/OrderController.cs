@@ -365,44 +365,61 @@ namespace WebAppVSEAT.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Calculer la somme de la livraison
-                double somme = 0;
-
-                foreach (var d in editOrderVM.orderDishes)
+                if (editOrderVM != null)
                 {
-                    somme += d.PRICEDISH * d.QUANTITY;
-                }
-
-                //Vérifier si l'heure n'est pas avant l'heure actuel
-                if (somme > 0)
-                {
-                    //mettre à jour l'order avec les nouvelles valeurs
+                    //Récupération de la commande
                     var order = OrderManager.GetOrder(editOrderVM.IDORDER);
-                    order.TOTALPRICE = (decimal)somme;
 
 
-                    OrderManager.UpdateOrder(order);
+                    //si l'heure de livraison est 30 minutes avant, pas possible de modifier
+                    var myDeliveryTime = order.DELIVERTIME;
+                    var diff = myDeliveryTime.Subtract(DateTime.Now);
 
-
-                    //Ajouter les plats dans DISHESORDER
-                    //si la quantité est supérieur à 0
-                    var idOrder = editOrderVM.IDORDER;
-                    foreach (var o in editOrderVM.orderDishes)
+                    if (diff.TotalMilliseconds < 1800000)
                     {
-                        if (o.QUANTITY > 0)
+                        ModelState.AddModelError(String.Empty, "Cannot modify your order 30 minutes before delivery");
+                        return View(editOrderVM);
+                    }
+
+                    //Calculer la somme de la livraison
+                    double somme = 0;
+
+                    foreach (var d in editOrderVM.orderDishes)
+                    {
+                        somme += d.PRICEDISH * d.QUANTITY;
+                    }
+
+                    //Vérifier si l'heure n'est pas avant l'heure actuel
+                    if (somme > 0)
+                    {
+                        //mettre à jour l'order avec les nouvelles valeurs
+                        order.TOTALPRICE = (decimal)somme;
+
+                        OrderManager.UpdateOrder(order);
+
+
+                        //Ajouter les plats dans DISHESORDER
+                        //si la quantité est supérieur à 0
+                        var idOrder = editOrderVM.IDORDER;
+                        foreach (var o in editOrderVM.orderDishes)
                         {
-                            DTO.DishesOrder dishesOrder = new DTO.DishesOrder
+                            if (o.QUANTITY > 0)
                             {
-                                IDDISHES = o.IDDISHES,
-                                IDORDER = idOrder,
-                                QUANTITY = o.QUANTITY
-                            };
-                            DishesOrderManager.UpdateDishesOrder(dishesOrder);
+                                DTO.DishesOrder dishesOrder = new DTO.DishesOrder
+                                {
+                                    IDDISHES = o.IDDISHES,
+                                    IDORDER = idOrder,
+                                    QUANTITY = o.QUANTITY
+                                };
+                                DishesOrderManager.UpdateDishesOrder(dishesOrder);
+                            }
                         }
                     }
+                    return RedirectToAction("Orders", "Order");
                 }
+                ModelState.AddModelError(string.Empty, "Cannot command with zero quantity");
             }
-            return RedirectToAction("Order", "Orders");
+            return View(editOrderVM);
         }
     }
 }
