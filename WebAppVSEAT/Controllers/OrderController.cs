@@ -381,6 +381,12 @@ namespace WebAppVSEAT.Controllers
                         return View(editOrderVM);
                     }
 
+                    if(DateTime.Compare(DateTime.Now, myDeliveryTime) < 0)
+                    {
+                        ModelState.AddModelError(String.Empty, "Cannot modify your order because the delivery already made");
+                        return View(editOrderVM);
+                    }
+
                     //Calculer la somme de la livraison
                     double somme = 0;
 
