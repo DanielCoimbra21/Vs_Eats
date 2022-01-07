@@ -19,7 +19,6 @@
 
 .cards__item {
     /* There will be 4 cards per row */
-    flex-basis: 25%;
     padding-left: 8px;
     padding-right: 8px;
     align-items: center;
