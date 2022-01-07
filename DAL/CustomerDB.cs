@@ -193,25 +193,28 @@ namespace DAL
 
                             customer.IDCUSTOMER = (int)dr["IDCUSTOMER"];
 
-                            if (dr["NAME"] != null)
-                                customer.NAME = (string)dr["NAME"];
+                           
+                            customer.NAME = (string)dr["NAME"];
 
-                            if (dr["SURNAME"] != null)
-                                customer.SURNAME = (string)dr["SURNAME"];
+                            
+                            customer.SURNAME = (string)dr["SURNAME"];
 
-                            if (dr["MAIL"] != null)
-                                customer.MAIL = (string)dr["MAIL"];
+                            
+                            customer.MAIL = (string)dr["MAIL"];
 
-                            if (dr["PASSWORD"] != null)
-                                customer.PASSWORD = (string)dr["PASSWORD"];
+                            
+                            customer.PASSWORD = (string)dr["PASSWORD"];
 
                             if (dr["USERNAME"] != null)
                                 customer.USERNAME = (string)dr["USERNAME"];
 
+                            
+                            customer.IDCITY = (int)dr["IDCITY"];
+
                             customer.PHONE = (string)dr["PHONE"];
 
-                            if (dr["ADDRESS"] != null)
-                                customer.ADDRESS = (string)dr["ADDRESS"];
+                            
+                            customer.ADDRESS = (string)dr["ADDRESS"];
 
                         }
                     }

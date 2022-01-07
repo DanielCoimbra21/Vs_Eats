@@ -20,6 +20,9 @@
         <i class="">@Html.DisplayFor(model => model.ADDRESS)</i>
         <br />
         <i class="">@Html.DisplayFor(model => model.CITYNAME)</i>
+        @Html.HiddenFor(model => model.IDCITY)
+        @Html.HiddenFor(model => model.IDCUSTOMER)
+       
     </p>
     <p>
         <button value="Edit">

@@ -92,6 +92,7 @@ namespace WebAppVSEAT.Controllers
                 if(city.CITYNAME == customerVM.CITYNAME)
                 {
                     idCity = city.IDCITY;
+                    break;
                 }
             }
 
@@ -109,6 +110,7 @@ namespace WebAppVSEAT.Controllers
             customer.PHONE = customerVM.PHONE;
             customer.ADDRESS = customerVM.ADDRESS;
             customer.MAIL = customerVM.MAIL;
+          
 
             if (ModelState.IsValid)
             {

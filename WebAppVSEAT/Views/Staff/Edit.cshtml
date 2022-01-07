@@ -51,7 +51,21 @@
                         <div class="form-group">
                             <h6>City</h6>
                             <label class="col-form-label" asp-for="CITYNAME" />
-                            <input type="text" asp-for="CITYNAME" class="form-control fadeIn second" placeholder="city" />
+                            <input type="text" list="cities" asp-for="CITYNAME" class="form-control fadeIn second" placeholder="city" />
+                            <datalist id="cities">
+                                <option value="Martigny">Martigny</option>
+                                <option value="Brigue">Brigue</option>
+                                <option value="Vétroz">Vétroz</option>
+                                <option value="Le Châble">Le Châble</option>
+                                <option value="Hérémence">Hérémence</option>
+                                <option value="Massongex">Massongex</option>
+                                <option value="Turtmann">Turtmann</option>
+                                <option value="Loèche-Les-Bains">Loèche-Les-Bains</option>
+                                <option value="Epinassey">Epinassey</option>
+                                <option value="Savièse">Savièse</option>
+                                <option value="Baltschieder">Baltschieder</option>
+                            </datalist>
+                            <span asp-validation-for="CITYNAME" class="text-danger fadeIn second"></span>
                         </div>
                         <div class="form-group">
                             <h6>Username</h6>
