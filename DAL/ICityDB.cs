@@ -10,5 +10,7 @@ namespace DAL
 
         DTO.City GetCity(int idCity);
 
+        DTO.City GetCity(string cityname);
+
     }
 }

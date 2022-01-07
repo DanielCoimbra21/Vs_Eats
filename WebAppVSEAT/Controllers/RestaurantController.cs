@@ -31,9 +31,15 @@ namespace WebAppVSEAT.Controllers
         }
 
 
-
+        /// <summary>
+        /// Method for the main page when we clicked on the button restaurant
+        /// </summary>
+        /// <param name="searchBy"></param>
+        /// <param name="search"></param>
+        /// <returns></returns>
         public IActionResult Index(string searchBy, string search)
         {
+            //Check if the user is connected
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -42,7 +48,7 @@ namespace WebAppVSEAT.Controllers
             var rest = RestaurantManager.GetRestaurants();
             var restaurants_vm = new List<RestaurantVM>();
 
-
+            //Create the view model with all restaurants
             foreach (var r in rest)
             {
                 var vm = new RestaurantVM();
@@ -55,6 +61,7 @@ namespace WebAppVSEAT.Controllers
                 restaurants_vm.Add(vm);
             }
 
+            //Control if the search bar is null, display all restaurants
             if (search == null)
             {
                 var rest_vm = new List<RestaurantVM>();
@@ -72,7 +79,7 @@ namespace WebAppVSEAT.Controllers
                 return View(rest_vm);
             }
 
-
+            //Check if we display the restaurant by restaurant name
             if (searchBy == "Restaurant")
             {
                 var restVM = new List<RestaurantVM>();
@@ -91,7 +98,37 @@ namespace WebAppVSEAT.Controllers
 
                         restVM.Add(vm);
                     }
+                }
 
+                return View(restVM);
+            }
+
+            //Check if we display by cityname
+            if (searchBy == "City")
+            {
+                var restVM = new List<RestaurantVM>();
+                var city = CityManager.GetCity(search);
+
+                if(city == null)
+                {
+                    ModelState.AddModelError(String.Empty, "Wrong city entered");
+                    return View(restVM);
+                }
+
+                foreach (var r in rest)
+                {
+                    if (r.IDCITY == city.IDCITY)
+                    {
+                        var vm = new RestaurantVM();
+                        var cityR = CityManager.GetCity(r.IDCITY);
+                        
+                        vm.CITYNAME = cityR.CITYNAME;
+                        vm.IDRESTAURANT = r.IDRESTAURANT;
+                        vm.NAMERESTAURANT = r.NAMERESTAURANT;
+                        vm.ADDRESSRESTAURANT = r.ADDRESSRESTAURANT;
+
+                        restVM.Add(vm);
+                    }
                 }
 
                 return View(restVM);
@@ -101,10 +138,14 @@ namespace WebAppVSEAT.Controllers
         }
 
 
-
-
+        /// <summary>
+        /// Method to list all dishes from a choosen restaurant
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Details(int id)
         {
+            //Check if the user is connected
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -114,13 +155,14 @@ namespace WebAppVSEAT.Controllers
             listDish = DishesRestaurantManager.GetListDishes(id);
             var dishesRestaurantVM = new List<DishesRestaurantVM>();
 
-
+            //Verify is the listDish is null, then display an error model
             if (listDish == null)
             {
                 var error = new ErrorViewModel();
                 return View(error);
             }
 
+            //Create the list of dishes from a restaurant
             foreach (var idDish in listDish)
             {
                 var vm = new DishesRestaurantVM();
@@ -135,6 +177,12 @@ namespace WebAppVSEAT.Controllers
             return View(dishesRestaurantVM);
         }
 
+
+        /// <summary>
+        /// Method when we want to make an order
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult TakeAnOrder(int id)
         {
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
@@ -142,11 +190,11 @@ namespace WebAppVSEAT.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            //liste des id des plats dans le restaurant
+            //List of id from a choosen restaurant
             var listIDDishes = DishesRestaurantManager.GetListDishes(id);
             var dishes = new List<DTO.Dish>();
 
-            //Ajout dans le tableau tous les plats liés au restaurant
+            //Add to list dishes all dish which are related
             foreach (var idDish in listIDDishes)
             {
                 dishes.Add(DishManager.GetDish(idDish));
@@ -154,9 +202,11 @@ namespace WebAppVSEAT.Controllers
 
             var myModel = new CommandVM();
             myModel.IDRESTAURANT = id;
+
+            //initialize the new orderDishes in CommandVM
             myModel.orderDishes = new List<CommandVM>();
 
-
+            //Control if the list of dishes is null, if yes return the view model
             if (dishes != null)
             {
                 foreach (var dish in dishes)
@@ -172,14 +222,18 @@ namespace WebAppVSEAT.Controllers
                         DELIVERTIME = DateTime.Now,
                         IDORDER = -1,
                     };
-
                     myModel.orderDishes.Add(myDishVM);
                 }
             }
-
             return View(myModel);
         }
 
+
+        /// <summary>
+        /// Method to confirm the new order we make
+        /// </summary>
+        /// <param name="commandVM"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult TakeAnOrder(CommandVM commandVM)
@@ -190,7 +244,7 @@ namespace WebAppVSEAT.Controllers
             {
                 if(commandVM != null)
                 {
-                    //Calculer la somme de la livraison
+                    //Calculate the sum of the new order
                     double somme = 0;
 
                     foreach (var d in commandVM.orderDishes)
@@ -199,13 +253,13 @@ namespace WebAppVSEAT.Controllers
                         idRestaurant = d.IDRESTAURANT;
                     }
 
-                    //Calculer la nouvelle date
+                    //Create the new datetime to insert after in the order
                     DateTime dateTimeNow = DateTime.Now;
                     var hour = int.Parse(commandVM.hour.Split(":")[0]);
                     var minutes = int.Parse(commandVM.hour.Split(":")[1]);
                     DateTime myDeliveryTime = new DateTime(dateTimeNow.Year, dateTimeNow.Month, dateTimeNow.Day, hour, minutes, 0);
 
-                    //si l'heure de livraison est 30 minutes avant, pas possible
+                    //If the order is made 30 minutes before the delivery, cannot do it
                     var diff = myDeliveryTime.Subtract(dateTimeNow);
                     
                     if (diff.TotalMilliseconds < 1800000)
@@ -214,18 +268,20 @@ namespace WebAppVSEAT.Controllers
                         return View(commandVM);
                     }
 
-                    //Définir le status
+                    //Initialize the status
                     string status = "ongoing";
 
-                    //Chercher l'id du customer
+                    //Get the idCustomer of the customer
                     int idCustomer = (int)HttpContext.Session.GetInt32("IdCustomer");
 
-                    //Trouver l'id du district
+                    //Find the district of the restaurant to add to the order
                     var city = CityManager.GetCity(RestaurantManager.GetRestaurant(idRestaurant).IDCITY);
                     int idDistrict = city.IDDISTRICT;
 
-
-                    //Créer une nouvelle commande sans l'id du Staff
+                    /*
+                     * Create an order without the id staff 
+                     * to match the method AssignStaff who need an order
+                    */
                     DTO.Order order = new DTO.Order();
                     order.IDDISTRICT = idDistrict;
                     order.IDRESTAURANT = idRestaurant;
@@ -234,35 +290,33 @@ namespace WebAppVSEAT.Controllers
                     order.DELIVERTIME = myDeliveryTime;
                     order.STATUS = status;
 
-                    //Trouver l'id du Staff
+                    //Find the id of the staff
                     int idStaff = OrderManager.AssignStaff(order);
 
-                    //Vérifier l'id du Staff
+                    //Verifiy the id of the staff
                     if (idStaff == -1)
                     {
                         ModelState.AddModelError(String.Empty, "No staff available. please choose an other delivery time");
                         return View(commandVM);
                     }
 
-                    //Vérifier si l'heure n'est pas avant l'heure actuel
-
+                    //Verify the time that is not before the actual time
                     if (myDeliveryTime < dateTimeNow)
                     {
                         ModelState.AddModelError(String.Empty, "Choose an another time, it passed");
                         return View(commandVM);
                     }
 
+                    //Insert the order only if the sum is upper than 0
                     if (somme > 0)
                     {
                         
+                        //Insert the new order in the database
+                        var myOrder = OrderManager.InsertOrder(order, idStaff);
 
-                        //Créer l'ordre avec l'id du Staff
-                        var preOrder = OrderManager.InsertOrder(order, idStaff);
 
-
-                        //Ajouter les plats dans DISHESORDER
-                        //si la quantité est supérieur à 0
-                        var idOrder = preOrder.IDORDER;
+                        //Add the dishes in the table DISHESORDER
+                        var idOrder = myOrder.IDORDER;
                         foreach (var o in commandVM.orderDishes)
                         {
                             if (o.QUANTITY > 0)

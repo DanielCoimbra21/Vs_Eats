@@ -39,10 +39,11 @@ namespace WebAppVSEAT.Controllers
            
             var rest = RestaurantManager.GetRestaurants();               
             var listDish = DishManager.GetDishes();
+            var listCities = CityManager.GetCities();
 
             var vm = new HomePageVM();
             vm.restaurantVMS = new List<RestaurantVM>();
-            vm.dishesVMS = new List<DishesVM>();
+            vm.citiesVMS = new List<DTO.City>();
 
 
             foreach (var r in rest)
@@ -57,25 +58,19 @@ namespace WebAppVSEAT.Controllers
                     vm.restaurantVMS.Add(vmr);
                 }
 
-
-
-            foreach (var dish in listDish)
+            foreach(var c in listCities)
             {
-                var vmd = new DishesVM();
-                var restaurant = RestaurantManager.GetRestaurant(dish.IDDISHES);
-               // vmd.IDRESTAURANT = 
-                vmd.NAMEDISH = dish.NAMEDISH;
-                vmd.PRICEDISH = dish.PRICEDISH;
-                vmd.IDDISHES = dish.IDDISHES;
+                var vmc = new DTO.City();
+                vmc.IDCITY = c.IDCITY;
+                vmc.IDDISTRICT = c.IDDISTRICT;
+                vmc.CITYNAME = c.CITYNAME;
+                vmc.NPA = c.NPA;
 
-                vm.dishesVMS.Add(vmd);
+                vm.citiesVMS.Add(vmc);
             }
 
 
             return View(vm);
-
-            
-
         }
     }
 }

@@ -38,30 +38,27 @@
 
 </div>
 
-
 <p>
     <center>
-        <h3>All of the Dishes available in our app</h3>
+        <h3>All Cities</h3>
     </center>
 </p>
 
 
-
 <div class="containerHomePage">
 
-    @foreach (var item in Model.dishesVMS)
+
+    @foreach (var item in Model.citiesVMS)
     {
-        string imageUrl = "Images/Dishes/" + item.IDDISHES + ".jpg";
+        string imageUrl = "Images/Cities/" + item.IDCITY + ".jpg";
 
         <div class="containerColumnHomePage">
-
-            <img src="~/@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
-
-            <h3>@Html.DisplayFor(modelItem => item.NAMEDISH)</h3>
-            <h3>@Html.DisplayFor(modelItem => item.PRICEDISH) CHF</h3>
-            @*@Html.ActionLink("Order", "TakeAnOrder", "Restaurant", new { id = item.IDRESTAURANT }, null)*@       
+            <img src="~/@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDCITY)" width="250" height="250" />
+            <h4>
+                @Html.ActionLink(item.CITYNAME, "Index", "Restaurant", new {searchBy = "City" , search = item.CITYNAME }, null)
+            </h4>
         </div>
+
     }
 
 </div>
-

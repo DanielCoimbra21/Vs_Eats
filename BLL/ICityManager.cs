@@ -12,6 +12,9 @@ namespace BLL
         List<City> GetCities();
 
         DTO.City GetCity(int idCity);
-        
+
+        DTO.City GetCity(string cityname);
+
+
     }
 }

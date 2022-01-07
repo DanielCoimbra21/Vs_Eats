@@ -9,7 +9,7 @@ namespace WebAppVSEAT.Models
     {
 
         public List<RestaurantVM> restaurantVMS { get; set; }
-        public List<DishesVM> dishesVMS { get; set; }
+        public List<DTO.City> citiesVMS { get; set; }
 
     }
 }

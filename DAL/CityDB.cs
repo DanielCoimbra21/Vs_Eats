@@ -101,17 +101,19 @@ namespace DAL
             return city;
         }
 
-        public string GetCityName(int idCity)
+
+        public DTO.City GetCity(string cityname)
         {
+            City city = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            string cityName = "";
+
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from [dbo].CITY where IDCITY = @idCity";
+                    string query = "Select * from CITY where CITYNAME = @cityname";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@idCity", idCity);
+                    cmd.Parameters.AddWithValue("@cityname", cityname);
 
                     cn.Open();
 
@@ -119,7 +121,17 @@ namespace DAL
                     {
                         while (dr.Read())
                         {
-                            cityName = (string)dr["CITYNAME"];
+
+                            city = new City();
+
+                            city.IDCITY = (int)dr["IDCITY"];
+
+                            city.CITYNAME = (string)dr["CITYNAME"];
+
+                            city.NPA = (int)dr["NPA"];
+
+                            city.IDDISTRICT = (int)dr["IDDISTRICT"];
+
                         }
                     }
                 }
@@ -129,9 +141,8 @@ namespace DAL
                 throw e;
             }
 
-            return cityName;
+            return city;
         }
-
 
     }
 

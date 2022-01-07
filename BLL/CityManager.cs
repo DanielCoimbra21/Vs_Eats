@@ -29,6 +29,11 @@ namespace DAL
             return CityDb.GetCity(idCity);
         }
 
+        public DTO.City GetCity(string cityname)
+        {
+            return CityDb.GetCity(cityname);
+        }
+
 
     }
 }
