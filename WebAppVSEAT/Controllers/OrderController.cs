@@ -32,27 +32,27 @@ namespace WebAppVSEAT.Controllers
         }
 
         /// <summary>
-        /// Affiche directement les commandes en cours du staff
+        /// Display the orders of the Staff
         /// </summary>
         /// <returns></returns>
         public IActionResult OrdersStaff()
         {
-            //Vérifier que l'utilisateur est bien connecté
+            //Verify that the user is connected
             if (HttpContext.Session.GetInt32("IdStaff") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
 
-
             var listOrders = OrderManager.GetOrders((int)HttpContext.Session.GetInt32("IdStaff"), "ongoing");
             var listOrderVM = new List<OrderVM>();
 
-            //Si liste des commandes est null, afficher une vue erreur
+            //The order can be null, so we display an error page with a message "No command"
             if (listOrders == null)
             {
                 return View("~/Views/Order/ErrorNoDelivery.cshtml");
             }
 
+            //Create view model
             foreach (var o in listOrders)
             {
                 var vm = new OrderVM();
@@ -371,8 +371,17 @@ namespace WebAppVSEAT.Controllers
                     var order = OrderManager.GetOrder(editOrderVM.IDORDER);
 
 
-                    //si l'heure de livraison est 30 minutes avant, pas possible de modifier
+                    //comparer l'heure de commande avec l'heure actuelle pour vérifier si il est possible d'annuler la commande 
                     var myDeliveryTime = order.DELIVERTIME;
+
+                    if (DateTime.Compare(DateTime.Now, myDeliveryTime) > 0)
+                    {
+                        ModelState.AddModelError(String.Empty, "Cannot modify your order because the date passed");
+                        return View(editOrderVM);
+                    }
+
+
+                    //si l'heure de livraison est 30 minutes avant, pas possible de modifier
                     var diff = myDeliveryTime.Subtract(DateTime.Now);
 
                     if (diff.TotalMilliseconds < 1800000)
@@ -381,11 +390,7 @@ namespace WebAppVSEAT.Controllers
                         return View(editOrderVM);
                     }
 
-                    if(DateTime.Compare(DateTime.Now, myDeliveryTime) < 0)
-                    {
-                        ModelState.AddModelError(String.Empty, "Cannot modify your order because the delivery already made");
-                        return View(editOrderVM);
-                    }
+                    
 
                     //Calculer la somme de la livraison
                     double somme = 0;
