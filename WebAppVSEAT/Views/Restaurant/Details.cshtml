@@ -16,11 +16,11 @@
 
         @foreach (var item in Model)
         {
-            string imageUrl = "/Images/Dishes/" + item.IDDISHES + ".jpg";
+            string imageUrl = "Images/Dishes/" + item.IDDISHES + ".jpg";
 
             <div class="cards__item">
 
-                <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
+                <img src="~/@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
 
                 <h2>@Html.DisplayFor(modelItem => item.NAMEDISH)</h2>
                 <h3>@Html.DisplayFor(modelItem => item.PRICEDISH) CHF</h3>
