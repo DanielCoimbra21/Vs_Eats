@@ -33,7 +33,5 @@ namespace DAL
         {
             return CityDb.GetCity(cityname);
         }
-
-
     }
 }

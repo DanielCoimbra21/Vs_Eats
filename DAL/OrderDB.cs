@@ -313,7 +313,6 @@ namespace DAL
                     cn.Open();
 
                     cmd.ExecuteNonQuery();
-
                 }
             }
             catch (Exception e)

@@ -17,12 +17,12 @@
 
 
 .cardSearch {
-
     break-inside: avoid;
     padding: 10px 10px 10px 10px;
     margin-bottom: 1rem;
     background-color: transparent;
     text-align: center;
+    transform: scale(1.4);
 }
 
 

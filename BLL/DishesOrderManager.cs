@@ -13,6 +13,7 @@ namespace BLL
     {
         private IDishesOrderDB DishesOrderDb { get; }
         private IOrderDB orderDb { get; }
+       
         public DishesOrderManager(IConfiguration configuration)
         {
             DishesOrderDb = new DishesOrderDB(configuration);
@@ -22,7 +23,6 @@ namespace BLL
             orderDb = new OrderDB(configuration);
         }
        
-
         public List<DishesOrder> GetDishesOrders(int idOrder)
         {
             return DishesOrderDb.GetDishesOrders(idOrder);
@@ -37,6 +37,5 @@ namespace BLL
         {
             DishesOrderDb.UpdateDishesOrder(dishesOrder);
         }
-
     }
 }

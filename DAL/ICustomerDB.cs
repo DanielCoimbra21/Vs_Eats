@@ -15,7 +15,6 @@ namespace DAL
         string GetPassword(string password);
         Customer GetCustomerID(int id);
         public void UpdatePassword(Customer customer);
-        void UpdateCustomer(Customer customer);
-        
+        void UpdateCustomer(Customer customer);      
     }
 }

@@ -9,10 +9,8 @@ namespace BLL
 {
     public interface IDishesOrderManager
     {
-        public void InsertDishesOrder(DishesOrder dishesOrder);
-
         public List<DishesOrder> GetDishesOrders(int idOrder);
-
+        public void InsertDishesOrder(DishesOrder dishesOrder);
         public void UpdateDishesOrder(DishesOrder dishesOrder);
     }
 

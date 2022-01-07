@@ -22,11 +22,9 @@ namespace BLL
         {
             return RestaurantDb.GetRestaurants();
         }
-
         public Restaurant GetRestaurant(int idRestaurant)
         {
             return RestaurantDb.GetRestaurant(idRestaurant);
         }
-
     }
 }

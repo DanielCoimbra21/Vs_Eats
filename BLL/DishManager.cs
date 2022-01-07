@@ -18,11 +18,6 @@ namespace BLL
             DishDb = dishDB;
         }
 
-        public Dish GetDish(string dishName)
-        {
-            return DishDb.GetDish(dishName);
-        }
-
         public Dish GetDish(int idDish)
         {
             return DishDb.GetDish(idDish);

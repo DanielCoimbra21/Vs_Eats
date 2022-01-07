@@ -9,10 +9,7 @@ namespace DAL
 {
     public interface IRestaurantDB
     {
-
         public List<Restaurant> GetRestaurants();
-
         public Restaurant GetRestaurant(int idRestaurant);
-
     }
 }

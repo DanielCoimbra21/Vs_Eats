@@ -140,8 +140,6 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-
-
                     var query = "UPDATE [dbo].[DISHESORDER] " +
                         "SET QUANTITY=@quantity " +
                         "WHERE IDDISHES=@iddishes AND IDORDER=@idorder";
@@ -150,11 +148,9 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@iddishes", dishesOrder.IDDISHES);
                     cmd.Parameters.AddWithValue("@idorder", dishesOrder.IDORDER);
 
-
                     cn.Open();
 
                     cmd.ExecuteNonQuery();
-
                 }
             }
             catch (Exception e)

@@ -24,7 +24,6 @@ namespace DAL
             List<Dish> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
@@ -44,12 +43,8 @@ namespace DAL
                             Dish dish = new Dish();
 
                             dish.IDDISHES = (int)dr["IDDISHES"];
-
-                            if (dr["NAMEDISH"] != null)
-                                dish.NAMEDISH = (string)dr["NAMEDISH"];
-
-                            if (dr["PRICEDISH"] != null)
-                                dish.PRICEDISH = (double)dr["PRICEDISH"];
+                            dish.NAMEDISH = (string)dr["NAMEDISH"];
+                            dish.PRICEDISH = (double)dr["PRICEDISH"];
 
                             results.Add(dish);
                         }
@@ -125,11 +120,8 @@ namespace DAL
                             dish = new Dish();
 
                             dish.IDDISHES = (int)dr["IDDISHES"];
-
                             dish.NAMEDISH = (string)dr["NAMEDISH"];
-
-                            if (dr["PRICEDISH"] != null)
-                                dish.PRICEDISH = (double)dr["PRICEDISH"];
+                            dish.PRICEDISH = (double)dr["PRICEDISH"];
                         }
                     }
                 }
@@ -141,6 +133,5 @@ namespace DAL
 
             return dish;
         }
-
     }
 }

@@ -17,50 +17,6 @@ namespace DAL
             Configuration = configuration;
         }
 
-        public List<Staff> GetStaffs()
-        {
-            List<Staff> results = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * from Staff";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-
-                    cn.Open();
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            if (results == null)
-                                results = new List<Staff>();
-
-                            Staff staff = new Staff();
-
-                            staff.IDSTAFF = (int)dr["IDSTAFF"];
-                            staff.IDCITY = (int)dr["IDCITY"];
-                            staff.NAMESTAFF = (string)dr["NAMESTAFF"];
-                            staff.SURNAMESTAFF = (string)dr["SURNAMESTAFF"];
-                            staff.PHONENUMBERSTAFF = (int)dr["PHONENUMBERSTAFF"];
-                            staff.ADDRESSSTAFF = (string)dr["ADDRESSSTAFF"];
-                            staff.MAILSTAFF = (string)dr["MAILSTAFF"];
-                            staff.USERNAMESTAFF = (string)dr["USERNAMESTAFF"];
-                            staff.PASSWORDSTAFF = (string)dr["PASSWORDSTAFF"];
-                            staff.ORDERCURRENTTOTAL = (int)dr["ORDERCURRENTTOTAL"];
-
-                            results.Add(staff);
-                        }
-                    }
-                }
-            }catch (Exception e)
-            {
-                throw e;
-            }
-            return results;
-        }
-
         public Staff GetStaff(string mailStaff, string passwordStaff)
         {
             Staff staff = null;
@@ -92,7 +48,8 @@ namespace DAL
                             staff.MAILSTAFF = (string)dr["MAILSTAFF"];
                             staff.USERNAMESTAFF = (string)dr["USERNAMESTAFF"];
                             staff.PASSWORDSTAFF = (string)dr["PASSWORDSTAFF"];
-                            staff.ORDERCURRENTTOTAL = (int)dr["ORDERCURRENTTOTAL"];
+                            if (dr["ORDERCURRENTTOTAL"] != null)
+                                staff.ORDERCURRENTTOTAL = (int)dr["ORDERCURRENTTOTAL"];
                         }
                     }
                 }
@@ -137,7 +94,8 @@ namespace DAL
                             staff.MAILSTAFF = (string)dr["MAILSTAFF"];
                             staff.USERNAMESTAFF = (string)dr["USERNAMESTAFF"];
                             staff.PASSWORDSTAFF = (string)dr["PASSWORDSTAFF"];
-                            staff.ORDERCURRENTTOTAL = (int)dr["ORDERCURRENTTOTAL"];
+                            if (dr["ORDERCURRENTTOTAL"] != null)
+                                staff.ORDERCURRENTTOTAL = (int)dr["ORDERCURRENTTOTAL"];
 
                         }
                     }
@@ -193,19 +151,15 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-
-
                     var query = "UPDATE STAFF " +
                         "SET PASSWORDSTAFF = @passwordStaff WHERE IDSTAFF=@idStaff";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idStaff", staff.IDSTAFF);
                     cmd.Parameters.AddWithValue("@passwordStaff", staff.PASSWORDSTAFF);
                     
-
                     cn.Open();
 
                     cmd.ExecuteNonQuery();
-
                 }
             }
             catch (Exception e)
@@ -238,55 +192,5 @@ namespace DAL
                 throw e;
             }
         }
-
-
-
-        public List<Order> GetUpComingOrder(int idStaff, string status)
-        {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            List <Order> results = null;
-            
-            try
-            {
-                using(SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    var query = "Select * FROM Order WHERE IDSTAFF=@idStaff and STATUS=@status";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@idStaff", idStaff);
-                    cmd.Parameters.AddWithValue("@status", status);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            if (results == null)
-                                results = new List<Order>();
-
-                            Order order = new Order();
-
-                            order.IDORDER = (int)dr["IDORDER"];
-                            order.IDDISTRICT = (int)dr["IDDISTRICT"];
-                            order.IDRESTAURANT = (int)dr["IDRESTAURANT"];
-                            order.IDSTAFF = (int)dr["IDSTAFF"];
-                            order.IDCUSTOMER = (int)dr["IDCUSTOMER"];
-                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
-                            order.DELIVERTIME = (DateTime)dr["DELIVERTIME"];
-                            order.STATUS = (string)dr["STATUS"];
-
-                            results.Add(order);
-                        }
-                    }   
-                }
-            }catch(Exception e)
-            {
-                throw e;
-            }
-            return results;
-        }
-
-        
-        
     }
 }

@@ -18,15 +18,6 @@ namespace BLL
             StaffDb = new StaffDB(conf);
         }
 
-        public void UpdatePassword(Staff staff)
-        {
-            StaffDb.UpdatePassword(staff);
-        }
-
-        public void UpdateStaff(Staff staff) {
-            StaffDb.UpdateStaff(staff);
-        }
-
         public DTO.Staff GetStaff(string mailStaff, string passwordStaff)
         {
             return StaffDb.GetStaff(mailStaff, passwordStaff);
@@ -37,5 +28,13 @@ namespace BLL
             return StaffDb.GetStaff(idStaff);
         }
 
+        public void UpdatePassword(Staff staff)
+        {
+            StaffDb.UpdatePassword(staff);
+        }
+
+        public void UpdateStaff(Staff staff) {
+            StaffDb.UpdateStaff(staff);
+        }
     }
 }

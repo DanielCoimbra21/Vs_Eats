@@ -10,9 +10,7 @@ namespace DAL
     public interface IDishDB
     {
         List<Dish> GetDishes();
-
         Dish GetDish(string nameDish);
-
         Dish GetDish(int idDish);
 
         
