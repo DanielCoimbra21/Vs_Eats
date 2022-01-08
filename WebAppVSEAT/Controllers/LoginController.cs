@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using BLL;
+using FluentEmail.Core;
+using FluentEmail.Smtp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAppVSEAT.Models;
@@ -98,9 +102,9 @@ namespace WebAppVSEAT.Controllers
             if (ModelState.IsValid)
             {
                 var listCustomer = CustomerManager.GetCustomers();
-                foreach(var c in listCustomer)
+                foreach (var c in listCustomer)
                 {
-                    if(c.MAIL == createCustomerVM.MAIL)
+                    if (c.MAIL == createCustomerVM.MAIL)
                     {
                         ModelState.AddModelError(string.Empty, "An account already exists with this mail");
                         return View(createCustomerVM);
@@ -133,12 +137,15 @@ namespace WebAppVSEAT.Controllers
                 customer.ADDRESS = createCustomerVM.ADDRESS;
                 customer.MAIL = createCustomerVM.MAIL;
                 customer.PASSWORD = createCustomerVM.PASSWORD;
-                
+
+                new MailController().SendRegisterMail(createCustomerVM.MAIL,createCustomerVM.NAME);
 
                 CustomerManager.InsertCustomer(customer);
             }
 
             return RedirectToAction("Index", "Login");
         }
+
     }
 }
+
