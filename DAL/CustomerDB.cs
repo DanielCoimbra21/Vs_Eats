@@ -112,7 +112,7 @@ namespace DAL
         }
 
 
-        public Customer GetCustomer(string email)
+        public Customer GetCustomer(string email, string password)
         {
             Customer customer = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -121,9 +121,10 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from CUSTOMER where MAIL = @email ";
+                    string query = "Select * from CUSTOMER where MAIL = @email AND PASSWORD = @password";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", GetPassword(password));
 
                     cn.Open();
 
@@ -227,7 +228,7 @@ namespace DAL
             return customer;
         }
 
-        public string SetPassword(string password)
+        public string GetPassword(string password)
         {
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -245,42 +246,6 @@ namespace DAL
                     {
                         if (dr.Read())
                         {
-
-                            password = (string)dr["PASSWORD"];
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            return password;
-
-        }
-
-        public string GetPassword(string email)
-        {
-            string password = null;
-
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * FROM CUSTOMER where MAIL = @email";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@email", email);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        if (dr.Read())
-                        {
-                            
-                            email = (string)dr["MAIL"];
-
                             password = (string)dr["PASSWORD"];
                         }
                     }
