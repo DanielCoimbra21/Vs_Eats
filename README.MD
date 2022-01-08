@@ -52,10 +52,10 @@ If the customer clicks on the restaurant name, he/she will be sent to the produc
 * confirm order
 * the orders are made for the current day only
 
-![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer\chooseDishes.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer/chooseDishes.png?raw=true "Title")
 
 
-![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer\passYourCommand.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer/passYourCommand.png?raw=true "Title")
 
 
 The customer will receive an email with the details of his/her order. 
@@ -65,7 +65,7 @@ If the customer clicks on the name of the district, it will show all the partner
 The customer can go to the restaurant page. There he/she can search by the restaurant name or by city name.
 
 
-![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer\indexRestaurant1.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer/indexRestaurant1.png?raw=true "Title")
 
 If the customer desires to cancel his/her order he/she can do it in two differnt ways :
 
@@ -78,13 +78,13 @@ If the customer desires to cancel his/her order he/she can do it in two differnt
 * * if less than 3h before delivery it won't be possible
 
 
-![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer\cancelOrder.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer/cancelOrder.png?raw=true "Title")
 
 
 The customer can edit the order, but only to change the quantity. But the customer can't edit it 30 minutes before the delivery time.
 
 
-![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer\editQuantityOrder.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer/editQuantityOrder.png?raw=true "Title")
 
 The customer can check his/her profile by going to the parameters button. This button allows him/her to log out or check his/her profile page.
 
@@ -92,7 +92,7 @@ If the customer clicks on his/her profile, he/she will get to the profile page w
 On this page, the customer can change his/her password as well as the information about him/her.
 
 
-![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer\customerProfile.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotCustomer/customerProfile.png?raw=true "Title")
 
 The user can also log in as a staff. It will redirect him/her to the staff profile page. It is possible to update his/her account information as well as change his/her password.
 
@@ -100,7 +100,7 @@ The user can also log in as a staff. It will redirect him/her to the staff profi
 ![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/loginStaff.png?raw=true "Title")
 
 
-![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotStaff\staffProfile.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotStaff/staffProfile.png?raw=true "Title")
 
 The staff has 2 pages : Historic and Current Orders
 
@@ -108,10 +108,10 @@ The staff has 2 pages : Historic and Current Orders
 * Current Orders : Show all the orders that the staff has to deliver, he can archive it by clicking on "archive"
 
 
-![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotStaff\staffHistoric.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotStaff/staffHistoric.png?raw=true "Title")
 
 
-![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotStaff\staffOrders.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/screenshotStaff/staffOrders.png?raw=true "Title")
 
 ### Features
 * Encrypted passwords
