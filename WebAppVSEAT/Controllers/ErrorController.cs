@@ -12,7 +12,6 @@ namespace WebAppVSEAT.Controllers
     public class ErrorController : Controller
     {
 
-        
         public IActionResult Index()
         {
             return View();
@@ -35,11 +34,9 @@ namespace WebAppVSEAT.Controllers
             {
                 case 404: ViewBag.errorMessage = "Page not found";
                     return View("PageNotFound404");
-                    break;
                 case 500:
                     ViewBag.errorMessage = "Error during production";
                     return View("Error500");
-                    break;
             }
 
             return View("");

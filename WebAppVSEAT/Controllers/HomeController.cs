@@ -25,7 +25,6 @@ namespace WebAppVSEAT.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-
             return View();
         }
 

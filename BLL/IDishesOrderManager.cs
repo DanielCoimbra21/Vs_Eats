@@ -13,6 +13,4 @@ namespace BLL
         public void InsertDishesOrder(DishesOrder dishesOrder);
         public void UpdateDishesOrder(DishesOrder dishesOrder);
     }
-
-    
 }

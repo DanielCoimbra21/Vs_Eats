@@ -12,7 +12,7 @@
         <div class="row justify-content-center align-content-center">
             <div class="col-sm-12 col-md-12 col-lg-4">
                 <form asp-action="CreateCustomer">
-                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="NAME" class="control-label"></label>
                         <input type="text" asp-for="NAME" class="form-control fadeIn second" placeholder="name" />

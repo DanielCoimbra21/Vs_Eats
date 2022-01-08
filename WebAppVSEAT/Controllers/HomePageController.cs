@@ -28,6 +28,10 @@ namespace WebAppVSEAT.Controllers
             DishesOrderManager = dishesOrderManager;
         }
 
+        /// <summary>
+        /// Method for the home page, display the restaurant and the cities
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
@@ -35,8 +39,6 @@ namespace WebAppVSEAT.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-
-           
             var rest = RestaurantManager.GetRestaurants();               
             var listDish = DishManager.GetDishes();
             var listCities = CityManager.GetCities();
@@ -45,7 +47,7 @@ namespace WebAppVSEAT.Controllers
             vm.restaurantVMS = new List<RestaurantVM>();
             vm.citiesVMS = new List<DTO.City>();
 
-
+            //Get all restaurants and create a view model
             foreach (var r in rest)
                 {
                     var vmr = new RestaurantVM();
@@ -57,7 +59,7 @@ namespace WebAppVSEAT.Controllers
 
                     vm.restaurantVMS.Add(vmr);
                 }
-
+            //Get all the cites and create a view model
             foreach(var c in listCities)
             {
                 var vmc = new DTO.City();
@@ -68,7 +70,6 @@ namespace WebAppVSEAT.Controllers
 
                 vm.citiesVMS.Add(vmc);
             }
-
 
             return View(vm);
         }

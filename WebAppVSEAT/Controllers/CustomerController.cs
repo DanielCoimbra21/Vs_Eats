@@ -21,9 +21,12 @@ namespace WebAppVSEAT.Controllers
             CityManager = cityManager;
         }
 
+        /// <summary>
+        /// Method index to the profile of the customer
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
-
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -32,7 +35,7 @@ namespace WebAppVSEAT.Controllers
             var customer = CustomerManager.GetCustomerID((int)HttpContext.Session.GetInt32("IdCustomer"));
             var customerVM = new CustomerVM();
 
-            //Rechercher le nom de la ville
+            //Search the city of the customer to display after the cityname
             var city = CityManager.GetCity(customer.IDCITY);
 
             customerVM.CITYNAME = city.CITYNAME;
@@ -47,6 +50,10 @@ namespace WebAppVSEAT.Controllers
             return View(customerVM);
         }
 
+        /// <summary>
+        /// Method to custom the information about the customer
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Edit()
         {
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
@@ -54,9 +61,11 @@ namespace WebAppVSEAT.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
+            //Get the information from the customer and an object city that match the idCity from the customer
             var customer = CustomerManager.GetCustomerID((int)HttpContext.Session.GetInt32("IdCustomer"));
             var city = CityManager.GetCity(customer.IDCITY);
 
+            //Creation of the customer VM with th
             CustomerVM customerVM = new CustomerVM()
             {
                 IDCUSTOMER = customer.IDCUSTOMER,
@@ -84,7 +93,7 @@ namespace WebAppVSEAT.Controllers
 
             DTO.Customer customer = CustomerManager.GetCustomerID(customerVM.IDCUSTOMER);
 
-            //Trouver l'idCity en fonction de la ville
+            //Find the idCity of the customer cityname
             var cities = CityManager.GetCities();
             var idCity = -1;
             foreach (var city in cities)
@@ -111,7 +120,6 @@ namespace WebAppVSEAT.Controllers
             customer.ADDRESS = customerVM.ADDRESS;
             customer.MAIL = customerVM.MAIL;
           
-
             if (ModelState.IsValid)
             {
                 CustomerManager.UpdateCustomer(customer);
@@ -122,7 +130,7 @@ namespace WebAppVSEAT.Controllers
         }
 
         /// <summary>
-        /// Méthode pour le changement de mot de passe dans la page profile
+        /// Method to change the password in the profile
         /// </summary>
         /// <returns></returns>
         public IActionResult ChangePasswordCustomer()
@@ -131,16 +139,9 @@ namespace WebAppVSEAT.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-
             return View();
         }
 
-
-        /// <summary>
-        /// Méthode pour changer le mot de passe
-        /// </summary>
-        /// <param name="changePasswordVM"></param>
-        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ChangePasswordCustomer(ChangePasswordCustomerVM changePasswordCustomerVM)
@@ -149,11 +150,11 @@ namespace WebAppVSEAT.Controllers
             {
                 int idCustomer = (int)HttpContext.Session.GetInt32("IdCustomer");
                 var customer = CustomerManager.GetCustomerID(idCustomer);
-                
-                //vérification que le mot de passe entré est bien le même que celui sauvegarder
+
+                //check that the password entered is the same as the one saved
                 if (CustomerManager.VerifyPassword(changePasswordCustomerVM.PASSWORDCUSTOMER, customer.MAIL))
                 {
-                    //vérification que le nouveau mot de passe est égal au mot de passe confirmé
+                    //check that the new password is equal to the confirmed password
                     if (changePasswordCustomerVM.NEWPASSWORD == changePasswordCustomerVM.CONFIRMPASSWORD)
                     {
                         customer.PASSWORD = CustomerManager.SetPassword(changePasswordCustomerVM.CONFIRMPASSWORD);
@@ -172,7 +173,6 @@ namespace WebAppVSEAT.Controllers
                     return View(changePasswordCustomerVM);
                 }
             }
-
             return View(changePasswordCustomerVM);
         }
 

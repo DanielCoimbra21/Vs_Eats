@@ -27,11 +27,19 @@ namespace WebAppVSEAT.Controllers
             CityManager = cityManager;
         }
 
+        /// <summary>
+        /// Method that display the page where you can log as a customer
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Method that display the page where you can log as a staff
+        /// </summary>
+        /// <returns></returns>
         public IActionResult IndexStaff()
         {
             return View();
@@ -44,6 +52,7 @@ namespace WebAppVSEAT.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Verify the password with the one from the database
                 if (CustomerManager.VerifyPassword(loginVM.password, loginVM.mail))
                 {
                     var customer = CustomerManager.GetCustomer(loginVM.mail);
@@ -55,7 +64,6 @@ namespace WebAppVSEAT.Controllers
                     }
                 }
 
-
                 ModelState.AddModelError(string.Empty, "Invalid email or password");
             }
             return View(loginVM);
@@ -64,8 +72,7 @@ namespace WebAppVSEAT.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult IndexStaff(LoginStaffVM loginStaffVM)
-        {
-            
+        {         
             if (ModelState.IsValid)
             {
                 if (StaffManager.VerifyPassword(loginStaffVM.PASSWORDSTAFF, loginStaffVM.MAILSTAFF))
@@ -85,17 +92,22 @@ namespace WebAppVSEAT.Controllers
             return View(loginStaffVM);
         }
 
+        /// <summary>
+        /// Method to logout from the customer or the staff part
+        /// </summary>
+        /// <param name="loginVM"></param>
+        /// <returns></returns>
         public IActionResult Logout(LoginVM loginVM)
         {
-            //permet de se déconnecter de la session 
+            //allow you to disconnect  
             HttpContext.Session.Clear();
 
-            //retour sur la page login
+            //return back to the login page
             return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
-        /// Méthode pour afficher la vue pour créer un staff
+        /// Method to display the page where you can sign in
         /// </summary>
         /// <returns></returns>
         public IActionResult CreateCustomer()
@@ -119,7 +131,6 @@ namespace WebAppVSEAT.Controllers
                     }
                 }
 
-                //Trouver l'idCity en fonction de la ville
                 var cities = CityManager.GetCities();
                 var idCity = -1;
                 foreach (var city in cities)
@@ -130,12 +141,14 @@ namespace WebAppVSEAT.Controllers
                     }
                 }
 
+                //If the idCity is not found, return an error
                 if (idCity == -1)
                 {
                     ModelState.AddModelError(string.Empty, "Wrong city entered, write correctly");
                     return View(createCustomerVM);
                 }
 
+                //verify if the data entered by the user will match the size in the database
                 if (VerifyDataCustomer(createCustomerVM))
                 {
                     var customer = new DTO.Customer();
@@ -149,16 +162,16 @@ namespace WebAppVSEAT.Controllers
                     customer.MAIL = createCustomerVM.MAIL;
                     customer.PASSWORD = CustomerManager.SetPassword(createCustomerVM.PASSWORD);
 
-
+                    //Insert the new customer in the db
                     CustomerManager.InsertCustomer(customer);
 
+                    //Send a registration mail to the new customer
                     new MailController().SendRegisterMail(createCustomerVM.MAIL, createCustomerVM.NAME);
 
                     return RedirectToAction("Index", "Login");
                 }
                 return View(createCustomerVM);
             }
-
             return RedirectToAction("Index", "Login");
         }
 
@@ -180,7 +193,6 @@ namespace WebAppVSEAT.Controllers
                 ModelState.AddModelError(string.Empty, "Username entered is too long");
                 return false;
             }
-
             if (createCustomerVM.PHONE.Length > 25)
             {
                 ModelState.AddModelError(string.Empty, "Phone entered is too long");

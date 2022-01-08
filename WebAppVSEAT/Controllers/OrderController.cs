@@ -82,13 +82,13 @@ namespace WebAppVSEAT.Controllers
 
 
         /// <summary>
-        /// Méthode pour l'archivage des livraisons du staff
+        /// Method to archive the commands from the staff
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public IActionResult Archive(int id)
         {
-            //Vérification si le staff est bien connecté
+            //Control if the staff is connected
             if (HttpContext.Session.GetInt32("IdStaff") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -101,12 +101,12 @@ namespace WebAppVSEAT.Controllers
         }
 
         /// <summary>
-        /// Méthode pour l'annulation de commande par le customer
-        /// redirige vers la view CancelOrder pour l'annulation
+        /// Method to cancel an order by the customer
         /// </summary>
         /// <returns></returns>
         public IActionResult CancelOrder()
         {
+            //Verifiy is the customer is connected
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -115,9 +115,13 @@ namespace WebAppVSEAT.Controllers
             return View();
         }
 
-      
+        /// <summary>
+        /// Method to cancel an order by the customer by selecting the right order id
+        /// </summary>
+        /// <returns></returns>
         public IActionResult CancelOrderID(int id)
         {
+            //Verifiy is the customer is connected
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -129,55 +133,44 @@ namespace WebAppVSEAT.Controllers
             return View(vm);
         }
 
-
-        /// <summary>
-        /// Méthode pour enregistrer l'annulation de la commande
-        /// </summary>
-        /// <param name="cancelOrderVM"></param>
-        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CancelOrder(CancelOrderVM cancelOrderVM)
         {
-            //Order sera utilisé plus tard pour l'archivage
             DTO.Order order = OrderManager.GetOrder(cancelOrderVM.IDORDER);
 
-            //vérification si le numéro d'ordre existe dans la base de données
+            //Verify if the order exist
             if (order == null)
             {
                 ModelState.AddModelError(string.Empty, "This order doesn't exist");
                 return View(cancelOrderVM);
             }
 
-            //vérification du status de l'order id
+            //Verify the status of the order, cannot cancel an order that is not created or has been already canceld
             if (!order.STATUS.Equals("ongoing"))
             {
                 ModelState.AddModelError(string.Empty, "Order has been dealt with");
                 return View(cancelOrderVM);
             }
 
-            //vérification si le customer logger a bien fait cette commande
+            //Verify if the customer who is logged have order this
             if (order.IDCUSTOMER != HttpContext.Session.GetInt32("IdCustomer"))
             {
                 ModelState.AddModelError(string.Empty, "Cannot canceled an order you didn't make");
                 return View(cancelOrderVM);
             }
 
-
-
             DateTime timeNow = DateTime.Now;
             TimeSpan diff = order.DELIVERTIME - timeNow;
 
             long threeHours = OrderManager.ConvertHoursToMiliseconds(3);
-
-            //Condition vérification si l'heure de l'ordre et la l'heure d'aujourd'hui
-            //est plus grande que 3 heures
+            
+            //Verify if the order can be canceld, condition : 3 hours before        
             if (diff.TotalMilliseconds > threeHours)
             {
                 int idCustomer = OrderManager.GetOrder(cancelOrderVM.IDORDER).IDCUSTOMER;
                 DTO.Customer customer = CustomerManager.GetCustomerID(idCustomer);
                 string codeToValidate = String.Concat(cancelOrderVM.IDORDER, cancelOrderVM.NAME, cancelOrderVM.SURNAME);
-
 
                 bool canceled = OrderManager.CancelOrder(customer, codeToValidate, cancelOrderVM.IDORDER);
 
@@ -187,9 +180,7 @@ namespace WebAppVSEAT.Controllers
                 }
                 ModelState.AddModelError(string.Empty, "Wrong Name or Surname");
                 return View(cancelOrderVM);
-
             }
-
 
             ModelState.AddModelError(string.Empty, "Order can't be cancelled less than 3h before the delivery");
             return View(cancelOrderVM);
@@ -197,11 +188,12 @@ namespace WebAppVSEAT.Controllers
 
 
         /// <summary>
-        /// Méthode pour afficher toutes les commandes d'un customer
+        /// Method to display all the command from a customer
         /// </summary>
         /// <returns></returns>
         public IActionResult Orders()
         {
+            //Verifiy is the customer is connected
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -211,6 +203,7 @@ namespace WebAppVSEAT.Controllers
             var listCustomerOrders = OrderManager.GetCustomerOrders(idCustomer);
             var listCustomerOrderVM = new List<CustomerOrderVM>();
 
+            //verify if the list order is null, then show an error command
             if (listCustomerOrders == null)
             {
                 return View("~/Views/Order/ErrorNoCommand.cshtml");
@@ -229,11 +222,12 @@ namespace WebAppVSEAT.Controllers
         }
 
         /// <summary>
-        /// Méthode pour l'affichage de l'historique des commandes d'un staff
+        /// Method to display all the command from a staff
         /// </summary>
         /// <returns></returns>
         public IActionResult Historic()
         {
+            //Verifiy is the staff is connected
             if (HttpContext.Session.GetInt32("IdStaff") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -243,8 +237,8 @@ namespace WebAppVSEAT.Controllers
             var listOrderVM = new List<OrderVM>();
 
             /*
-             *  si le staff est nouveau, il n'y aura pas de commande -> pas d'historique
-             *  page pour annoncer aucun historique
+             * If the staff is new, there will be no command, so no historic
+             *  display the an error page
              */
             if (listOrders == null)
             {
@@ -277,18 +271,19 @@ namespace WebAppVSEAT.Controllers
             return View(listOrderVM);
         }
         /// <summary>
-        /// Methode pour l'affichage détaillé de la commande faite par le customer
+        /// Method to display the command made by the customer
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public IActionResult DetailsOrder(int id)
         {
-            //Vérifier si le customer est bien connecté
+            //Verifiy is the customer is connected
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
 
+            //Get order, restaurant and city to create a new view model
             var order = OrderManager.GetOrder(id);
             var restaurant = RestaurantManager.GetRestaurant(order.IDRESTAURANT);
             var city = CityManager.GetCity(restaurant.IDCITY);
@@ -320,24 +315,24 @@ namespace WebAppVSEAT.Controllers
         }
 
         /// <summary>
-        /// Methode pour la modification de la commande
+        /// Method to modify the command
         /// </summary>
         /// <returns></returns>
         public IActionResult EditOrder(int id)
         {
-            //Vérifier si le customer est bien connecté
+            //Verifiy is the customer is connected
             if (HttpContext.Session.GetInt32("IdCustomer") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
 
-            //rechercher les informations pour order
+            //Search the information for the order
             var order = OrderManager.GetOrder(id);
             var dishesOrder = DishesOrderManager.GetDishesOrders(id);
             var restaurant = RestaurantManager.GetRestaurant(order.IDRESTAURANT);
             DateTime deliveryTime = order.DELIVERTIME; 
 
-            //créer la view
+            //Creation of the view
             var vm = new EditOrderVM();
             vm.IDRESTAURANT = restaurant.IDRESTAURANT;
             vm.NAMERESTAURANT = restaurant.NAMERESTAURANT;
@@ -356,7 +351,6 @@ namespace WebAppVSEAT.Controllers
                 vmDish.IDRESTAURANT = restaurant.IDRESTAURANT;
                 vm.orderDishes.Add(vmDish);
             }
-
             return View(vm);
         }
 
@@ -368,11 +362,10 @@ namespace WebAppVSEAT.Controllers
             {
                 if (editOrderVM != null)
                 {
-                    //Récupération de la commande
+                    //Get the command from the view model
                     var order = OrderManager.GetOrder(editOrderVM.IDORDER);
 
-
-                    //comparer l'heure de commande avec l'heure actuelle pour vérifier si il est possible d'annuler la commande 
+                    //Compare the hour of the command with the actual hour and verify if we can canceld
                     var myDeliveryTime = order.DELIVERTIME;
 
                     if (DateTime.Compare(DateTime.Now, myDeliveryTime) > 0)
@@ -381,8 +374,7 @@ namespace WebAppVSEAT.Controllers
                         return View(editOrderVM);
                     }
 
-
-                    //si l'heure de livraison est 30 minutes avant, pas possible de modifier
+                    //if the deliverytime is 30 minutes before the choosen deliverytime
                     var diff = myDeliveryTime.Subtract(DateTime.Now);
 
                     if (diff.TotalMilliseconds < 1800000)
@@ -391,27 +383,23 @@ namespace WebAppVSEAT.Controllers
                         return View(editOrderVM);
                     }
 
-                    
-
-                    //Calculer la somme de la livraison
+                    //Calculate the sum of the order
                     double somme = 0;
 
                     foreach (var d in editOrderVM.orderDishes)
                     {
                         somme += d.PRICEDISH * d.QUANTITY;
                     }
-
-                    //Vérifier si l'heure n'est pas avant l'heure actuel
+ 
+                    //Only update the datable dishesorder if the sum is over zero
                     if (somme > 0)
                     {
-                        //mettre à jour l'order avec les nouvelles valeurs
                         order.TOTALPRICE = (decimal)somme;
 
                         OrderManager.UpdateOrder(order);
 
 
-                        //Ajouter les plats dans DISHESORDER
-                        //si la quantité est supérieur à 0
+                        //Add dishes in the table DISHESORDER
                         var idOrder = editOrderVM.IDORDER;
                         foreach (var o in editOrderVM.orderDishes)
                         {

@@ -27,6 +27,11 @@ namespace WebAppVSEAT.Controllers
             StaffManager = staffManager;
         }
 
+        /// <summary>
+        /// Method to create a new mail when a new customer is registered
+        /// </summary>
+        /// <param name="customerMail"></param>
+        /// <param name="firstname"></param>
         public void SendRegisterMail(string customerMail, string firstname)
         {          
             //Create the mail
@@ -37,11 +42,18 @@ namespace WebAppVSEAT.Controllers
             mail.SubjectEncoding = System.Text.Encoding.UTF8;
             mail.Body = "Dear " + firstname + "," + "\n Welcome to VS EAT, we hope you'll enjoy ordering from us. \n" + " The VS EAT Team !";
 
-          
             //Method to send the mail
             SendMail(mail);
         }
 
+        /// <summary>
+        /// Method to create a new email when someone ordered dishes
+        /// </summary>
+        /// <param name="idCustomer"></param>
+        /// <param name="idStaff"></param>
+        /// <param name="idOrder"></param>
+        /// <param name="deliverytime"></param>
+        /// <param name="totalPrice"></param>
         public void SendOrderConfirmationMail(int idCustomer, int idStaff,int idOrder,DateTime deliverytime,double totalPrice)
         {
             var customer = CustomerManager.GetCustomerID(idCustomer);
@@ -58,13 +70,18 @@ namespace WebAppVSEAT.Controllers
                 + "DeliveryTime: " + deliverytime + "\n"
                 + "Delivery Man: " + staff.NAMESTAFF + " " + staff.SURNAMESTAFF + "\n"
                 + "Phone number: " + staff.PHONENUMBERSTAFF + "\n"
-                + "Total price: " + totalPrice + "\n"
+                + "Total price: " + totalPrice + " CHF \n"
                 + "Enjoy your future meal \n The VS EAT Team !";
 
             //Method to send the mail
             SendMail(mail);
         }
 
+
+        /// <summary>
+        /// Method that actually send the mail to the customer
+        /// </summary>
+        /// <param name="mail"></param>
         private void SendMail(System.Net.Mail.MailMessage mail)
         {
             mail.Priority = MailPriority.High;

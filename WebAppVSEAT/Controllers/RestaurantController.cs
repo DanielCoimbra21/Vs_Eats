@@ -206,7 +206,7 @@ namespace WebAppVSEAT.Controllers
             var myModel = new CommandVM();
             myModel.IDRESTAURANT = id;
 
-            //initialize the new orderDishes in CommandVM
+            //Initialize the new orderDishes in CommandVM
             myModel.orderDishes = new List<CommandVM>();
 
             //Control if the list of dishes is null, if yes return the view model

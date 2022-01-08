@@ -44,29 +44,28 @@ namespace BLL
         }
 
         /// <summary>
-        /// Méthode pour l'archivage des livraisons du staff
+        /// Method to archive the delivery from staff
         /// </summary>
         /// <param name="order"></param>
         /// <param name="status"></param>
         public void ArchiveDelivery(Order order, string status)
         {
-            //Récupération de l'ordre que l'on souhaite archiver
+            //Get the order we want to modify
             Order order1 = OrderDb.GetOrder(order.IDORDER);
            
             OrderDb.ArchiveDelivery(order1, status);
             
             /*
-             * Lorsqu'on archive une commande qui est livré
-             * on ajoute 1 au ordercurrentotal du staff qui l'a livré
-             * Cela est utile pour la répartition des livraisons
+             * When we archive an order that is delivered
+             * add one to the currentTotal
+             * It is helpful when we assign the staff
              */
             StaffDb.UpdateCurrentTotal(order1.IDSTAFF);
         }
 
 
         /// <summary>
-        /// Méthode pour l'annulation d'un ordre
-        /// Objet customer correspond au customer de l'ordre que l'on veut annuler
+        /// Method to cancel the order
         /// </summary>
         /// <param name="customer"></param>
         /// <param name="codeToValidate"></param>
@@ -76,8 +75,8 @@ namespace BLL
             Order order = OrderDb.GetOrder(orderId);
 
             /*
-             * Pour l'annulation, vérifier que nom, prénom entrer dans la page
-             * est équivalent à l'ordre récupéré
+             * To cancel, we have to verify the name and surname that we entered
+             * with the information from the database
             */
             var codeToCancel = String.Concat(orderId, customer.NAME, customer.SURNAME);
                 if (codeToCancel.Equals(codeToValidate))
@@ -89,28 +88,26 @@ namespace BLL
             return false;
         }
 
+        /// <summary>
+        /// Method to choose which staff will delivered the order
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
         public int AssignStaff(Order order)
         {
             List<Staff> listStaff = new List<Staff>();
 
 
-            /*
-             * Appel méthode recherche staff par district
-             */
+            //Get the staff that are in the same district as the restaurant
             listStaff = SearchStaffByDistrict(order);
 
 
-            /*
-             * Appel méthode mise à jour du staff avec condition < 5
-             * ainsi que vérification si il y a des staff qui on un compteur plus bas
-             * que 5 -> pour mieux répartir les livreurs selon le nombre de commande
-            */
+            //Get a new list of staff with staff that have less than 5 orders
             List<Staff> listStaffUpdate = SearchStaffByTime(listStaff, order.DELIVERTIME);
 
 
             /*
-             * Vérification si de la liste
-             * Si la liste est vide -> retour de la valeur -1
+             * Check if the list is empty, then return -1
             */
             if (listStaffUpdate.Count == 0)
             {
@@ -118,11 +115,7 @@ namespace BLL
             }
 
 
-            /*
-             * Dernière vérification dans la liste staff, obtenir les staffs qui ont le moins livré
-             * dans selon le OrderCurrentTotal
-             * seul livreur disponible sinon on vérifie la valeur ORDERCURRENTOTAL
-            */
+            //Last verification to choose which one has the less order
             int idStaff = VerifyCurrentOrder(listStaffUpdate);
 
 
@@ -130,7 +123,7 @@ namespace BLL
         }
 
         /// <summary>
-        /// Méthode pour contrôler le nombre d'ordre total de chaque livreur
+        /// Method to control the number of order by each staff
         /// </summary>
         /// <param name="listStaffUpdate"></param>
         /// <returns></returns>
@@ -150,16 +143,14 @@ namespace BLL
             }
 
             /*
-             * Retourne la dernière valeur du tableau car elle sera la plus petite
-             * la plus petite valeur est toujours ajouté à la fin
-             * si égalité la dernière valeure est renvoyé
+             * Returns the last value of the array as it will be the smallest
+             * the smallest value is always added at the end
              */
             return listStaffLastOfThem[listStaffLastOfThem.Count-1].IDSTAFF;
         }
 
-
         /// <summary>
-        /// Méthode pour sélectionner le staff qui est dans la région des restaurants
+        /// Method to select the staff who work in the same disctict as the order
         /// </summary>
         /// <param name="order"></param>
         /// <returns></returns>
@@ -168,7 +159,7 @@ namespace BLL
             List<DistrictStaff> listOfStaffDistrict = DistrictStaffDb.GetDistrictStaffs();
             List<Staff> listStaff = new List<Staff>();
 
-            //Rechercher les staffs qui travaillent dans la même région que la nouvelle commande 
+            //Search the staff that are working in the same district as the order 
             foreach (var staff in listOfStaffDistrict)
             {
                 if (order.IDDISTRICT == staff.IDDISTRICT)
@@ -176,13 +167,11 @@ namespace BLL
                     listStaff.Add(StaffDb.GetStaff(staff.IDSTAFF));
                 }
             }
-
             return listStaff;
         }
 
-
         /// <summary>
-        /// Méthode pour sélectionner les staff qui ont moins de 5 commandes en une demi-heure
+        /// Method to select the staff with less than 5 commands during 30 minutes
         /// </summary>
         /// <param name="listStaff"></param>
         /// <param name="deliverTime"></param>
@@ -197,18 +186,18 @@ namespace BLL
             DateTime dateTimeOrderAfter = dateTimeOrder.Add(new TimeSpan(0, 15, 0));
 
             /*
-             * Rechercher dans les staffs sélectionnés lesquels ont moins de 5 ordres
-             * et dans la tranche horaire de 30 minutes
+             * Search in the listStaff the one with less than 5 orders in the scale of 30 minutes
             */
             for (int i = 0; i < listStaff.Count; i++)
             {
-                //Réinitialisation du compteur à zéro pour chaque staff de la liste
+                //Cpt back to zero everytime for each staff in the list
                 cpt = 0;
                 foreach (var orderByStaff in listOrders)
                 {
-                    /*Deux conditions
-                     * 1. Vérifier le statut qu'ils soient "ongoing" et idStaff recherché = idStaff dans la liste
-                     * 2. Vérifier les heures des commandes entre -15min et +15min et l'heure elle-même
+                    /*
+                     * 2 conditions : 
+                     * 1. Statut has to be ongoing and idStaff searched = idStaff in the list
+                     * Control the hour of each command between -15min et +15min and the deliverytime entered
                     */
                 if (orderByStaff.STATUS.Equals("ongoing") && orderByStaff.IDSTAFF.Equals(listStaff[i].IDSTAFF))
                     {
@@ -217,11 +206,9 @@ namespace BLL
                         }
                     }
                 }
-
-
-                /*
-                 * Vérifier le compteur et mise à jour du max, le max ne dépassera pas le 5
-                 */
+   
+                 
+                // Verify the cpt et update the variable max, max value will not be more thant 5
                 if(cpt < max)
                 {
                     max = cpt;
@@ -236,21 +223,15 @@ namespace BLL
             OrderDb.UpdateOrder(order);
         }
 
-
         public Order InsertOrder(Order order, int idStaff)
         {
             return OrderDb.InsertOrder(order, idStaff);
         }
-
 
         public long ConvertHoursToMiliseconds(int hours)
         {
             long milliseconds;
             return milliseconds = hours * 60 * 60 * 1000;
         }
-
-
-
-
     }
 }
