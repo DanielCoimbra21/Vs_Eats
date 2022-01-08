@@ -45,14 +45,18 @@ namespace WebAppVSEAT.Controllers
         {
             if (ModelState.IsValid)
             {
-                var customer = CustomerManager.GetCustomer(loginVM.mail, loginVM.password);
-
-                if (customer != null)
+                if (CustomerManager.VerifyPassword(loginVM.password, loginVM.mail))
                 {
-                    HttpContext.Session.SetInt32("IdCustomer", customer.IDCUSTOMER);
-                    return RedirectToAction("Index", "HomePage");
+                    var customer = CustomerManager.GetCustomer(loginVM.mail);
+
+                    if (customer != null)
+                    {
+                        HttpContext.Session.SetInt32("IdCustomer", customer.IDCUSTOMER);
+                        return RedirectToAction("Index", "HomePage");
+                    }
                 }
-                                
+
+
                 ModelState.AddModelError(string.Empty, "Invalid email or password");
             }
             return View(loginVM);
@@ -128,24 +132,68 @@ namespace WebAppVSEAT.Controllers
                     return View(createCustomerVM);
                 }
 
-                var customer = new DTO.Customer();
-                customer.IDCITY = idCity;
-                customer.NAME = createCustomerVM.NAME;
-                customer.SURNAME = createCustomerVM.SURNAME;
-                customer.USERNAME = createCustomerVM.USERNAME;
-                customer.PHONE = createCustomerVM.PHONE;
-                customer.ADDRESS = createCustomerVM.ADDRESS;
-                customer.MAIL = createCustomerVM.MAIL;
-                customer.PASSWORD = createCustomerVM.PASSWORD;
+                if (VerifyDataCustomer(createCustomerVM))
+                {
+                    var customer = new DTO.Customer();
+                    customer.IDCITY = idCity;
 
-                new MailController().SendRegisterMail(createCustomerVM.MAIL,createCustomerVM.NAME);
+                    customer.NAME = createCustomerVM.NAME;
+                    customer.SURNAME = createCustomerVM.SURNAME;
+                    customer.USERNAME = createCustomerVM.USERNAME;
+                    customer.PHONE = createCustomerVM.PHONE;
+                    customer.ADDRESS = createCustomerVM.ADDRESS;
+                    customer.MAIL = createCustomerVM.MAIL;
+                    customer.PASSWORD = CustomerManager.SetPassword(createCustomerVM.PASSWORD);
 
-                CustomerManager.InsertCustomer(customer);
+
+                    CustomerManager.InsertCustomer(customer);
+
+                    new MailController().SendRegisterMail(createCustomerVM.MAIL, createCustomerVM.NAME);
+
+                    return RedirectToAction("Index", "Login");
+                }
+                return View(createCustomerVM);
             }
 
             return RedirectToAction("Index", "Login");
         }
 
+        private bool VerifyDataCustomer(CreateCustomerVM createCustomerVM)
+        {
+            //Control the length of the data before inserted in the db 
+            if (createCustomerVM.NAME.Length > 25)
+            {
+                ModelState.AddModelError(string.Empty, "Name entered is too long");
+                return false;
+            }
+            if (createCustomerVM.SURNAME.Length > 25)
+            {
+                ModelState.AddModelError(string.Empty, "Surname entered is too long");
+                return false;
+            }
+            if (createCustomerVM.USERNAME.Length > 25)
+            {
+                ModelState.AddModelError(string.Empty, "Username entered is too long");
+                return false;
+            }
+
+            if (createCustomerVM.PHONE.Length > 25)
+            {
+                ModelState.AddModelError(string.Empty, "Phone entered is too long");
+                return false;
+            }
+            if (createCustomerVM.ADDRESS.Length > 25)
+            {
+                ModelState.AddModelError(string.Empty, "Address entered is too long");
+                return false;
+            }
+            if (createCustomerVM.MAIL.Length > 50)
+            {
+                ModelState.AddModelError(string.Empty, "MAIL entered is too long");
+                return false;
+            }
+            return true;
+        }
     }
 }
 

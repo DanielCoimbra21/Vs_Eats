@@ -18,9 +18,10 @@ namespace WebAppVSEAT.Controllers
         private ICityManager CityManager { get; }
         private IOrderManager OrderManager { get; }
         private IDishesOrderManager DishesOrderManager { get; }
+        private ICustomerManager CustomerManager;
+        private IStaffManager StaffManager;
 
-
-        public RestaurantController(IDishesOrderManager dishesOrderManager,IOrderManager orderManager, ICityManager cityManager, IRestaurantManager restaurantManager, IDishManager dishManager, IDishesRestaurantManager dishesRestaurantManager)
+        public RestaurantController(ICustomerManager customerManager, IStaffManager staffManager,IDishesOrderManager dishesOrderManager,IOrderManager orderManager, ICityManager cityManager, IRestaurantManager restaurantManager, IDishManager dishManager, IDishesRestaurantManager dishesRestaurantManager)
         {
             RestaurantManager = restaurantManager;
             DishesRestaurantManager = dishesRestaurantManager;
@@ -28,6 +29,8 @@ namespace WebAppVSEAT.Controllers
             CityManager = cityManager;
             OrderManager = orderManager;
             DishesOrderManager = dishesOrderManager;
+            CustomerManager = customerManager;
+            StaffManager = staffManager;
         }
 
 
@@ -331,6 +334,8 @@ namespace WebAppVSEAT.Controllers
                             }
                         }
                         commandVM.IDORDER = idOrder;
+
+                        new MailController(CustomerManager,StaffManager).SendOrderConfirmationMail(idCustomer,idStaff,idOrder,myDeliveryTime,somme);
 
                         return View("~/Views/Restaurant/TakeAnOrderConfirmation.cshtml", commandVM);
                     }

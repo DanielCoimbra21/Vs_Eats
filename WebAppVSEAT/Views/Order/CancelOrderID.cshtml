@@ -2,7 +2,10 @@
 
 @{
     ViewData["Title"] = "CancelOrderID";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h1 style="font-family: 'Palatino Linotype'; text-align: center;">Cancel Order</h1>
 
 <hr />
 <div class="wrapper fadeInDown">
@@ -18,7 +21,7 @@
                             <h6>Order Number</h6>
                             <label class="col-form-label" asp-for="IDORDER" />
                             <input type="text" asp-for="IDORDER" class="form-control fadeIn second" placeholder="name" />
-                            
+
                         </div>
                         <div class="form-group">
                             <h6>First Name</h6>
