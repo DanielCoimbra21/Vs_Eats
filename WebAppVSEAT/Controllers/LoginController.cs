@@ -16,7 +16,6 @@ namespace WebAppVSEAT.Controllers
 {
     public class LoginController : Controller
     {
-
         private ICustomerManager CustomerManager { get; }
         private IStaffManager StaffManager { get; }
         private ICityManager CityManager { get; }

@@ -11,13 +11,17 @@ namespace WebAppVSEAT.Models
 
         public int IDCUSTOMER { get; set; }
         public int IDCITY { get; set; }
+        [Required]
         public string NAME { get; set; }
+        [Required]
         public string SURNAME { get; set; }
+        [Required]
         public string USERNAME { get; set; }
         
         [Required]
         [DataType(DataType.PhoneNumber)]
         public string PHONE { get; set; }
+        [Required]
         public string ADDRESS { get; set; }
         [Required]
         public string CITYNAME { get; set; }
@@ -32,7 +36,7 @@ namespace WebAppVSEAT.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Compare(nameof(PASSWORD), ErrorMessage = "This Password doesn't correspond to the previous r password")]
+        [Compare(nameof(PASSWORD), ErrorMessage = "This Password doesn't correspond to the previous password")]
         public string confirmerPassword { get; set; }
 
     }
