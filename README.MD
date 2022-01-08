@@ -38,9 +38,9 @@ The customer can create an account or log-in directly if he/she has an account a
 If the customer wants to create an account, the user can only use the cities that the site proposes the user.
 
 
-![Alt text](Vs_Eats/ImagesReadMe\loginPage.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/loginPage.png?raw=true "Title")
 
-![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
+![Alt text](https://github.com/DanielCoimbra21/Vs_Eats/blob/dev/ImagesReadMe/Sign-in.png?raw=true "Title")
 
 Once the customer logged in, he/she will arrive at the home page. Here the user can choose the restaurant of his/her choice, or he/she can choose the distric of his/her choice.
 
