@@ -37,19 +37,14 @@ To login as a staff, the user can use these following users, each one of these s
 The customer can create an account or log-in directly if he/she has an account already.
 If the customer wants to create an account, the user can only use the cities that the site proposes the user.
 
-<fig><title>Login Page</title>
-<image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\loginPage.png" placement="break"><alt>Sample image</alt></image>
-</fig>
 
-<fig><title>Sign In</title>
-<image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\Sign-in.png" placement="break"><alt>Sample image</alt></image>
-</fig>
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\loginPage.png?raw=true "Title")
+
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
 
 Once the customer logged in, he/she will arrive at the home page. Here the user can choose the restaurant of his/her choice, or he/she can choose the distric of his/her choice.
 
-<fig><title>home Page</title>
-<image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\RestaurantHomePage.png" placement="break"><alt>Sample image</alt></image>
-</fig>
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\RestaurantHomePage.png?raw=true "Title")
 
 If the customer clicks on the restaurant name, he/she will be sent to the products page of that restaurant. The customer can pass his order : 
 * choose the delivery time
@@ -61,9 +56,13 @@ If the customer clicks on the restaurant name, he/she will be sent to the produc
 <image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\screenshotCustomer\chooseDishes.png" placement="break"><alt>Sample image</alt></image>
 </fig>
 
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
+
 <fig><title>Order</title>
 <image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\screenshotCustomer\passYourCommand.png" placement="break"><alt>Sample image</alt></image>
 </fig>
+
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
 
 
 The customer will receive an email with the details of his/her order. 
@@ -72,10 +71,8 @@ If the customer clicks on the name of the district, it will show all the partner
 
 The customer can go to the restaurant page. There he/she can search by the restaurant name or by city name.
 
-<fig><title>Restaurants</title>
-<image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\screenshotCustomer\indexRestaurant1.png" placement="break"><alt>Sample image</alt></image>
-</fig>
 
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\screenshotCustomer\indexRestaurant1.png?raw=true "Title")
 
 If the customer desires to cancel his/her order he/she can do it in two differnt ways :
 
@@ -91,6 +88,8 @@ If the customer desires to cancel his/her order he/she can do it in two differnt
 <image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\screenshotCustomer\cancelOrder.png" placement="break"><alt>Sample image</alt></image>
 </fig>
 
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
+
 
 The customer can edit the order, but only to change the quantity. But the customer can't edit it 30 minutes before the delivery time.
 
@@ -98,6 +97,8 @@ The customer can edit the order, but only to change the quantity. But the custom
 <fig><title>edit order</title>
 <image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\screenshotCustomer\editQuantityOrder.png" placement="break"><alt>Sample image</alt></image>
 </fig>
+
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
 
 The customer can check his/her profile by going to the parameters button. This button allows him/her to log out or check his/her profile page.
 
@@ -108,6 +109,7 @@ On this page, the customer can change his/her password as well as the informatio
 <image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\screenshotCustomer\customerProfile.png" placement="break"><alt>Sample image</alt></image>
 </fig>
 
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
 
 The user can also log in as a staff. It will redirect him/her to the staff profile page. It is possible to update his/her account information as well as change his/her password.
 
@@ -116,9 +118,13 @@ The user can also log in as a staff. It will redirect him/her to the staff profi
 <image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\loginStaff.png" placement="break"><alt>Sample image</alt></image>
 </fig>
 
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
+
 <fig><title>Login Staff</title>
 <image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\screenshotStaff\staffProfile.png" placement="break"><alt>Sample image</alt></image>
 </fig>
+
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
 
 The staff has 2 pages : Historic and Current Orders
 
@@ -129,9 +135,13 @@ The staff has 2 pages : Historic and Current Orders
 <image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\screenshotStaff\staffHistoric.png" placement="break"><alt>Sample image</alt></image>
 </fig>
 
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
+
 <fig><title>Login Staff</title>
 <image href="C:\VS_EAT\Vs_Eats\ImagesReadMe\screenshotStaff\staffOrders.png" placement="break"><alt>Sample image</alt></image>
 </fig>
+
+![Alt text](~/Vs_Eats/tree/dev/ImagesReadMe\Sign-in.png?raw=true "Title")
 
 ### Features
 * Encrypted passwords
