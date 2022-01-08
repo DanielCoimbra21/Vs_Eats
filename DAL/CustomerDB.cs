@@ -228,39 +228,6 @@ namespace DAL
             return customer;
         }
 
-
-        public string SetPassword(string password)
-        {
-
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * FROM CUSTOMER where PASSWORD = @password";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@password", password);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        if (dr.Read())
-                        {
-
-                            password = (string)dr["PASSWORD"];
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            return password;
-
-        }
-
         public string GetPassword(string email)
         {
             string password = null;

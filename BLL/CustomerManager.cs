@@ -56,12 +56,11 @@ namespace BLL
             return CustomerDb.GetPassword(mail);
         }
 
-        //public void SetPassword(int idCustomer, string password)
-        //{
-        //   CustomerDb.SetPassword(idCustomer,  password);
-        //}
-
-
+        /// <summary>
+        /// Method to create the salt we are using to encrypt the password
+        /// </summary>
+        /// <param name="size"></param>
+        /// <returns></returns>
         private string CreateSalt(int size)
         {
             var rng = new System.Security.Cryptography.RNGCryptoServiceProvider();
@@ -71,39 +70,51 @@ namespace BLL
             return Convert.ToBase64String(buff);
         }
 
+        /// <summary>
+        /// Method to hash the password with the entered password from the customer 
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public string HashPassword(string password)
         {
-
-            //byte[] bytes = System.Text.Encoding.UTF8.GetBytes(password);
-            //System.Security.Cryptography.SHA256Managed sha256hashString = new System.Security.Cryptography.SHA256Managed();
-            //byte[] hash = sha256hashString.ComputeHash(bytes);
-
-            //string bitString = BitConverter.ToString(hash);
-
-            //return bitString;
-
             SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
 
+            //Change the password in an array of byte
             byte[] password_bytes = Encoding.ASCII.GetBytes(password);
+            //Hash the password byte[] with the sha1
             byte[] encrypted_bytes = sha1.ComputeHash(password_bytes);
 
+            /*
+             * Converts the value of an array of 8-bit 
+             * unsigned integers to its equivalent string representation that is encoded with base-64 digits.
+             */
             return Convert.ToBase64String(encrypted_bytes);
         }
 
+        /// <summary>
+        /// Method to set the password in the db
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public string SetPassword(string password)
         {
-            //methode pour hasher les mots de passe, pas réussi
             string salt = CreateSalt(10);
             string hashedPassword = HashPassword(password);
-            string fullHashPassword = string.Concat("$" + salt + "$" + hashedPassword);
-            //string fullHashPassword = hashedPassword;
-
-            return CustomerDb.SetPassword(fullHashPassword);
+            string fullHashPassword = string.Concat("$" + salt + "$" + hashedPassword);    
+            return fullHashPassword;
         }
 
+        /// <summary>
+        /// Method to verify the password entered by the user
+        /// </summary>
+        /// <param name="passwordLogin"></param>
+        /// <param name="mail"></param>
+        /// <returns></returns>
         public Boolean VerifyPassword(string passwordLogin, string mail)
         {
+            //Get the password from the customer
             string passwordCustomer = CustomerDb.GetPassword(mail);
+            //Find the salt in the password
             string salt = passwordCustomer.Substring(1, passwordCustomer.LastIndexOf("$"));
             string passwordSansSalt = passwordCustomer.Remove(0, passwordCustomer.LastIndexOf('$') + 1);
 
@@ -117,13 +128,6 @@ namespace BLL
             {
                 return false;
             }
-
-
         }
-
-
-
-
-
     }
 }
