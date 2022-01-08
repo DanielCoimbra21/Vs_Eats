@@ -8,5 +8,8 @@ namespace DAL
         void UpdateStaff(Staff staff);
         Staff GetStaff(int idStaff);
         void UpdatePassword(Staff staff);
+
+        public string GetPassword(string email);
+        public Staff GetStaff(string email);
     }
 }

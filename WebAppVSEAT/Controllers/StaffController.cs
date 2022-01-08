@@ -152,13 +152,14 @@ namespace WebAppVSEAT.Controllers
                 var staff = StaffManager.GetStaff(idStaff);
 
                 //vérification que le mot de passe entrer est bien le même que celui sauvegarder
-                if (changePasswordVM.PASSWORDSTAFF == staff.PASSWORDSTAFF)
+                if (StaffManager.VerifyPassword(changePasswordVM.PASSWORDSTAFF, staff.MAILSTAFF))
                 {
                     //vérification que le nouveau mot de passe est égal au mot de passe confirmé
                     if (changePasswordVM.NEWPASSWORD == changePasswordVM.CONFIRMPASSWORD)
                     {
-                        staff.PASSWORDSTAFF = changePasswordVM.CONFIRMPASSWORD;
+                        staff.PASSWORDSTAFF = StaffManager.SetPassword(changePasswordVM.CONFIRMPASSWORD);
                         StaffManager.UpdatePassword(staff);
+                        return RedirectToAction("Profile", "Staff");
                     }
                     else
                     {

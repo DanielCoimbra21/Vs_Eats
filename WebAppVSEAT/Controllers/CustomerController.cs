@@ -150,13 +150,13 @@ namespace WebAppVSEAT.Controllers
                 int idCustomer = (int)HttpContext.Session.GetInt32("IdCustomer");
                 var customer = CustomerManager.GetCustomerID(idCustomer);
                 
-                //vérification que le mot de passe entrer est bien le même que celui sauvegarder
-                if (changePasswordCustomerVM.PASSWORDCUSTOMER == customer.PASSWORD)
+                //vérification que le mot de passe entré est bien le même que celui sauvegarder
+                if (CustomerManager.VerifyPassword(changePasswordCustomerVM.PASSWORDCUSTOMER, customer.MAIL))
                 {
                     //vérification que le nouveau mot de passe est égal au mot de passe confirmé
                     if (changePasswordCustomerVM.NEWPASSWORD == changePasswordCustomerVM.CONFIRMPASSWORD)
                     {
-                        customer.PASSWORD = changePasswordCustomerVM.CONFIRMPASSWORD;
+                        customer.PASSWORD = CustomerManager.SetPassword(changePasswordCustomerVM.CONFIRMPASSWORD);
                         CustomerManager.UpdatePassword(customer);
                         return RedirectToAction("Index", "Customer");
                     }

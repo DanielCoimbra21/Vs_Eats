@@ -65,15 +65,20 @@ namespace WebAppVSEAT.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult IndexStaff(LoginStaffVM loginStaffVM)
         {
+            
             if (ModelState.IsValid)
             {
-                var staff = StaffManager.GetStaff(loginStaffVM.MAILSTAFF, loginStaffVM.PASSWORDSTAFF);
-
-                if (staff != null)
+                if (StaffManager.VerifyPassword(loginStaffVM.PASSWORDSTAFF, loginStaffVM.MAILSTAFF))
                 {
-                    HttpContext.Session.SetInt32("IdStaff", staff.IDSTAFF);
-                    return RedirectToAction("OrdersStaff", "Order");
+                    var staff = StaffManager.GetStaff(loginStaffVM.MAILSTAFF);
+
+                    if (staff != null)
+                    {
+                        HttpContext.Session.SetInt32("IdStaff", staff.IDSTAFF);
+                        return RedirectToAction("OrdersStaff", "Order");
+                    }
                 }
+
 
                 ModelState.AddModelError(string.Empty, "Invalid email or password");
             }

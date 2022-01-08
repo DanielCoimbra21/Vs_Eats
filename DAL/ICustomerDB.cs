@@ -13,7 +13,6 @@ namespace DAL
         Customer GetCustomer(string mail);
         void InsertCustomer(Customer customer);
 
-        string SetPassword(string password);
         string GetPassword(string mail);
         Customer GetCustomerID(int id);
         public void UpdatePassword(Customer customer);

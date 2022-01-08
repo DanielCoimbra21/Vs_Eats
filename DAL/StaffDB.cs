@@ -103,12 +103,91 @@ namespace DAL
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
-                Console.WriteLine("Username or Password incorrect");
                 throw e;
             }
             return staff;
         }
+
+        public Staff GetStaff(string email)
+        {
+            Staff staff = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from STAFF where MAILSTAFF = @email ";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@email", email);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            staff = new Staff();
+
+                            staff.IDSTAFF = (int)dr["IDSTAFF"];
+                            staff.IDCITY = (int)dr["IDCITY"];
+                            staff.NAMESTAFF = (string)dr["NAMESTAFF"];
+                            staff.SURNAMESTAFF = (string)dr["SURNAMESTAFF"];
+                            staff.PHONENUMBERSTAFF = (int)dr["PHONENUMBERSTAFF"];
+                            staff.ADDRESSSTAFF = (string)dr["ADDRESSSTAFF"];
+                            staff.MAILSTAFF = (string)dr["MAILSTAFF"];
+                            staff.USERNAMESTAFF = (string)dr["USERNAMESTAFF"];
+                            staff.PASSWORDSTAFF = (string)dr["PASSWORDSTAFF"];
+                            if (dr["ORDERCURRENTTOTAL"] != null)
+                                staff.ORDERCURRENTTOTAL = (int)dr["ORDERCURRENTTOTAL"];
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return staff;
+        }
+
+        public string GetPassword(string email)
+        {
+            string password = null;
+
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * From STAFF where MAILSTAFF = @mailStaff";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@mailStaff", email);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+
+                            email = (string)dr["MAILSTAFF"];
+
+                            password = (string)dr["PASSWORDSTAFF"];
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return password;
+
+        }
+
 
         public void UpdateStaff(Staff staff)
         {  
