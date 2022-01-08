@@ -178,43 +178,81 @@ namespace BLL
         /// <returns></returns>
         private List<Staff> SearchStaffByTime(List<Staff> listStaff,DateTime dateTimeOrder)
         {
+            //var cpt = 0;
+            //int max = 5;
+            //List<Order> listOrders = OrderDb.GetOrders();
+            //List<Staff> results = new List<Staff>();
+            //DateTime dateTimeOrderBefore = dateTimeOrder.Subtract(new TimeSpan(0, 15, 0));
+            //DateTime dateTimeOrderAfter = dateTimeOrder.Add(new TimeSpan(0, 15, 0));
+
+            ///*
+            // * Search in the listStaff the one with less than 5 orders in the scale of 30 minutes
+            //*/
+            //for (int i = 0; i < listStaff.Count; i++)
+            //{
+            //    //Cpt back to zero everytime for each staff in the list
+            //    cpt = 0;
+            //    foreach (var orderByStaff in listOrders)
+            //    {
+            //        /*
+            //         * 2 conditions : 
+            //         * 1. Statut has to be ongoing and idStaff searched = idStaff in the list
+            //         * Control the hour of each command between -15min et +15min and the deliverytime entered
+            //        */
+            //    if (orderByStaff.STATUS.Equals("ongoing") && orderByStaff.IDSTAFF.Equals(listStaff[i].IDSTAFF))
+            //        {
+            //            if(orderByStaff.DELIVERTIME == dateTimeOrder || orderByStaff.DELIVERTIME == dateTimeOrderAfter || orderByStaff.DELIVERTIME == dateTimeOrderBefore){
+            //                cpt++;
+            //            }
+            //        }
+            //    }
+
+
+            //    // Verify the cpt et update the variable max, max value will not be more thant 5
+            //    if(cpt < max)
+            //    {
+            //        max = cpt;
+            //        results.Add(listStaff[i]);
+            //    }
+
             var cpt = 0;
             int max = 5;
             List<Order> listOrders = OrderDb.GetOrders();
             List<Staff> results = new List<Staff>();
-            DateTime dateTimeOrderBefore = dateTimeOrder.Subtract(new TimeSpan(0, 15, 0));
+            DateTime dateTimeOrderAfter2 = dateTimeOrder.Add(new TimeSpan(0, 30, 0));
             DateTime dateTimeOrderAfter = dateTimeOrder.Add(new TimeSpan(0, 15, 0));
 
             /*
-             * Search in the listStaff the one with less than 5 orders in the scale of 30 minutes
+            * Search in the listStaff the one with less than 5 orders in the scale of 30 minutes
             */
             for (int i = 0; i < listStaff.Count; i++)
-            {
-                //Cpt back to zero everytime for each staff in the list
-                cpt = 0;
-                foreach (var orderByStaff in listOrders)
                 {
-                    /*
-                     * 2 conditions : 
-                     * 1. Statut has to be ongoing and idStaff searched = idStaff in the list
-                     * Control the hour of each command between -15min et +15min and the deliverytime entered
-                    */
-                if (orderByStaff.STATUS.Equals("ongoing") && orderByStaff.IDSTAFF.Equals(listStaff[i].IDSTAFF))
+                    //Cpt back to zero everytime for each staff in the list
+                    cpt = 0;
+                    foreach (var orderByStaff in listOrders)
                     {
-                        if(orderByStaff.DELIVERTIME == dateTimeOrder || orderByStaff.DELIVERTIME == dateTimeOrderAfter || orderByStaff.DELIVERTIME == dateTimeOrderBefore){
-                            cpt++;
+                        /*
+                         * 2 conditions : 
+                         * 1. Statut has to be ongoing and idStaff searched = idStaff in the list
+                         * Control the hour of each command between -15min et +15min and the deliverytime entered
+                        */
+                        if (orderByStaff.STATUS.Equals("ongoing") && orderByStaff.IDSTAFF.Equals(listStaff[i].IDSTAFF))
+                        {
+                            if (orderByStaff.DELIVERTIME == dateTimeOrder || orderByStaff.DELIVERTIME == dateTimeOrderAfter || orderByStaff.DELIVERTIME == dateTimeOrderAfter2)
+                            {
+                                cpt++;
+                            }
                         }
                     }
+
+
+                    // Verify the cpt et update the variable max, max value will not be more thant 5
+                    if (cpt < max)
+                    {
+                        max = cpt;
+                        results.Add(listStaff[i]);
+                    }
                 }
-   
-                 
-                // Verify the cpt et update the variable max, max value will not be more thant 5
-                if(cpt < max)
-                {
-                    max = cpt;
-                    results.Add(listStaff[i]);
-                }
-            }
             return results;
         }
 

@@ -77,6 +77,29 @@ namespace WebAppVSEAT.Controllers
             SendMail(mail);
         }
 
+        /// <summary>
+        /// Method to create a new email when someone cancel an order
+        /// </summary>
+        /// <param name="idCustomer"></param>
+        /// <param name="idStaff"></param>
+        /// <param name="idOrder"></param>
+        /// <param name="deliverytime"></param>
+        /// <param name="totalPrice"></param>
+        public void SendCancelOrderMail(string mailCustomer, int idOrder)
+        {
+            //Create the mail
+            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
+            mail.To.Add(mailCustomer);
+            mail.From = new MailAddress(from);
+            mail.Subject = "Cancel order n°" + idOrder;
+            mail.SubjectEncoding = System.Text.Encoding.UTF8;
+            mail.Body = "Your order has been canceled\n"
+               
+                + "\n We hope to see you back soon ! \n The VS EAT Team !";
+
+            //Method to send the mail
+            SendMail(mail);
+        }
 
         /// <summary>
         /// Method that actually send the mail to the customer

@@ -52,17 +52,20 @@ namespace WebAppVSEAT.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Verify the password with the one from the database
-                if (CustomerManager.VerifyPassword(loginVM.password, loginVM.mail))
-                {
-                    var customer = CustomerManager.GetCustomer(loginVM.mail);
+                var customer = CustomerManager.GetCustomer(loginVM.mail);
 
-                    if (customer != null)
+                if (customer != null)
+                {
+                    //Verify the password with the one from the database
+                    if (CustomerManager.VerifyPassword(loginVM.password, loginVM.mail))
                     {
                         HttpContext.Session.SetInt32("IdCustomer", customer.IDCUSTOMER);
                         return RedirectToAction("Index", "HomePage");
                     }
                 }
+
+               
+                
 
                 ModelState.AddModelError(string.Empty, "Invalid email or password");
             }
@@ -75,18 +78,16 @@ namespace WebAppVSEAT.Controllers
         {         
             if (ModelState.IsValid)
             {
-                if (StaffManager.VerifyPassword(loginStaffVM.PASSWORDSTAFF, loginStaffVM.MAILSTAFF))
-                {
-                    var staff = StaffManager.GetStaff(loginStaffVM.MAILSTAFF);
+                var staff = StaffManager.GetStaff(loginStaffVM.MAILSTAFF);
 
-                    if (staff != null)
+                if (staff != null)
+                {
+                    if (StaffManager.VerifyPassword(loginStaffVM.PASSWORDSTAFF, loginStaffVM.MAILSTAFF))
                     {
                         HttpContext.Session.SetInt32("IdStaff", staff.IDSTAFF);
                         return RedirectToAction("OrdersStaff", "Order");
-                    }
+                    }  
                 }
-
-
                 ModelState.AddModelError(string.Empty, "Invalid email or password");
             }
             return View(loginStaffVM);

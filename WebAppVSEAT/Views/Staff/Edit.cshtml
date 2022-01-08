@@ -34,6 +34,11 @@
                             <input type="text" asp-for="SURNAMESTAFF" class="form-control fadeIn second" placeholder="surname" />
                         </div>
                         <div class="form-group">
+                            <h6>Username</h6>
+                            <label class="col-form-label" asp-for="USERNAMESTAFF" />
+                            <input type="text" asp-for="USERNAMESTAFF" class="form-control fadeIn second" placeholder="username" />
+                        </div>
+                        <div class="form-group">
                             <h6>Mail</h6>
                             <label class="col-form-label" asp-for="MAILSTAFF" />
                             <input type="text" asp-for="MAILSTAFF" class="form-control fadeIn second" placeholder="mail" />
@@ -66,11 +71,6 @@
                                 <option value="Baltschieder">Baltschieder</option>
                             </datalist>
                             <span asp-validation-for="CITYNAME" class="text-danger fadeIn second"></span>
-                        </div>
-                        <div class="form-group">
-                            <h6>Username</h6>
-                            <label class="col-form-label" asp-for="USERNAMESTAFF" />
-                            <input type="text" asp-for="USERNAMESTAFF" class="form-control fadeIn second" placeholder="username" />
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />

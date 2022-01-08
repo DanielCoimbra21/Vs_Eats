@@ -176,6 +176,7 @@ namespace WebAppVSEAT.Controllers
 
                 if (canceled != false)
                 {
+                    new MailController().SendCancelOrderMail(customer.MAIL, cancelOrderVM.IDORDER);
                     return RedirectToAction("Orders", "Order");
                 }
                 ModelState.AddModelError(string.Empty, "Wrong Name or Surname");
