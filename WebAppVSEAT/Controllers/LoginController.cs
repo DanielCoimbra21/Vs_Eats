@@ -9,8 +9,9 @@ using FluentEmail.Core;
 using FluentEmail.Smtp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Tulpep.NotificationWindow;
 using WebAppVSEAT.Models;
-
+using Xceed.Wpf.Toolkit;
 
 namespace WebAppVSEAT.Controllers
 {
@@ -44,6 +45,40 @@ namespace WebAppVSEAT.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// Method that display the page where the user can contact us
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult BecomeStaff()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult BecomeStaff(BecomeStaffVM becomeStaffVM)
+        {   
+                new MailController().SendBecomeStaffMail(becomeStaffVM.mailFrom, becomeStaffVM.subjectMail, becomeStaffVM.bodyMail);
+
+            
+            return View();
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult BecomeStaff(BecomeStaffVM becomeStaffVM)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        new MailController().SendBecomeStaffMail(becomeStaffVM.mailFrom, becomeStaffVM.subjectMail, becomeStaffVM.bodyMail);
+        //        PopupNotifier popup = new PopupNotifier();
+        //        popup.TitleText = "notification";
+        //        popup.ContentText = "mail sent";
+        //        popup.Popup();
+        //    }
+        //    return View(becomeStaffVM);
+        //}
 
 
         [HttpPost]

@@ -78,6 +78,23 @@ namespace WebAppVSEAT.Controllers
         }
 
         /// <summary>
+        /// Method to send the mail when you want to become a staff 
+        /// </summary>
+        public void SendBecomeStaffMail(string mailFrom, string body, string subject)
+        {
+            //Create the mail
+            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
+            mail.To.Add(from);
+            mail.From = new MailAddress(mailFrom);
+            mail.Subject = subject;
+            mail.SubjectEncoding = System.Text.Encoding.UTF8;
+            mail.Body = body;
+            
+            //Method to send the mail
+            SendMail(mail);
+        }
+
+        /// <summary>
         /// Method to create a new email when someone cancel an order
         /// </summary>
         /// <param name="idCustomer"></param>
