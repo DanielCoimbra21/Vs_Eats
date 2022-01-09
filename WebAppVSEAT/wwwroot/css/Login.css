@@ -85,8 +85,8 @@ input[type=text] {
     display: inline-block;
     font-size: 15px;
     border: 2px solid #f6f6f6;
-    max-width: 200px;
-    width: 200px;
+    max-width: 150px;
+    width: 150px;
     transition: all 0.5s ease-in-out;
     border-radius: 5px 5px 5px 5px;
 }
@@ -111,8 +111,8 @@ input[type=password] {
     display: inline-block;
     font-size: 15px;
     border: 2px solid #f6f6f6;
-    max-width: 200px;
-    width: 200px;
+    max-width: 150px;
+    width: 150px;
     transition: all 0.5s ease-in-out;
     border-radius: 5px 5px 5px 5px;
 }
