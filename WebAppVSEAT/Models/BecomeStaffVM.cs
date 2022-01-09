@@ -10,6 +10,7 @@ namespace WebAppVSEAT.Models
     {
      
         [Required]
+        
         public string mailFrom { get; set;}
         [Required]
         public string subjectMail { get; set; }
