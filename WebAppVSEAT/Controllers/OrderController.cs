@@ -176,7 +176,12 @@ namespace WebAppVSEAT.Controllers
 
                 if (canceled != false)
                 {
-                    new MailController().SendCancelOrderMail(customer.MAIL, cancelOrderVM.IDORDER);
+                    bool sent = new MailController().SendCancelOrderMail(customer.MAIL, cancelOrderVM.IDORDER);
+                    if (!sent)
+                    {
+                        ModelState.AddModelError(string.Empty, "Order is canceld but mail has not been sent");
+                        return View(cancelOrderVM);
+                    }
                     return RedirectToAction("Orders", "Order");
                 }
                 ModelState.AddModelError(string.Empty, "Wrong Name or Surname");

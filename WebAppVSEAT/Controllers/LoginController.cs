@@ -59,27 +59,15 @@ namespace WebAppVSEAT.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult BecomeStaff(BecomeStaffVM becomeStaffVM)
         {   
-                new MailController().SendBecomeStaffMail(becomeStaffVM.mailFrom, becomeStaffVM.subjectMail, becomeStaffVM.bodyMail);
+            bool sent = new MailController().SendBecomeStaffMail(becomeStaffVM.mailFrom, becomeStaffVM.subjectMail, becomeStaffVM.bodyMail);
 
-            
-            return View();
+            if (!sent)
+            {
+                ModelState.AddModelError(string.Empty, "Mail has not been sent");
+                return View(becomeStaffVM);
+            }
+            return RedirectToAction("Index", "Login");
         }
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult BecomeStaff(BecomeStaffVM becomeStaffVM)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        new MailController().SendBecomeStaffMail(becomeStaffVM.mailFrom, becomeStaffVM.subjectMail, becomeStaffVM.bodyMail);
-        //        PopupNotifier popup = new PopupNotifier();
-        //        popup.TitleText = "notification";
-        //        popup.ContentText = "mail sent";
-        //        popup.Popup();
-        //    }
-        //    return View(becomeStaffVM);
-        //}
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -98,10 +86,6 @@ namespace WebAppVSEAT.Controllers
                         return RedirectToAction("Index", "HomePage");
                     }
                 }
-
-               
-                
-
                 ModelState.AddModelError(string.Empty, "Invalid email or password");
             }
             return View(loginVM);

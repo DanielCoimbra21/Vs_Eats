@@ -32,7 +32,7 @@ namespace WebAppVSEAT.Controllers
         /// </summary>
         /// <param name="customerMail"></param>
         /// <param name="firstname"></param>
-        public void SendRegisterMail(string customerMail, string firstname)
+        public bool SendRegisterMail(string customerMail, string firstname)
         {          
             //Create the mail
             System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
@@ -43,7 +43,7 @@ namespace WebAppVSEAT.Controllers
             mail.Body = "Dear " + firstname + "," + "\n Welcome to VS EAT, we hope you'll enjoy ordering from us. \n" + " The VS EAT Team !";
 
             //Method to send the mail
-            SendMail(mail);
+            return SendMail(mail);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace WebAppVSEAT.Controllers
         /// <param name="idOrder"></param>
         /// <param name="deliverytime"></param>
         /// <param name="totalPrice"></param>
-        public void SendOrderConfirmationMail(int idCustomer, int idStaff,int idOrder,DateTime deliverytime,double totalPrice)
+        public bool SendOrderConfirmationMail(int idCustomer, int idStaff,int idOrder,DateTime deliverytime,double totalPrice)
         {
             var customer = CustomerManager.GetCustomerID(idCustomer);
             var staff = StaffManager.GetStaff(idStaff);
@@ -74,13 +74,13 @@ namespace WebAppVSEAT.Controllers
                 + "Enjoy your future meal \n The VS EAT Team !";
 
             //Method to send the mail
-            SendMail(mail);
+            return SendMail(mail);
         }
 
         /// <summary>
         /// Method to send the mail when you want to become a staff 
         /// </summary>
-        public void SendBecomeStaffMail(string mailFrom, string body, string subject)
+        public bool SendBecomeStaffMail(string mailFrom, string body, string subject)
         {
             //Create the mail
             System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
@@ -91,7 +91,7 @@ namespace WebAppVSEAT.Controllers
             mail.Body = body;
             
             //Method to send the mail
-            SendMail(mail);
+            return SendMail(mail);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace WebAppVSEAT.Controllers
         /// <param name="idOrder"></param>
         /// <param name="deliverytime"></param>
         /// <param name="totalPrice"></param>
-        public void SendCancelOrderMail(string mailCustomer, int idOrder)
+        public bool SendCancelOrderMail(string mailCustomer, int idOrder)
         {
             //Create the mail
             System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
@@ -115,14 +115,14 @@ namespace WebAppVSEAT.Controllers
                 + "\n We hope to see you back soon ! \n The VS EAT Team !";
 
             //Method to send the mail
-            SendMail(mail);
+            return SendMail(mail);
         }
 
         /// <summary>
         /// Method that actually send the mail to the customer
         /// </summary>
         /// <param name="mail"></param>
-        private void SendMail(System.Net.Mail.MailMessage mail)
+        private bool SendMail(System.Net.Mail.MailMessage mail)
         {
             mail.Priority = MailPriority.High;
             SmtpClient client = new SmtpClient();
@@ -142,17 +142,20 @@ namespace WebAppVSEAT.Controllers
             try
             {
                 client.Send(mail);
+                return true;
             }
             catch (Exception ex)
             {
                 Exception ex2 = ex;
                 string errorMessage = string.Empty;
+                return false;
                 while (ex2 != null)
                 {
                     errorMessage += ex2.ToString();
                     ex2 = ex2.InnerException;
                 }
             }
+            return true;
         }
 
     }

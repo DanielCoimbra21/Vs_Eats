@@ -335,7 +335,12 @@ namespace WebAppVSEAT.Controllers
                         }
                         commandVM.IDORDER = idOrder;
 
-                        new MailController(CustomerManager,StaffManager).SendOrderConfirmationMail(idCustomer,idStaff,idOrder,myDeliveryTime,somme);
+                        bool sent = new MailController(CustomerManager,StaffManager).SendOrderConfirmationMail(idCustomer,idStaff,idOrder,myDeliveryTime,somme);
+
+                        if (!sent)
+                        {
+                            ModelState.AddModelError(string.Empty, "Order has been made, but the confirmation mail has not been sent");
+                        }
 
                         return View("~/Views/Restaurant/TakeAnOrderConfirmation.cshtml", commandVM);
                     }
