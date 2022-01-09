@@ -32,6 +32,13 @@ To login as a staff, the user can use these following users, each one of these s
 ```
 
 
+To login as a customer, the user can create an account or use the following credentials : 
+
+```
+* oss117.flantier@gmail.com - 123 - Martigny
+```
+
+
 ### Using the WebSite
 
 The customer can create an account or log-in directly if he/she has an account already.
