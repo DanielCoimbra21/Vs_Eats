@@ -59,7 +59,7 @@ namespace WebAppVSEAT.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult BecomeStaff(BecomeStaffVM becomeStaffVM)
         {   
-            bool sent = new MailController().SendBecomeStaffMail(becomeStaffVM.mailFrom, becomeStaffVM.subjectMail, becomeStaffVM.bodyMail);
+            bool sent = new MailController().SendBecomeStaffMail(becomeStaffVM.mailFrom, becomeStaffVM.bodyMail, becomeStaffVM.subjectMail);
 
             if (!sent)
             {
