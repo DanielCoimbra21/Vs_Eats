@@ -9,8 +9,9 @@ using FluentEmail.Core;
 using FluentEmail.Smtp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Tulpep.NotificationWindow;
 using WebAppVSEAT.Models;
-
+using Xceed.Wpf.Toolkit;
 
 namespace WebAppVSEAT.Controllers
 {
@@ -45,6 +46,28 @@ namespace WebAppVSEAT.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Method that display the page where the user can contact us
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult BecomeStaff()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult BecomeStaff(BecomeStaffVM becomeStaffVM)
+        {   
+            bool sent = new MailController().SendBecomeStaffMail(becomeStaffVM.mailFrom, becomeStaffVM.subjectMail, becomeStaffVM.bodyMail);
+
+            if (!sent)
+            {
+                ModelState.AddModelError(string.Empty, "Mail has not been sent");
+                return View(becomeStaffVM);
+            }
+            return RedirectToAction("Index", "Login");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -63,10 +86,6 @@ namespace WebAppVSEAT.Controllers
                         return RedirectToAction("Index", "HomePage");
                     }
                 }
-
-               
-                
-
                 ModelState.AddModelError(string.Empty, "Invalid email or password");
             }
             return View(loginVM);
