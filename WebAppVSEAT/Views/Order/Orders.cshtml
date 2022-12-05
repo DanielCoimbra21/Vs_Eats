@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebAppVSEAT.Models.CustomerOrderVM>
+
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Orders</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.IDORDER)
+            </th>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.DELIVERTIME)
+            </th>
+            <th class="headerOrder">
+               
+            </th>
+            <th class="headerOrder">
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDORDER)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DELIVERTIME)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "DetailsOrder", new { id = item.IDORDER })
+            </td>
+            <td>
+                @Html.ActionLink("Cancel Order", "CancelOrderID", new { id = item.IDORDER })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WebAppVSEAT.Models.DishesRestaurantVM>
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link rel="stylesheet" href="~/css/dishes.css" />
+    /* var idRestaurant = 0;*/
+}
+
+
+
+<h1 style="font-family: 'Palatino Linotype'; text-align: center;" ">Their Best Dishes </h1>
+
+<center>
+    <div class="cards">
+
+        @foreach (var item in Model)
+        {
+            string imageUrl = "/VS_Eat_Daniel_Thomas/Images/Dishes/" + item.IDDISHES + ".jpg";
+
+            <div class="cards__item">
+
+                <img src="@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDDISHES)" width="250" height="250" />
+
+                <h2>@Html.DisplayFor(modelItem => item.NAMEDISH)</h2>
+                <h3>@Html.DisplayFor(modelItem => item.PRICEDISH) CHF</h3>
+                <p>
+                    <button class="btn">
+                        @Html.ActionLink("Order", "TakeAnOrder", new { id = item.IDRESTAURANT })
+                    </button>
+                </p>
+
+            </div>
+
+
+        }
+
+    </div>
+</center>
+
+
+
+
+
+
+
+

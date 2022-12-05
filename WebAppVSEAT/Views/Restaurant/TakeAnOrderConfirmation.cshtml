@@ -1,0 +1,55 @@
+﻿@model WebAppVSEAT.Models.CommandVM
+@{
+    Layout = "_Layout";
+}
+@{
+    ViewData["Title"] = "TakeAnOrderConfirmation";
+}
+
+<h1 style="font-family: 'Palatino Linotype'; text-align: center;">Your command at @Model.orderDishes.First().NAMERESTAURANT</h1>
+
+
+
+<div class="containerHomePage">
+    @{ decimal sommeTotal = 0;}
+
+    @for (int i = 0; i < Model.orderDishes.Count(); i++)
+    {
+        int idDish = Model.orderDishes[i].dish.IDDISHES;
+        string imageUrl = "Images/Dishes/" + idDish + ".jpg";
+
+        @if (Model.orderDishes[i].QUANTITY > 0)
+        {
+
+    <div class="containerColumnHomePage">
+        <img src="~/@imageUrl" alt="@idDish" width="250" height="250" />
+        <h4>
+            @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
+            <br />
+        </h4>
+        <h4>
+            @Html.DisplayFor(modelItem => Model.orderDishes[i].QUANTITY)X
+            <br />
+        </h4>
+        <h4>
+            @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.PRICEDISH) CHF
+        </h4>
+        <h4>
+            @{decimal s = (decimal)(Model.orderDishes[i].QUANTITY * Model.orderDishes[i].dish.PRICEDISH);
+                sommeTotal += s;}
+        </h4>
+        <h4 style="align-content:center">
+            Total : @Html.DisplayFor(modelItem => s) CHF
+        </h4>
+
+    </div>
+        }
+    }
+
+    </div>
+
+
+<h4 style='font-weight:bold;'>Total Order : @sommeTotal CHF</h4>
+<h4 style='font-weight:bold;'> Delivery Time : @Model.hour</h4>
+<h4 style='font-weight:bold;'> Order number : @Model.IDORDER</h4>
+

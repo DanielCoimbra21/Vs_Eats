@@ -1,0 +1,103 @@
+﻿@model WebAppVSEAT.Models.CustomerVM
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="cardProfile">
+    <img src="~/Images/Avatar/avatar.png" style="width:100%">
+    <h1>@Html.DisplayFor(model => model.NAME) @Html.DisplayFor(model => model.SURNAME)</h1>
+    <p class="title"> @Html.DisplayFor(model => model.USERNAME)</p>
+    <p>
+        @Html.DisplayFor(model => model.MAIL)
+        <br />
+        <i class=""> @Html.DisplayFor(model => model.PHONE)</i>
+    </p>
+    <br />
+    <p>
+        <i class="">@Html.DisplayFor(model => model.ADDRESS)</i>
+        <br />
+        <i class="">@Html.DisplayFor(model => model.CITYNAME)</i>
+        @Html.HiddenFor(model => model.IDCITY)
+        @Html.HiddenFor(model => model.IDCUSTOMER)
+       
+    </p>
+    <p>
+        <button value="Edit">
+            <div>
+                @Html.ActionLink("Edit Profile", "Edit")
+            </div>
+        </button>
+        <button value="Edit">
+            <div>
+                @Html.ActionLink("Change Password", "ChangePasswordCustomer")
+            </div>
+        </button>
+    </p>
+</div>
+
+
+@*<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.HiddenFor(model => model.IDCUSTOMER)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.HiddenFor(model => model.IDCUSTOMER)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.HiddenFor(model => model.IDCITY)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.HiddenFor(model => model.IDCITY)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NAME)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SURNAME)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SURNAME)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.USERNAME)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.USERNAME)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PHONE)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PHONE)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ADDRESS)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ADDRESS)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CITYNAME)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CITYNAME)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MAIL)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MAIL)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit")
+</div>*@

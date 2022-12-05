@@ -1,0 +1,54 @@
+﻿@model IEnumerable<RestaurantVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <div class="cardSearch">
+        @using (@Html.BeginForm("Index", "Restaurant", FormMethod.Get))
+        {     
+        <h1>
+            <input checked="checked" id="searchBy" name="searchBy" type="radio" value="Restaurant"> Restaurant
+            <input checked="checked" id="searchBy" name="searchBy" type="radio" value="City" > City
+        </h1>
+            <p>
+                @Html.TextBox("search")
+                <input type="submit" class="btn" value="search" />
+            </p>
+        }
+    </div>
+</p>
+
+
+<div class="masonry-grid">
+
+    @foreach (var item in Model)
+    {
+
+        string imageUrl = "Images/Restaurant/" + item.IDRESTAURANT + ".jpg";
+
+        <div class="masonry-grid__item" >
+                <img src="~/@imageUrl" alt="@Html.DisplayFor(modelItem => item.IDRESTAURANT)" width="250" height="250" />
+                <h2>
+                    @Html.ActionLink(item.NAMERESTAURANT, "Details", new { id = item.IDRESTAURANT })
+                </h2>
+                <h4>
+                    @Html.DisplayFor(modelItem => item.ADDRESSRESTAURANT)
+                </h4>
+                <h4>
+                    @Html.DisplayFor(modelItem => item.CITYNAME)
+                </h4>
+        </div>
+        <br />
+    }
+
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+﻿@model WebAppVSEAT.Models.LoginStaffVM
+
+@{
+    ViewData["Title"] = "IndexStaff";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="h2LogIn">Log in STAFF</h2>
+        <div class="row justify-content-center align-content-center">
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <form method="post">
+                    <div asp-validation-summary="All" class="text">
+
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" asp-for="MAILSTAFF" />
+                        <input type="text" asp-for="MAILSTAFF" name="MAILSTAFF" class="form-control fadeIn second" placeholder="mail" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label" asp-for="PASSWORDSTAFF" />
+                        <input asp-for="PASSWORDSTAFF" type="password" class="form-control fadeIn third" placeholder="password" />
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" class="fadeIn fourth" value="Login" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

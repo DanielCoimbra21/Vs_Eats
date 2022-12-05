@@ -1,0 +1,100 @@
+﻿@model WebAppVSEAT.Models.CreateCustomerVM
+
+@{
+    ViewData["Title"] = "CreateCustomer";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<hr />
+@Html.ActionLink("Want to become a delivery staff ?", "BecomeStaff" /*new { id = Model.IDORDER }*/)
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <div class="h2LogIn active">Create Customer</div>
+        <div class="row justify-content-center align-content-center">
+            <div class="col-sm-12 col-md-12 col-lg-4">
+
+                <form asp-action="CreateCustomer">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <h6>Name</h6>
+                        <label asp-for="NAME" class="control-label" hidden></label>
+                        <input type="text" asp-for="NAME" class="form-control fadeIn second" placeholder="name" />
+                        <span asp-validation-for="NAME" class="text-danger fadeIn second"></span>
+                    </div>
+                    <div class="form-group">
+                        <h6>Surname</h6>
+                        <label asp-for="SURNAME" class="control-label" hidden></label>
+                        <input type="text" asp-for="SURNAME" class="form-control fadeIn second" placeholder="surname" />
+                        <span asp-validation-for="SURNAME" class="text-danger fadeIn second"></span>
+                    </div>
+                    <div class="form-group">
+                        <h6>Username</h6>
+                        <label asp-for="USERNAME" class="control-label" hidden></label>
+                        <input asp-for="USERNAME" class="form-control fadeIn second" placeholder="username" />
+                        <span asp-validation-for="USERNAME" class="text-danger fadeIn second"></span>
+                    </div>
+                    <div class="form-group">
+                        <h6>Address</h6>
+                        <label asp-for="ADDRESS" class="control-label" hidden></label>
+                        <input asp-for="ADDRESS" class="form-control fadeIn second" placeholder="address" />
+                        <span asp-validation-for="ADDRESS" class="text-danger fadeIn second"></span>
+                    </div>
+                    <div class="form-group">
+                        <h6>City</h6>
+                        <label class="col-form-label" asp-for="CITYNAME" />
+                        <input type="text" list="cities" asp-for="CITYNAME" class="form-control fadeIn second" placeholder="city" />
+                        <datalist id="cities">
+                            <option value="Martigny">Martigny</option>
+                            <option value="Brigue">Brigue</option>
+                            <option value="Vétroz">Vétroz</option>
+                            <option value="Le Châble">Le Châble</option>
+                            <option value="Hérémence">Hérémence</option>
+                            <option value="Massongex">Massongex</option>
+                            <option value="Turtmann">Turtmann</option>
+                            <option value="Loèche-Les-Bains">Loèche-Les-Bains</option>
+                            <option value="Epinassey">Epinassey</option>
+                            <option value="Savièse">Savièse</option>
+                            <option value="Baltschieder">Baltschieder</option>
+                        </datalist>
+                        <span asp-validation-for="CITYNAME" class="text-danger fadeIn second"></span>
+                    </div>
+                    <div class="form-group">
+                        <h6>Phonenumber</h6>
+                        <label asp-for="PHONE" class="control-label" hidden></label>
+                        <input type="text" asp-for="PHONE" class="form-control fadeIn second" placeholder="phone number" />
+                        <span asp-validation-for="PHONE" class="text-danger fadeIn second"></span>
+                    </div>
+                    <div class="form-group">
+                        <h6>Mail</h6>
+                        <label asp-for="MAIL" class="control-label" hidden></label>
+                        <input type="text" asp-for="MAIL" class="form-control fadeIn second" placeholder="mail" />
+                        <span asp-validation-for="MAIL" class="text-danger fadeIn second"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Password</h6>
+                        <label asp-for="PASSWORD" class="control-label" hidden></label>
+                        <input type="password" asp-for="PASSWORD" class="form-control fadeIn second" placeholder="password" />
+                        <span asp-validation-for="PASSWORD" class="text-danger fadeIn second"></span>
+                    </div>
+                    <div class="form-group">
+                        <h6>Confirm password</h6>
+                        <label asp-for="CONFIRMPASSWORD" class="control-label" hidden></label>
+                        <input type="password" asp-for="CONFIRMPASSWORD" class="form-control fadeIn second" placeholder="confirm password" />
+                        <span asp-validation-for="CONFIRMPASSWORD" class="text-danger fadeIn second"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="fadeIn fourth" value="Create" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

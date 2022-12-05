@@ -1,0 +1,93 @@
+﻿@model WebAppVSEAT.Models.CommandVM
+@{
+    Layout = "_Layout";
+}
+@{
+    ViewData["Title"] = "TakeAnOrder";
+}
+
+<h1 style="text-align: center; font-family:'Palatino Linotype'"> Pass your command at @Model.orderDishes.First().NAMERESTAURANT</h1>
+<form asp-action="TakeAnOrder">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <h4>
+        <label asp-for="hour" class="control-label">Delivery time</label>
+        <select asp-for="hour">
+            <option disabled>Lunch</option>
+            <option value="11:30">11:30</option>
+            <option value="11:45">11:45</option>
+            <option value="12:00">12:00</option>
+            <option value="12:15">12:15</option>
+            <option value="12:30">12:30</option>
+            <option value="12:45">12:45</option>
+            <option value="13:00">13:00</option>
+            <option value="13:15">13:15</option>
+            <option value="13:30">13:30</option>
+            <option disabled>Dinner</option>
+            <option value="18:00">18:00</option>
+            <option value="18:15">18:15</option>
+            <option value="18:30">18:30</option>
+            <option value="18:45">18:45</option>
+            <option value="19:00">19:00</option>
+            <option value="19:15">19:15</option>
+            <option value="19:30">19:30</option>
+            <option value="19:45">19:45</option>
+            <option value="20:00">20:00</option>
+            <option value="20:15">20:15</option>
+            <option value="20:30">20:30</option>
+            <option value="20:45">20:45</option>
+            <option value="21:00">21:00</option>
+            <option value="21:15">21:15</option>
+            <option value="21:30">21:30</option>
+            <option value="22:00">22:00</option>
+            <option value="22:15">22:15</option>
+            <option value="22:30">22:30</option>
+        </select>
+    </h4>
+
+    <br />
+
+
+    <div class="containerHomePage">
+
+        @for (int i = 0; i < Model.orderDishes.Count(); i++)
+        {
+            //var idDish = (int)@Html.DisplayFor(modelItem => Model.orderDishes[i].dish.IDDISHES);
+            int idDish = Model.orderDishes[i].dish.IDDISHES;
+            string imageUrl = "/VS_Eat_Daniel_Thomas/Images/Dishes/" + idDish + ".jpg";
+
+            <div class="containerColumnHomePage">
+                <img src="@imageUrl" alt="@idDish" width="250" height="250" />
+                <h4>
+                    @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.NAMEDISH)
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.IDDISHES)
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].IDRESTAURANT)
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].NAMERESTAURANT)
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].CITYNAME)
+                </h4>
+                <h4>
+                    @Html.DisplayFor(model => model.orderDishes[i].dish.PRICEDISH) CHF
+                    @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.PRICEDISH) 
+                </h4>
+                <h4 style="align-content:center">                  
+                    @Html.TextBoxFor(modelItem => Model.orderDishes[i].QUANTITY)
+                </h4>
+
+            </div>
+        }
+
+    </div>
+    <p>
+
+    </p>
+    <center>
+        <input style="align-content:center" class="btn" type="submit" value="Confirm order" />
+        <br />
+    </center>
+   
+
+
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

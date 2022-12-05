@@ -1,0 +1,213 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+
+body {
+    /*background: url("/Images/BurgerBackground.jpeg");*/
+    background-color: antiquewhite;
+    height: auto;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+}
+
+
+.titre
+{
+    position: absolute;
+    width: 600px;
+    height: 300px;
+    margin: 20% 30%;
+    text-align: center;
+}
+
+.titre h1
+{
+    text-align: center;
+    color: #000000;
+    text-transform: uppercase;
+    font-size: 60px;
+}
+
+.titre a{
+    border: 1px solid #fff;
+    padding: 10px 25px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-top: 20px;
+    display: inline-block;
+      
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+
+
+.a-right {
+    float: right;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    font-family: sans-serif;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 400;
+    background-color: transparent;
+    font-size: 18px;
+    color: black;
+}
+}
+    
+a:hover {
+        background-color: gray;
+        border-radius: 7px;
+}
+
+.btn {
+    background-color: #56baed;
+    border: none;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #56baed;
+    border: none;
+    color: white;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    background-color: dimgrey;
+    border-radius: 3px;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+    width: 100%;
+    position: fixed;
+    background: #333;
+    padding: 10px 0;
+    color: #fff;
+    bottom: 0;
+}
+
+.btn-restaurant {
+    background-color: #e5e5e5;
+    border: none;
+    color: white;
+}
+
+/*DropDown mennu*/
+
+.headerOrder {
+    background-color: #ddd;
+    position: sticky;
+    top: 0; 
+    z-index: 9999;
+}
+
+
+.dropdown {
+    position: relative;
+}
+
+/* Hide the dropdown's content by default */
+.dropdown__content {
+    display: none;
+    /* Position it right below the trigger element */
+    left: 0;
+    padding-top: 5px;
+    position: absolute;
+    top: 30px;
+    /* It should be on the top of other elements */
+    background-color: #fff;
+
+    /* Size */
+    height: 100px;
+    width: 125px;
+}
+
+/* Show the content when hover on the container */
+.dropdown:hover .dropdown__content {
+    display: block;
+}
+
+/*HomePage Code*/
+
+.containerHomePage {
+    /* Content is centered horizontally */
+    align-items: center;
+    display: flex;
+    border: 1px;
+    overflow-x: auto;
+    
+}
+
+.containerHomePage::-webkit-scrollbar
+{
+    width: 1;
+}
+
+.containerColumnHomePage {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    margin: 0 8px;
+    border-radius: 4px;
+    background-color: #edcdb3;
+    padding: 5px;
+}
+
+
+
+
+
+

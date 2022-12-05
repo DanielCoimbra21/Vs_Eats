@@ -1,0 +1,87 @@
+﻿@model IEnumerable<WebAppVSEAT.Models.OrderVM>
+
+@{
+    ViewData["Title"] = "Error";
+    Layout = "~/Views/Shared/_LayoutOrder.cshtml";
+}
+
+<h1>Historic</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.IDORDER)
+            </th>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.TOTALPRICE)
+            </th>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.NAME)
+            </th>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.SURNAME)
+            </th>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.ADDRESS)
+            </th>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.CITY)
+            </th>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.NPA)
+            </th>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.PHONE)
+            </th>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.DELIVERTIME)
+            </th>
+            <th class="headerOrder">
+                @Html.DisplayNameFor(model => model.STATUS)
+            </th>
+            <th class="headerOrder">
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDORDER)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TOTALPRICE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SURNAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ADDRESS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CITY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NPA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PHONE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DELIVERTIME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.STATUS)
+                </td>
+            </tr>
+        }
+        <div>
+    </tbody>
+</table>

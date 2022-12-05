@@ -1,0 +1,28 @@
+﻿.masonry-grid {
+    column-count: 3;
+    column-gap: 1rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.masonry-grid__item {
+
+    break-inside: avoid;
+    padding: 5px 5px 5px 5px;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    text-align: center;
+}
+
+
+
+.cardSearch {
+    break-inside: avoid;
+    padding: 10px 10px 10px 10px;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    text-align: center;
+    transform: scale(1.4);
+}
+
+
